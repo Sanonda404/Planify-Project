@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           stylesheets="@../css/AddTask.css"
+           fx:controller="com.planify.frontend.controllers.project.AddTaskController"
+           styleClass="overlay-backdrop">
+
+    <!-- Modal Container -->
+    <VBox styleClass="modal-container" maxWidth="850" maxHeight="700">
+
+        <!-- Header -->
+        <HBox styleClass="modal-header" alignment="CENTER_LEFT" spacing="15">
+            <padding>
+                <Insets top="25" right="30" bottom="25" left="30"/>
+            </padding>
+
+            <Label styleClass="header-emoji" text="✨"/>
+            <Label styleClass="header-title" text="Add New Task"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#closeWindow"/>
+        </HBox>
+
+        <!-- Content Area -->
+        <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox styleClass="content-container" spacing="20">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- Task Name -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Task Name *"/>
+                    <TextField fx:id="taskNameField" styleClass="styled-textfield" promptText="Enter task name"/>
+                </VBox>
+
+                <!-- Description -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Description"/>
+                    <TextArea fx:id="descriptionField" styleClass="styled-textarea" promptText="Enter task description (optional)" wrapText="true" prefRowCount="3"/>
+                </VBox>
+
+                <!-- Category Section -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Category *"/>
+                    <ComboBox fx:id="categoryCombo" styleClass="styled-combobox" promptText="Select or create category" maxWidth="Infinity"/>
+
+                    <!-- New Category Field (Hidden by default) -->
+                    <VBox fx:id="newCategoryBox" spacing="8" visible="false" managed="false">
+                        <Label styleClass="field-label-small" text="Enter new category name:"/>
+                        <TextField fx:id="newCategoryField" styleClass="styled-textfield" promptText="e.g., Development, Design, Testing"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Due Date Time -->
+                <GridPane hgap="20" vgap="12">
+                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Target Date"/>
+                    <DatePicker fx:id="dueDatePicker" styleClass="styled-datepicker" promptText="Select due date"/>
+                </VBox>
+
+                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Target Time"/>
+                    <HBox spacing="8">
+                        <Spinner fx:id="targetHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                        <Label styleClass="time-separator" text=":"/>
+                        <Spinner fx:id="targetMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                    </HBox>
+                </VBox>
+                </GridPane>
+
+                <!-- Milestone (Optional) -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Milestone (Optional)"/>
+                    <ComboBox fx:id="milestoneCombo" styleClass="styled-combobox" promptText="Select milestone (optional)" maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- Assignees Section -->
+                <VBox spacing="12">
+                    <Label styleClass="section-title" text="👥 Assign To *"/>
+
+                    <VBox spacing="12">
+                        <!-- Radio Buttons -->
+                        <RadioButton fx:id="assignAllRadio" styleClass="styled-radio" text="Assign to all team members" selected="true">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="assigneeToggleGroup"/>
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <RadioButton fx:id="assignSpecificRadio" styleClass="styled-radio" text="Assign to specific members" toggleGroup="$assigneeToggleGroup"/>
+
+                        <!-- Specific Members Selection (Hidden by default) -->
+                        <VBox fx:id="specificMembersBox" spacing="10" visible="false" managed="false">
+                            <Label styleClass="field-label-small" text="Select team members:"/>
+
+                            <!-- Scrollable Checkbox List -->
+                            <ScrollPane styleClass="members-scroll" fitToWidth="true" prefHeight="200" maxHeight="250">
+                                <VBox fx:id="membersCheckboxContainer" spacing="8" styleClass="members-container">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+                                    <!-- Checkboxes will be added dynamically -->
+                                </VBox>
+                            </ScrollPane>
+
+                            <Label fx:id="selectedCountLabel" styleClass="selected-count-label" text="0 members selected"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Attachment URL -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Attachment (URL or Drive Link)"/>
+                    <TextField fx:id="attachmentField" styleClass="styled-textfield" promptText="https://drive.google.com/..."/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+        <!-- Footer Buttons -->
+        <HBox styleClass="modal-footer" spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="30" bottom="25" left="30"/>
+            </padding>
+
+            <Button styleClass="cancel-button" text="Cancel" onAction="#closeWindow" prefWidth="180"/>
+            <Button styleClass="create-button" text="Create Task" onAction="#addTask" prefWidth="180"/>
+        </HBox>
+
+    </VBox>
+
+</StackPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="24"
+      fillWidth="true"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/project_details.css"
+      styleClass="pt-root"
+      fx:controller="com.planify.frontend.controllers.project.ProjectTasksController">
+
+    <HBox alignment="CENTER_LEFT">
+        <Label text="Tasks Organization" styleClass="pt-section-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <HBox spacing="12">
+            <Button text="+ Add Milestone" styleClass="pt-primary-btn" onAction="#openAddMilestone"/>
+            <Button text="+ Add Task" styleClass="pt-outline-btn" onAction="#openAddTask"/>
+        </HBox>
+    </HBox>
+
+    <!-- Dynamic container for milestones -->
+    <VBox fx:id="milestoneContainer" spacing="16"/>
+
+    <!-- Unassigned tasks box -->
+    <VBox fx:id="unassignedContainer" spacing="16" styleClass="pt-unassigned-card">
+        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+        <Label text="📌 Unassigned Tasks" styleClass="pt-milestone-title"/>
+        <VBox fx:id="unassignedTasksBox" spacing="10"/>
+    </VBox>
+</VBox>

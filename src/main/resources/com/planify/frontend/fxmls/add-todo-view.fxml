@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane styleClass="overlay-backdrop" stylesheets="@../css/AddTask.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.task.AddTodoController">
+
+    <!-- Modal Container -->
+    <VBox maxHeight="750" maxWidth="900" styleClass="modal-container">
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="modal-header">
+            <padding>
+                <Insets bottom="25" left="30" right="30" top="25" />
+            </padding>
+            <Label styleClass="header-title" text="Add New Task" />
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Button fx:id="closeButton" onAction="#closeWindow" styleClass="close-button" text="×" />
+        </HBox>
+
+        <!-- Content Area -->
+        <ScrollPane fitToWidth="true" styleClass="content-scroll" VBox.vgrow="ALWAYS">
+            <VBox spacing="20" styleClass="content-container">
+                <padding>
+                    <Insets bottom="30" left="30" right="30" top="30" />
+                </padding>
+
+                <!-- Task Name -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Task Name *" />
+                    <TextField fx:id="taskNameField" promptText="Enter task name" styleClass="styled-textfield" />
+                </VBox>
+
+                <!-- Description -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Description" />
+                    <TextArea fx:id="descriptionField" prefRowCount="3" promptText="Enter task description (optional)" styleClass="styled-textarea" wrapText="true" />
+                </VBox>
+
+                <!-- Type: Daily/Custom (Hidden for Project Tasks) -->
+                <VBox fx:id="typeContainer" managed="true" spacing="10" visible="true">
+                    <Label styleClass="field-label" text="Task Type *" />
+                    <ComboBox fx:id="typeCombo" promptText="Select task type" styleClass="styled-combobox" />
+                </VBox>
+
+                <!-- Due Date & Time (Always visible for Project Tasks, conditional for Personal) -->
+                <VBox fx:id="targetTimeContainer" spacing="10">
+                    <Label styleClass="field-label" text="Due Date &amp; Time *" />
+                    <GridPane hgap="15" vgap="10">
+                        <VBox spacing="6" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                            <Label styleClass="field-label-small" text="Date" />
+                            <DatePicker fx:id="dueDatePicker" promptText="Select due date" styleClass="styled-datepicker" />
+                        </VBox>
+
+                        <VBox spacing="6" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                            <Label styleClass="field-label-small" text="Time" />
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Spinner fx:id="targetHour" editable="true" prefWidth="70" styleClass="time-spinner" />
+                                <Label styleClass="time-separator" text=":" />
+                                <Spinner fx:id="targetMinute" editable="true" prefWidth="70" styleClass="time-spinner" />
+                                <ComboBox fx:id="targetAmPm" prefWidth="70" styleClass="am-pm-combo" />
+                            </HBox>
+                        </VBox>
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                </VBox>
+
+                <!-- Weight (1-10) -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Weight / Importance (1-10) *" />
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Slider fx:id="weightSlider" majorTickUnit="1" max="10" min="1" prefWidth="300" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="weight-slider" value="5" />
+                        <Label fx:id="weightValueLabel" styleClass="weight-value" text="5" />
+                    </HBox>
+                    <Label styleClass="field-label-small" text="Higher weight = More important tasks" />
+                </VBox>
+
+                <!-- Priority -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Priority *" />
+                    <ComboBox fx:id="priorityCombo" promptText="Select priority" styleClass="styled-combobox">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="High" />
+                                <String fx:value="Medium" />
+                                <String fx:value="Low" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <!-- Add To (Personal/Project) - Hidden when project/milestone provided -->
+                <VBox fx:id="addToContainer" managed="true" spacing="10" visible="true">
+                    <Label styleClass="field-label" text="Add To *" />
+                    <ComboBox fx:id="todoForCombo" maxWidth="Infinity" styleClass="styled-combobox" />
+                </VBox>
+
+                <!-- Project Selection (Hidden when project provided) -->
+                <VBox fx:id="projectSelectionBox" managed="true" spacing="10" visible="true">
+                    <Label styleClass="field-label" text="Project *" />
+                    <ComboBox fx:id="projectCombo" promptText="Choose a project..." styleClass="styled-combobox" />
+                </VBox>
+
+                <!-- Milestone (Hidden when milestone provided) -->
+                <VBox fx:id="milestoneSelectionBox" managed="true" spacing="8" visible="true">
+                    <Label styleClass="field-label" text="Milestone (Optional)" />
+                    <ComboBox fx:id="milestoneCombo" maxWidth="Infinity" promptText="Select milestone (optional)" styleClass="styled-combobox" />
+                </VBox>
+
+                <!-- Category Section -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Category *" />
+                    <ComboBox fx:id="categoryCombo" maxWidth="Infinity" promptText="Select or create category" styleClass="styled-combobox" />
+
+                    <!-- New Category Field -->
+                    <VBox fx:id="newCategoryBox" managed="false" spacing="8" visible="false">
+                        <Label styleClass="field-label-small" text="Enter new category name:" />
+                        <TextField fx:id="newCategoryField" promptText="e.g., Development, Design, Testing" styleClass="styled-textfield" />
+                    </VBox>
+                </VBox>
+
+                <!-- Assignees Section (Only for Project Tasks) -->
+                <VBox fx:id="assignToSection" managed="true" spacing="12" visible="true">
+                    <Label styleClass="section-title" text="👥 Assign To *" />
+
+                    <VBox spacing="12">
+                        <RadioButton fx:id="assignAllRadio" selected="true" styleClass="styled-radio" text="Assign to all team members">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="assigneeToggleGroup" />
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <RadioButton fx:id="assignSpecificRadio" styleClass="styled-radio" text="Assign to specific members" toggleGroup="$assigneeToggleGroup" />
+
+                        <VBox fx:id="specificMembersBox" managed="false" spacing="10" visible="false">
+                            <Label styleClass="field-label-small" text="Select team members:" />
+                            <ScrollPane fitToWidth="true" maxHeight="250" prefHeight="200" styleClass="members-scroll">
+                                <VBox fx:id="membersCheckboxContainer" spacing="8" styleClass="members-container">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                </VBox>
+                            </ScrollPane>
+                            <Label fx:id="selectedCountLabel" styleClass="selected-count-label" text="0 members selected" />
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Attachment URL -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Attachment (URL or Drive Link)" />
+                    <TextField fx:id="attachmentField" promptText="https://drive.google.com/..." styleClass="styled-textfield" />
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+                    <!-- Footer Buttons -->
+        <HBox alignment="CENTER" spacing="15" styleClass="modal-footer">
+            <padding>
+                <Insets bottom="25" left="30" right="30" top="20" />
+            </padding>
+            <Button onAction="#closeWindow" prefWidth="180" styleClass="cancel-button" text="Cancel" />
+            <Button onAction="#addTask" prefWidth="180" styleClass="create-button" text="Create Task" />
+        </HBox>
+
+    </VBox>
+
+</StackPane>

@@ -1,0 +1,371 @@
+/* ===== OVERLAY & BACKDROP ===== */
+.gm-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+    -fx-alignment: center;
+}
+
+/* ===== MODAL CONTAINER ===== */
+.gm-modal {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.25), 30, 0, 0, 8);
+}
+
+/* ===== HEADER ===== */
+.gm-header {
+    -fx-background-color: linear-gradient(to bottom right, #457b9d, #1d3557);
+    -fx-background-radius: 24 24 0 0;
+}
+
+.gm-header-icon {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+}
+
+.gm-header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: white;
+    -fx-font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+.gm-close-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 28px;
+    -fx-font-weight: 400;
+    -fx-cursor: hand;
+    -fx-padding: 0 8;
+    -fx-background-radius: 12;
+}
+
+.gm-close-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+}
+
+/* ===== SCROLL PANE ===== */
+.gm-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.gm-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.gm-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6;
+}
+
+.gm-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #a8dadc;
+    -fx-background-radius: 3;
+}
+
+.gm-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #457b9d;
+}
+
+/* ===== CONTENT ===== */
+.gm-content {
+    -fx-background-color: white;
+}
+
+/* ===== TABS ===== */
+.gm-tab-container {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 40;
+    -fx-padding: 4;
+}
+
+.gm-tab-active {
+    -fx-background-color: white;
+    -fx-text-fill: #457b9d;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 10 20;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 1);
+}
+
+.gm-tab-inactive {
+    -fx-background-color: transparent;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 20;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.gm-tab-inactive:hover {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #1d3557;
+}
+
+/* ===== LABELS ===== */
+.gm-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1d3557;
+}
+
+.gm-section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #457b9d;
+    -fx-padding: 0 0 4 0;
+}
+
+.gm-hint {
+    -fx-font-size: 10px;
+    -fx-text-fill: #94a3b8;
+    -fx-font-style: italic;
+}
+
+/* ===== TEXT FIELD ===== */
+.gm-textfield {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-transition: all 0.2s;
+}
+
+.gm-textfield:focused {
+    -fx-background-color: white;
+    -fx-border-color: #457b9d;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.15), 4, 0, 0, 0);
+}
+
+.gm-textfield:hover {
+    -fx-border-color: #a8dadc;
+}
+
+/* ===== TEXT AREA ===== */
+.gm-textarea {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+}
+
+.gm-textarea:focused {
+    -fx-background-color: white;
+    -fx-border-color: #457b9d;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.15), 4, 0, 0, 0);
+}
+
+.gm-textarea .content {
+    -fx-background-color: transparent;
+}
+
+/* ===== COMBO BOX ===== */
+.gm-combo {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+}
+
+.gm-combo:focused {
+    -fx-border-color: #457b9d;
+}
+
+.gm-combo:hover {
+    -fx-border-color: #a8dadc;
+}
+
+.gm-combo .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #1e293b;
+    -fx-padding: 8 12;
+}
+
+.gm-combo .list-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.gm-combo .list-cell:selected {
+    -fx-background-color: #457b9d;
+    -fx-text-fill: white;
+}
+
+/* ===== SEPARATOR ===== */
+.gm-separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 1;
+}
+
+/* ===== COLOR PREVIEW ===== */
+.gm-color-preview {
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+    -fx-max-width: 48;
+    -fx-max-height: 48;
+    -fx-background-radius: 12;
+    -fx-background-color: #457b9d;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 1);
+}
+
+.gm-color-btn {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #457b9d;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.gm-color-btn:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+/* ===== EMOJI PREVIEW ===== */
+.gm-emoji-preview {
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+    -fx-max-width: 48;
+    -fx-max-height: 48;
+    -fx-background-radius: 12;
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 2;
+    -fx-alignment: center;
+}
+
+.gm-emoji-text {
+    -fx-font-size: 28px;
+}
+
+.gm-emoji-btn {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #457b9d;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.gm-emoji-btn:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+/* ===== CHECKBOX ===== */
+.gm-checkbox {
+    -fx-font-size: 13px;
+    -fx-text-fill: #334155;
+    -fx-padding: 4 0;
+}
+
+.gm-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 4;
+}
+
+.gm-checkbox:selected .box {
+    -fx-background-color: #457b9d;
+    -fx-border-color: #457b9d;
+}
+
+.gm-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+/* ===== BUTTONS ===== */
+.gm-cancel-btn {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.gm-cancel-btn:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #cbd5e1;
+    -fx-text-fill: #1d3557;
+}
+
+.gm-create-btn {
+    -fx-background-color: linear-gradient(to bottom right, #457b9d, #1d3557);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.3), 8, 0, 0, 2);
+}
+
+.gm-create-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 12, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.gm-join-btn {
+    -fx-background-color: linear-gradient(to bottom right, #457b9d, #1d3557);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.3), 8, 0, 0, 2);
+}
+
+.gm-join-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 12, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeInScale {
+    from {
+        -fx-opacity: 0;
+        -fx-scale-x: 0.95;
+        -fx-scale-y: 0.95;
+    }
+    to {
+        -fx-opacity: 1;
+        -fx-scale-x: 1;
+        -fx-scale-y: 1;
+    }
+}
+
+.gm-modal {
+    -fx-animation: fadeInScale 0.25s ease-out;
+}

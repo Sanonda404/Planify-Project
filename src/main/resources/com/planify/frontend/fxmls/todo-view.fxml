@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.planify.frontend.controllers.task.TodoController"
+            stylesheets="@../css/Todo.css"
+            styleClass="root-pane">
+
+    <!-- Professional Top Navbar -->
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="16" right="28" bottom="16" left="28"/>
+            </padding>
+
+            <Button styleClass="nav-back-btn" text="←" onAction="#goBack"/>
+            <StackPane styleClass="nav-logo-box">
+                <Label styleClass="nav-logo-emoji" text="✅"/>
+            </StackPane>
+            <VBox spacing="2">
+                <Label styleClass="nav-title" text="Task Management"/>
+                <Label styleClass="nav-subtitle" text="Organize &amp; Track Your Work"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="20" styleClass="nav-stats">
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="navTotalLabel" styleClass="nav-stat-number" text="0"/>
+                    <Label styleClass="nav-stat-label" text="Total"/>
+                </VBox>
+                <Separator orientation="VERTICAL" styleClass="nav-stat-sep"/>
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="navCompletedLabel" styleClass="nav-stat-number, nav-stat-green" text="0"/>
+                    <Label styleClass="nav-stat-label" text="Done"/>
+                </VBox>
+                <Separator orientation="VERTICAL" styleClass="nav-stat-sep"/>
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="navProgressLabel" styleClass="nav-stat-number, nav-stat-orange" text="0"/>
+                    <Label styleClass="nav-stat-label" text="Active"/>
+                </VBox>
+            </HBox>
+            <Button fx:id="notificationBtn" styleClass="nav-icon-btn" text="🔔" onAction="#toggleNotifications"/>
+            <Button styleClass="nav-logout-btn" text="Logout" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <!-- Notification Panel -->
+    <right>
+        <VBox fx:id="notificationPanel" styleClass="notification-panel" spacing="15" visible="false" managed="false">
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+            <HBox alignment="CENTER_LEFT">
+                <Label styleClass="notif-title" text="Notifications"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button styleClass="notif-close-btn" text="×" onAction="#toggleNotifications"/>
+            </HBox>
+            <ScrollPane styleClass="notif-scroll" fitToWidth="true" prefHeight="600">
+                <ListView fx:id="notificationsList"/>
+            </ScrollPane>
+        </VBox>
+    </right>
+
+    <!-- Main Content -->
+    <center>
+        <VBox styleClass="main-container" spacing="24">
+            <padding><Insets top="24" right="28" bottom="28" left="28"/></padding>
+
+            <!-- Filter Bar -->
+            <VBox styleClass="filter-bar">
+                <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <HBox spacing="0" styleClass="view-toggle-group">
+                        <Button fx:id="personalTasksBtn" styleClass="view-toggle-btn" text="📋 Personal Tasks"/>
+                        <Button fx:id="projectTasksBtn" styleClass="view-toggle-btn" text="🚀 Project Tasks"/>
+                    </HBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button styleClass="new-task-btn" text="+ New Task" onAction="#openAddTask"/>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="20" styleClass="filters-row">
+                    <VBox spacing="4">
+                        <Label styleClass="filter-label" text="TIME PERIOD"/>
+                        <ComboBox fx:id="timeFilterCombo" styleClass="filter-combo" prefWidth="140"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label styleClass="filter-label" text="DAILY TODO"/>
+                        <ComboBox fx:id="dailyTodoCombo" styleClass="filter-combo" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="4" fx:id="projectFilterBox" visible="false" managed="false">
+                        <Label styleClass="filter-label" text="PROJECT"/>
+                        <ComboBox fx:id="projectFilterCombo" styleClass="filter-combo" prefWidth="160"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label styleClass="filter-label" text="MILESTONE"/>
+                        <ComboBox fx:id="milestoneFilterCombo" styleClass="filter-combo" prefWidth="140"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label styleClass="filter-label" text="CATEGORY"/>
+                        <ComboBox fx:id="categoryFilterCombo" styleClass="filter-combo" prefWidth="140"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <CheckBox fx:id="showCompletedCheck" styleClass="show-completed-check" text="Show Completed"/>
+                    <Button styleClass="clear-filters-btn" text="Clear All" onAction="#clearFilters"/>
+                </HBox>
+            </VBox>
+
+            <!-- Kanban Board - Fixed Height Columns with Scroll -->
+            <HBox spacing="24" styleClass="kanban-board" VBox.vgrow="ALWAYS">
+
+                <!-- Pending Column -->
+                <VBox styleClass="kanban-column" HBox.hgrow="ALWAYS">
+                    <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
+                        <Region styleClass="column-indicator, indicator-pending"/>
+                        <Label styleClass="column-title" text="Pending"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="pendingBadge" styleClass="column-badge" text="0"/>
+                    </HBox>
+
+                    <Separator styleClass="column-separator"/>
+
+                    <!-- Scrollable Task Container -->
+                    <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pendingContainer" spacing="12" styleClass="tasks-container"/>
+                    </ScrollPane>
+                </VBox>
+
+                <!-- In Progress Column -->
+                <VBox styleClass="kanban-column" HBox.hgrow="ALWAYS">
+                    <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
+                        <Region styleClass="column-indicator, indicator-progress"/>
+                        <Label styleClass="column-title" text="In Progress"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="inProgressBadge" styleClass="column-badge" text="0"/>
+                    </HBox>
+
+                    <Separator styleClass="column-separator"/>
+
+                    <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="inProgressContainer" spacing="12" styleClass="tasks-container"/>
+                    </ScrollPane>
+                </VBox>
+
+                <!-- Completed Column -->
+                <VBox fx:id="completedColumn" styleClass="kanban-column" HBox.hgrow="ALWAYS">
+                    <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
+                        <Region styleClass="column-indicator, indicator-completed"/>
+                        <Label styleClass="column-title" text="Completed"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="completedBadge" styleClass="column-badge" text="0"/>
+                    </HBox>
+
+                    <Separator styleClass="column-separator"/>
+
+                    <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="completedContainer" spacing="12" styleClass="tasks-container"/>
+                    </ScrollPane>
+                </VBox>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

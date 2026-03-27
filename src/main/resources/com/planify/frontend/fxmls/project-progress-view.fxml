@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ProgressBar?>
+<BorderPane styleClass="root-pane" stylesheets="@../css/ProjectProgress.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.project.ProjectProgressController">
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="main-scroll">
+            <VBox spacing="28" styleClass="main-container">
+                <padding>
+                    <Insets bottom="32" left="32" right="32" top="28" />
+                </padding>
+
+                <!-- Hero Stats Cards -->
+                <GridPane hgap="20" vgap="20" styleClass="stats-grid">
+                    <!-- Overall Progress Card -->
+                    <VBox alignment="CENTER" styleClass="stat-card, stat-card-primary" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <padding><Insets bottom="28" left="32" right="32" top="28" /></padding>
+                        <Label styleClass="stat-emoji" text="🎯" />
+                        <Label fx:id="overallProgressLabel" styleClass="stat-value" text="0%" />
+                        <Label styleClass="stat-label" text="Overall Progress" />
+                        <Label fx:id="progressTrendLabel" styleClass="stat-trend" text="↑ 12% this week" />
+                    </VBox>
+
+                    <!-- Tasks Completed Card -->
+                    <VBox alignment="CENTER" styleClass="stat-card, stat-card-success" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <padding><Insets bottom="28" left="32" right="32" top="28" /></padding>
+                        <Label styleClass="stat-emoji" text="✅" />
+                        <Label fx:id="tasksCompletedLabel" styleClass="stat-value" text="0/0" />
+                        <Label styleClass="stat-label" text="Tasks Completed" />
+                        <Label fx:id="completionRateLabel" styleClass="stat-trend" text="85% completion" />
+                    </VBox>
+
+                    <!-- Weight Progress Card -->
+                    <VBox alignment="CENTER" styleClass="stat-card, stat-card-warning" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <padding><Insets bottom="28" left="32" right="32" top="28" /></padding>
+                        <Label styleClass="stat-emoji" text="⚡" />
+                        <Label fx:id="weightProgressLabel" styleClass="stat-value" text="0/0" />
+                        <Label styleClass="stat-label" text="Weight Completed" />
+                        <Label fx:id="avgWeightLabel" styleClass="stat-trend" text="Avg: 0" />
+                    </VBox>
+
+                    <!-- Team Members Card -->
+                    <VBox alignment="CENTER" styleClass="stat-card, stat-card-info" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <padding><Insets bottom="28" left="32" right="32" top="28" /></padding>
+                        <Label styleClass="stat-emoji" text="👥" />
+                        <Label fx:id="teamSizeLabel" styleClass="stat-value" text="0" />
+                        <Label styleClass="stat-label" text="Team Members" />
+                        <Label fx:id="activeMembersLabel" styleClass="stat-trend" text="Active: 0" />
+                    </VBox>
+
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                    </columnConstraints>
+                    <rowConstraints><RowConstraints /></rowConstraints>
+                </GridPane>
+
+                <!-- Main Analytics Grid -->
+                <GridPane hgap="28" vgap="28" styleClass="analytics-grid">
+
+                    <!-- Left Column -->
+                    <VBox spacing="28" GridPane.columnIndex="0" GridPane.rowIndex="0">
+
+                        <!-- Project Health Card -->
+                        <VBox spacing="20" styleClass="glass-card">
+                            <padding><Insets bottom="28" left="28" right="28" top="28" /></padding>
+
+                            <HBox alignment="CENTER_LEFT">
+                                <Label styleClass="section-title" text="📊 Project Health" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label fx:id="healthScoreLabel" styleClass="health-score" text="Score: 0/100" />
+                            </HBox>
+
+                            <Separator styleClass="section-separator" />
+
+                            <!-- Circular Progress -->
+                            <StackPane alignment="CENTER">
+                                <Canvas fx:id="progressCircleCanvas" height="220" width="220" />
+                                <VBox alignment="CENTER" spacing="5">
+                                    <Label fx:id="circleProgressLabel" styleClass="circle-progress-value" text="0%" />
+                                    <Label styleClass="circle-progress-label" text="Complete" />
+                                </VBox>
+                            </StackPane>
+
+                            <!-- Status Breakdown with Progress Bars -->
+                            <VBox spacing="12">
+                                <Label styleClass="status-section-title" text="Milestone Status" />
+
+                                <VBox spacing="8">
+                                    <HBox alignment="CENTER_LEFT" spacing="12">
+                                        <Region styleClass="status-dot, status-dot-completed" />
+                                        <Label styleClass="status-label" text="Completed" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="completedMilestonesLabel" styleClass="status-value" text="0" />
+                                    </HBox>
+                                    <ProgressBar fx:id="completedProgressBar" progress="0" styleClass="status-progress, progress-completed" />
+
+                                    <HBox alignment="CENTER_LEFT" spacing="12">
+                                        <Region styleClass="status-dot, status-dot-progress" />
+                                        <Label styleClass="status-label" text="In Progress" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="inProgressMilestonesLabel" styleClass="status-value" text="0" />
+                                    </HBox>
+                                    <ProgressBar fx:id="inProgressProgressBar" progress="0" styleClass="status-progress, progress-progress" />
+
+                                    <HBox alignment="CENTER_LEFT" spacing="12">
+                                        <Region styleClass="status-dot, status-dot-pending" />
+                                        <Label styleClass="status-label" text="Pending" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="pendingMilestonesLabel" styleClass="status-value" text="0" />
+                                    </HBox>
+                                    <ProgressBar fx:id="pendingProgressBar" progress="0" styleClass="status-progress, progress-pending" />
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- Category Breakdown -->
+                        <VBox spacing="20" styleClass="glass-card">
+                            <padding><Insets bottom="28" left="28" right="28" top="28" /></padding>
+                            <Label styleClass="section-title" text="📂 Category Breakdown" />
+                            <Separator styleClass="section-separator" />
+                            <VBox fx:id="categoryContainer" spacing="16" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Right Column -->
+                    <VBox spacing="28" GridPane.columnIndex="1" GridPane.rowIndex="0">
+
+                        <!-- Milestone Timeline -->
+                        <VBox spacing="20" styleClass="glass-card">
+                            <padding><Insets bottom="28" left="28" right="28" top="28" /></padding>
+                            <HBox alignment="CENTER_LEFT">
+                                <Label styleClass="section-title" text="🏆 Milestone Timeline" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label fx:id="totalMilestonesLabel" styleClass="section-badge" text="0 Total" />
+                            </HBox>
+                            <Separator styleClass="section-separator" />
+                            <ScrollPane fitToWidth="true" styleClass="timeline-scroll" prefHeight="400">
+                                <VBox fx:id="milestoneTimeline" spacing="20" styleClass="timeline-container" />
+                            </ScrollPane>
+                        </VBox>
+
+                        <!-- Phase Progress -->
+                        <VBox spacing="20" styleClass="glass-card">
+                            <padding><Insets bottom="28" left="28" right="28" top="28" /></padding>
+                            <Label styleClass="section-title" text="📈 Phase Progress" />
+                            <Separator styleClass="section-separator" />
+                            <HBox fx:id="phaseBarsContainer" alignment="CENTER" spacing="16" styleClass="phase-chart" />
+                        </VBox>
+
+                        <!-- Team Performance -->
+                        <VBox spacing="20" styleClass="glass-card">
+                            <padding><Insets bottom="28" left="28" right="28" top="28" /></padding>
+                            <Label styleClass="section-title" text="👥 Team Performance" />
+                            <Separator styleClass="section-separator" />
+                            <VBox fx:id="teamContainer" spacing="12" />
+                        </VBox>
+                    </VBox>
+
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50" />
+                        <ColumnConstraints percentWidth="50" />
+                    </columnConstraints>
+                    <rowConstraints><RowConstraints /></rowConstraints>
+                </GridPane>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

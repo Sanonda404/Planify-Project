@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.planify.frontend.controllers.group.AddMemberController"
+            stylesheets="@../css/add-member.css"
+            prefHeight="520" prefWidth="600">
+
+    <StackPane styleClass="am-overlay" AnchorPane.topAnchor="0.0"
+               AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0">
+
+        <VBox maxWidth="560" maxHeight="500" prefWidth="560" styleClass="am-modal">
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="am-header">
+                <padding>
+                    <Insets top="16" right="20" bottom="16" left="20"/>
+                </padding>
+                <Label text="👥" styleClass="am-header-icon"/>
+                <Label text="Add Members" styleClass="am-header-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleClose" styleClass="am-close-btn" text="×"/>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="am-scroll" VBox.vgrow="ALWAYS">
+                <VBox spacing="16" styleClass="am-content">
+                    <padding>
+                        <Insets top="20" right="20" bottom="24" left="20"/>
+                    </padding>
+
+                    <!-- Description -->
+                    <VBox spacing="4">
+                        <Label text="Invite teammates by email to collaborate on this group."
+                               wrapText="true" styleClass="am-description"/>
+                        <Label text="Members will receive an invitation to join."
+                               wrapText="true" styleClass="am-hint"/>
+                    </VBox>
+
+                    <Separator styleClass="am-separator"/>
+
+                    <!-- Email List Container -->
+                    <VBox spacing="8">
+                        <Label text="Email Addresses" styleClass="am-section-title"/>
+                        <VBox fx:id="emailContainer" spacing="8" styleClass="am-email-container">
+                            <!-- Default email row -->
+                            <HBox styleClass="am-email-row" spacing="10" alignment="CENTER_LEFT">
+                                <TextField promptText="Enter email address" styleClass="am-email-input"
+                                           HBox.hgrow="ALWAYS" prefWidth="Infinity"/>
+                                <Button text="✕" styleClass="am-remove-btn" onAction="#removeEmailRow"
+                                        userData="0"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Add Button -->
+                    <Button text="+ Add Another Email"
+                            styleClass="am-add-btn"
+                            onAction="#handleAddEmailField"
+                            maxWidth="Infinity"/>
+
+                    <Separator styleClass="am-separator"/>
+
+                    <!-- Status Message -->
+                    <Label fx:id="inviteStatusLabel" styleClass="am-status" visible="false" managed="false"/>
+
+                    <!-- Action Buttons -->
+                    <HBox spacing="12" alignment="CENTER">
+                        <Button text="Cancel"
+                                onAction="#handleClose"
+                                styleClass="am-cancel-btn"
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"/>
+                        <Button text="Send Invitations"
+                                onAction="#handleSendInvites"
+                                styleClass="am-send-btn"
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"/>
+                    </HBox>
+
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+    </StackPane>
+</AnchorPane>

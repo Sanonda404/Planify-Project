@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Rectangle?>
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.planify.frontend.controllers.project.EditMilestoneController"
+           styleClass="overlay-backdrop"
+stylesheets="@../css/EditForms.css">
+    
+    <!-- Modal Container -->
+    <VBox styleClass="modal-container" maxWidth="800" maxHeight="650">
+        
+        <!-- Header -->
+        <HBox styleClass="modal-header" alignment="CENTER_LEFT" spacing="15">
+            <padding>
+                <Insets top="25" right="30" bottom="25" left="30"/>
+            </padding>
+            
+            <Label styleClass="header-emoji" text="✏️"/>
+            <Label styleClass="header-title" text="Edit Milestone"/>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#handleClose"/>
+        </HBox>
+        
+        <!-- Content Area -->
+        <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox styleClass="content-container" spacing="20">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+                
+                <!-- Info Banner -->
+                <HBox styleClass="info-banner" spacing="12" alignment="CENTER_LEFT">
+                    <padding>
+                        <Insets top="12" right="15" bottom="12" left="15"/>
+                    </padding>
+                    <Label styleClass="info-icon" text="ℹ️"/>
+                    <Label styleClass="info-text" text="Editing milestone will update all associated data" wrapText="true"/>
+                </HBox>
+                
+                <!-- Milestone Title -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Milestone Title *"/>
+                    <TextField fx:id="titleField" styleClass="styled-textfield" promptText="Enter milestone title"/>
+                </VBox>
+                
+                <!-- Description -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Description *"/>
+                    <TextArea fx:id="descriptionArea" styleClass="styled-textarea" promptText="Enter milestone description" wrapText="true" prefRowCount="4"/>
+                </VBox>
+                
+                <!-- Due Date -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Due Date *"/>
+                    <DatePicker fx:id="dueDatePicker" styleClass="styled-datepicker" promptText="Select due date"/>
+                </VBox>
+                
+                <!-- Current Progress Info (Read-only) -->
+                <VBox spacing="12" styleClass="progress-info-box">
+                    <Label styleClass="section-title-small" text="📊 Current Progress"/>
+                    
+                    <GridPane hgap="20" vgap="10">
+                        <Label text="Completion Rate:" styleClass="info-label-key" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label fx:id="completionRateLabel" styleClass="info-label-value-highlight" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        
+                        <Label text="Total Tasks:" styleClass="info-label-key" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label fx:id="totalTasksLabel" styleClass="info-label-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        
+                        <Label text="Completed Tasks:" styleClass="info-label-key" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label fx:id="completedTasksLabel" styleClass="info-label-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    </GridPane>
+                    
+                    <!-- Progress Bar -->
+                    <StackPane styleClass="progress-bar-container" prefHeight="12">
+                        <Rectangle fx:id="progressBackground" styleClass="progress-bg" height="12"/>
+                        <Rectangle fx:id="progressFill" styleClass="progress-fill" height="12"/>
+                    </StackPane>
+                </VBox>
+                
+                <!-- Warning if has tasks -->
+                <HBox fx:id="warningBox" styleClass="warning-banner" spacing="12" alignment="CENTER_LEFT" visible="false" managed="false">
+                    <padding>
+                        <Insets top="12" right="15" bottom="12" left="15"/>
+                    </padding>
+                    <Label styleClass="warning-icon" text="⚠️"/>
+                    <Label styleClass="warning-text" text="This milestone has tasks. Changing the due date may affect task schedules." wrapText="true"/>
+                </HBox>
+                
+            </VBox>
+        </ScrollPane>
+        
+        <!-- Footer Buttons -->
+        <HBox styleClass="modal-footer" spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="30" bottom="25" left="30"/>
+            </padding>
+            
+            <Button styleClass="cancel-button" text="Cancel" onAction="#handleClose" prefWidth="180"/>
+            <Button styleClass="save-button" text="Save Changes" onAction="#handleSave" prefWidth="180"/>
+        </HBox>
+        
+    </VBox>
+    
+</StackPane>

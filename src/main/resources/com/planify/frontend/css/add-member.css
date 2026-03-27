@@ -1,0 +1,254 @@
+/* ===== OVERLAY & BACKDROP ===== */
+.am-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+    -fx-alignment: center;
+}
+
+/* ===== MODAL CONTAINER ===== */
+.am-modal {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.25), 20, 0, 0, 5);
+}
+
+/* ===== HEADER ===== */
+.am-header {
+    -fx-background-color: linear-gradient(135deg, #457b9d, #1d3557);
+    -fx-background-radius: 20 20 0 0;
+}
+
+.am-header-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.am-header-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: white;
+    -fx-font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+.am-close-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 24px;
+    -fx-font-weight: 400;
+    -fx-cursor: hand;
+    -fx-padding: 0 6;
+    -fx-background-radius: 10;
+}
+
+.am-close-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+}
+
+/* ===== SCROLL PANE ===== */
+.am-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.am-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.am-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 5;
+}
+
+.am-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #a8dadc;
+    -fx-background-radius: 3;
+}
+
+.am-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #457b9d;
+}
+
+/* ===== CONTENT ===== */
+.am-content {
+    -fx-background-color: white;
+}
+
+/* ===== TEXT STYLES ===== */
+.am-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-line-spacing: 2px;
+}
+
+.am-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748b;
+    -fx-font-style: italic;
+}
+
+.am-section-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1d3557;
+    -fx-padding: 0 0 4 0;
+}
+
+/* ===== EMAIL CONTAINER ===== */
+.am-email-container {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-min-height: 100;
+}
+
+/* ===== EMAIL ROW ===== */
+.am-email-row {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 4 0;
+    -fx-background-color: transparent;
+}
+
+.am-email-input {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-hgrow: ALWAYS;
+    -fx-min-width: 300;
+    -fx-pref-width: Infinity;
+}
+
+.am-email-input:focused {
+    -fx-border-color: #457b9d;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.1), 4, 0, 0, 0);
+}
+
+.am-email-input:hover {
+    -fx-border-color: #a8dadc;
+}
+
+.am-remove-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 4 10;
+    -fx-background-radius: 20;
+    -fx-min-width: 32;
+}
+
+.am-remove-btn:hover {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #e63946;
+}
+
+/* ===== ADD BUTTON ===== */
+.am-add-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #457b9d;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16;
+    -fx-background-radius: 10;
+    -fx-border-color: #457b9d;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.5;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s;
+}
+
+.am-add-btn:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #1d3557;
+    -fx-text-fill: #1d3557;
+}
+
+/* ===== SEPARATOR ===== */
+.am-separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 1;
+}
+
+/* ===== STATUS MESSAGE ===== */
+.am-status {
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-alignment: center;
+}
+
+.am-status-success {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+}
+
+.am-status-error {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #dc2626;
+}
+
+/* ===== BUTTONS ===== */
+.am-cancel-btn {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.am-cancel-btn:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #cbd5e1;
+    -fx-text-fill: #1d3557;
+}
+
+.am-send-btn {
+    -fx-background-color: linear-gradient(135deg, #457b9d, #1d3557);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.3), 6, 0, 0, 2);
+}
+
+.am-send-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 10, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeInScale {
+    from {
+        -fx-opacity: 0;
+        -fx-scale-x: 0.95;
+        -fx-scale-y: 0.95;
+    }
+    to {
+        -fx-opacity: 1;
+        -fx-scale-x: 1;
+        -fx-scale-y: 1;
+    }
+}
+
+.am-modal {
+    -fx-animation: fadeInScale 0.2s ease-out;
+}

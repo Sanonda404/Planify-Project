@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           stylesheets="@../css/EditEvent.css"
+           fx:controller="com.planify.frontend.controllers.events.EditEventController"
+           styleClass="overlay-backdrop">
+
+    <!-- Modal Container -->
+    <VBox styleClass="modal-container" maxWidth="950" maxHeight="800">
+
+        <!-- Header -->
+        <HBox styleClass="modal-header" alignment="CENTER_LEFT" spacing="12">
+            <padding>
+                <Insets top="20" right="24" bottom="20" left="24"/>
+            </padding>
+            <Label styleClass="header-icon" text="✏️"/>
+            <Label styleClass="header-title" text="Edit Event"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#handleClose"/>
+        </HBox>
+
+        <!-- Content Area -->
+        <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox styleClass="content-container" spacing="20">
+                <padding>
+                    <Insets top="24" right="28" bottom="24" left="28"/>
+                </padding>
+
+                <!-- Basic Info Section -->
+                <VBox spacing="16">
+                    <Label styleClass="section-title" text="📋 Basic Information"/>
+
+                    <GridPane hgap="20" vgap="16">
+                        <!-- Event Title -->
+                        <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                            <Label styleClass="field-label" text="Event Title *"/>
+                            <TextField fx:id="titleField" styleClass="styled-textfield" promptText="Enter event title"/>
+                        </VBox>
+
+                        <!-- Event Type -->
+                        <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                            <Label styleClass="field-label" text="Event Type *"/>
+                            <ComboBox fx:id="typeComboBox" styleClass="styled-combobox" promptText="Select type"/>
+                        </VBox>
+
+                        <!-- Color Picker -->
+                        <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2">
+                            <Label styleClass="field-label" text="Event Color"/>
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <ColorPicker fx:id="colorPicker" styleClass="styled-colorpicker"/>
+                                <Label fx:id="colorLabel" styleClass="color-label" text="Default: Blue"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Description -->
+                        <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
+                            <Label styleClass="field-label" text="Description"/>
+                            <TextArea fx:id="descriptionArea" styleClass="styled-textarea"
+                                      promptText="Enter event description (optional)" wrapText="true" prefRowCount="3"/>
+                        </VBox>
+                    </GridPane>
+                </VBox>
+
+                <!-- Timing Section -->
+                <VBox spacing="16">
+                    <Label styleClass="section-title" text="⏰ Timing"/>
+
+                    <!-- Slot Timing -->
+                    <VBox fx:id="slotTimingBox" spacing="12" visible="false" managed="false">
+                        <GridPane hgap="20" vgap="12">
+                            <!-- Start Date -->
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Start Date"/>
+                                <DatePicker fx:id="slotStartDate" styleClass="styled-datepicker"/>
+                            </VBox>
+
+                            <!-- Start Time with AM/PM -->
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Start Time"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="slotStartHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <Label styleClass="time-separator" text=":"/>
+                                    <Spinner fx:id="slotStartMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <ComboBox fx:id="slotStartAmPm" styleClass="am-pm-combo" prefWidth="70"/>
+                                </HBox>
+                            </VBox>
+
+                            <!-- Duration -->
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Duration"/>
+                                <TextField fx:id="slotDurationValue" styleClass="styled-textfield" promptText="1"/>
+                            </VBox>
+
+                            <!-- Duration Unit -->
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Unit"/>
+                                <ComboBox fx:id="slotDurationUnit" styleClass="styled-combobox">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="minutes"/>
+                                            <String fx:value="hours"/>
+                                            <String fx:value="days"/>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </VBox>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- Span Timing -->
+                    <VBox fx:id="spanTimingBox" spacing="12" visible="false" managed="false">
+                        <GridPane hgap="20" vgap="12">
+                            <!-- Start Date -->
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Start Date"/>
+                                <DatePicker fx:id="spanStartDate" styleClass="styled-datepicker"/>
+                            </VBox>
+
+                            <!-- Start Time with AM/PM -->
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Start Time"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="spanStartHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <Label styleClass="time-separator" text=":"/>
+                                    <Spinner fx:id="spanStartMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <ComboBox fx:id="spanStartAmPm" styleClass="am-pm-combo" prefWidth="70"/>
+                                </HBox>
+                            </VBox>
+
+                            <!-- End Date -->
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="End Date"/>
+                                <DatePicker fx:id="spanEndDate" styleClass="styled-datepicker"/>
+                            </VBox>
+
+                            <!-- End Time with AM/PM -->
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="End Time"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="spanEndHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <Label styleClass="time-separator" text=":"/>
+                                    <Spinner fx:id="spanEndMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <ComboBox fx:id="spanEndAmPm" styleClass="am-pm-combo" prefWidth="70"/>
+                                </HBox>
+                            </VBox>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- Target Timing (Deadline/Marker) -->
+                    <VBox fx:id="targetTimingBox" spacing="12" visible="false" managed="false">
+                        <GridPane hgap="20" vgap="12">
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Target Date"/>
+                                <DatePicker fx:id="targetDate" styleClass="styled-datepicker"/>
+                            </VBox>
+
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Target Time"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="targetHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <Label styleClass="time-separator" text=":"/>
+                                    <Spinner fx:id="targetMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <ComboBox fx:id="targetAmPm" styleClass="am-pm-combo" prefWidth="70"/>
+                                </HBox>
+                            </VBox>
+                        </GridPane>
+                    </VBox>
+                </VBox>
+
+                <!-- Repeat Section -->
+                <VBox spacing="12">
+                    <Label styleClass="section-title" text="🔄 Repeat"/>
+
+                    <ComboBox fx:id="repeatComboBox" styleClass="styled-combobox" promptText="Select repeat pattern" maxWidth="Infinity">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="No repeat"/>
+                                <String fx:value="Daily"/>
+                                <String fx:value="Weekly"/>
+                                <String fx:value="Monthly"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+
+                    <!-- Daily Repeat -->
+                    <VBox fx:id="dailyRepeatBox" spacing="10" visible="false" managed="false">
+                        <Label styleClass="field-label-small" text="Select days to include:"/>
+                        <HBox spacing="10" styleClass="weekday-container">
+                            <CheckBox fx:id="mondayCheckbox" styleClass="weekday-checkbox" text="M"/>
+                            <CheckBox fx:id="tuesdayCheckbox" styleClass="weekday-checkbox" text="T"/>
+                            <CheckBox fx:id="wednesdayCheckbox" styleClass="weekday-checkbox" text="W"/>
+                            <CheckBox fx:id="thursdayCheckbox" styleClass="weekday-checkbox" text="T"/>
+                            <CheckBox fx:id="fridayCheckbox" styleClass="weekday-checkbox" text="F"/>
+                            <CheckBox fx:id="saturdayCheckbox" styleClass="weekday-checkbox" text="S"/>
+                            <CheckBox fx:id="sundayCheckbox" styleClass="weekday-checkbox" text="S"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Monthly Repeat -->
+                    <VBox fx:id="monthlyRepeatBox" spacing="12" visible="false" managed="false">
+                        <GridPane hgap="20" vgap="12">
+                            <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Day of Month"/>
+                                <DatePicker fx:id="monthlyDatePicker" styleClass="styled-datepicker" promptText="Select date"/>
+                            </VBox>
+
+                            <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Time"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="monthlyHour" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <Label styleClass="time-separator" text=":"/>
+                                    <Spinner fx:id="monthlyMinute" styleClass="time-spinner" editable="true" prefWidth="70"/>
+                                    <ComboBox fx:id="monthlyAmPm" styleClass="am-pm-combo" prefWidth="70"/>
+                                </HBox>
+                            </VBox>
+                        </GridPane>
+                    </VBox>
+                </VBox>
+
+                <!-- Reminder Section -->
+                <VBox spacing="12">
+                    <Label styleClass="section-title" text="🔔 Reminder"/>
+
+                    <VBox spacing="12">
+                        <RadioButton fx:id="reminderAtStartRadio" styleClass="styled-radio" text="At start" selected="true">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="reminderToggleGroup"/>
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <VBox spacing="8">
+                            <RadioButton fx:id="reminderCustomRadio" styleClass="styled-radio" text="Custom" toggleGroup="$reminderToggleGroup"/>
+
+                            <HBox fx:id="customReminderBox" spacing="12" alignment="CENTER_LEFT" disable="true">
+                                <TextField fx:id="reminderValue" styleClass="styled-textfield" promptText="10" prefWidth="100"/>
+                                <ComboBox fx:id="reminderUnit" styleClass="styled-combobox" prefWidth="120">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="minutes"/>
+                                            <String fx:value="hours"/>
+                                            <String fx:value="days"/>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                                <Label styleClass="field-label-small" text="before event"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Reminder Type -->
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Reminder Type" />
+                    <ComboBox fx:id="reminderTypeComboBox" promptText="Select reminder type" styleClass="styled-combobox" />
+                </VBox>
+
+                <!-- Attachment Section -->
+                <VBox spacing="6">
+                    <Label styleClass="section-title" text="📎 Attachment"/>
+                    <TextField fx:id="attachmentField" styleClass="styled-textfield" promptText="https://drive.google.com/... or file URL"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+        <!-- Footer Buttons -->
+        <HBox styleClass="modal-footer" spacing="16" alignment="CENTER">
+            <padding>
+                <Insets top="16" right="24" bottom="20" left="24"/>
+            </padding>
+            <Button styleClass="cancel-button" text="Cancel" onAction="#handleClose" prefWidth="160"/>
+            <Button styleClass="update-button" text="Update Event" onAction="#handleUpdateEvent" prefWidth="160"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

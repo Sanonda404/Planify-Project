@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.planify.frontend.controllers.task.TodoCardController"
+      stylesheets="@../css/Todo.css"
+      styleClass="task-card"
+      spacing="12">
+
+    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+    <Region fx:id="priorityIndicator" styleClass="priority-indicator"/>
+
+    <!-- Header: Title & Priority Badge -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label fx:id="titleLabel" styleClass="task-title" text="Task Title" wrapText="true" HBox.hgrow="ALWAYS"/>
+        <Label fx:id="priorityBadge" styleClass="priority-badge" text="Medium" visible="false" managed="false"/>
+    </HBox>
+
+    <!-- Description Preview -->
+    <Label fx:id="descriptionLabel" styleClass="task-description" text="" wrapText="true" visible="false" managed="false"/>
+
+    <!-- Meta Information -->
+    <VBox spacing="8">
+        <!-- Category & Milestone -->
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="categoryLabel" styleClass="task-tag" text="Development"/>
+            <Label fx:id="milestoneLabel" styleClass="task-tag" text="Sprint 1" visible="false" managed="false"/>
+            <Label fx:id="dailyBadge" styleClass="daily-badge" text="⚡ Daily Task" visible="false" managed="false"/>
+        </HBox>
+
+        <!-- Due Date & Project -->
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="dueDateLabel" styleClass="task-meta" text="📅 No due date"/>
+            <Label fx:id="projectLabel" styleClass="task-meta" text="📊 Project" visible="false" managed="false"/>
+        </HBox>
+
+        <!-- Assignees -->
+        <HBox fx:id="assigneesBox" spacing="6" alignment="CENTER_LEFT" visible="false" managed="false">
+            <Label styleClass="task-meta-label" text="Assigned:"/>
+            <Label fx:id="assigneesLabel" styleClass="task-meta" text=""/>
+        </HBox>
+
+        <!-- Attachment -->
+        <Label fx:id="attachmentLabel" styleClass="task-attachment" text="📎 Attachment" visible="false" managed="false"/>
+
+        <!-- Weight & Priority Info -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <Label fx:id="weightLabel" styleClass="task-weight" text="⚡ Weight: 5" visible="false" managed="false"/>
+        </HBox>
+    </VBox>
+
+    <!-- Action Button -->
+    <Button fx:id="actionButton" styleClass="task-action-btn" text="Start Task" maxWidth="Infinity"/>
+
+    <!-- Quick Actions -->
+    <HBox spacing="8" alignment="CENTER">
+        <Button styleClass="task-quick-btn" text="👁 View" onAction="#viewTask" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button styleClass="task-quick-btn" text="✏️ Edit" onAction="#editTask" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+    </HBox>
+
+</VBox>

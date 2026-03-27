@@ -1,0 +1,328 @@
+/* ===== OVERLAY & BACKDROP ===== */
+.ap-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+    -fx-alignment: center;
+}
+
+/* ===== MODAL CONTAINER ===== */
+.ap-modal {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.25), 30, 0, 0, 8);
+}
+
+/* ===== HEADER ===== */
+.ap-header {
+    -fx-background-color: linear-gradient(to bottom right, #457b9d, #1d3557);
+    -fx-background-radius: 24 24 0 0;
+}
+
+.ap-header-icon {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+}
+
+.ap-header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: white;
+    -fx-font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+.ap-close-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 28px;
+    -fx-font-weight: 400;
+    -fx-cursor: hand;
+    -fx-padding: 0 8;
+    -fx-background-radius: 12;
+}
+
+.ap-close-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+}
+
+/* ===== SCROLL PANE ===== */
+.ap-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.ap-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.ap-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6;
+}
+
+.ap-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #a8dadc;
+    -fx-background-radius: 3;
+}
+
+.ap-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #457b9d;
+}
+
+/* ===== CONTENT ===== */
+.ap-content {
+    -fx-background-color: white;
+}
+
+/* ===== LABELS ===== */
+.ap-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1d3557;
+}
+
+.ap-section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #457b9d;
+    -fx-padding: 0 0 4 0;
+}
+
+/* ===== TEXT FIELD ===== */
+.ap-textfield {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-transition: all 0.2s;
+}
+
+.ap-textfield:focused {
+    -fx-background-color: white;
+    -fx-border-color: #457b9d;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.15), 4, 0, 0, 0);
+}
+
+.ap-textfield:hover {
+    -fx-border-color: #a8dadc;
+}
+
+/* ===== TEXT AREA ===== */
+.ap-textarea {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+}
+
+.ap-textarea:focused {
+    -fx-background-color: white;
+    -fx-border-color: #457b9d;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.15), 4, 0, 0, 0);
+}
+
+.ap-textarea .content {
+    -fx-background-color: transparent;
+}
+
+/* ===== COMBO BOX ===== */
+.ap-combo {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+}
+
+.ap-combo:focused {
+    -fx-border-color: #457b9d;
+}
+
+.ap-combo:hover {
+    -fx-border-color: #a8dadc;
+}
+
+.ap-combo .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #1e293b;
+    -fx-padding: 8 12;
+}
+
+.ap-combo .list-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.ap-combo .list-cell:selected {
+    -fx-background-color: #457b9d;
+    -fx-text-fill: white;
+}
+
+/* ===== DATE PICKER ===== */
+.ap-date-picker {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+.ap-date-picker:focused {
+    -fx-border-color: #457b9d;
+}
+
+.ap-date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+}
+
+.ap-date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.ap-date-picker .arrow {
+    -fx-background-color: #457b9d;
+}
+
+/* ===== TIME SPINNER ===== */
+.ap-time-spinner {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+.ap-time-spinner:focused {
+    -fx-border-color: #457b9d;
+}
+
+.ap-time-spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1e293b;
+}
+
+.ap-time-spinner .increment-arrow-button,
+.ap-time-spinner .decrement-arrow-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.ap-time-spinner .increment-arrow-button:hover,
+.ap-time-spinner .decrement-arrow-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.ap-time-separator {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #457b9d;
+}
+
+/* ===== AM/PM COMBO ===== */
+.ap-ampm-combo {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 6 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+.ap-ampm-combo:focused {
+    -fx-border-color: #457b9d;
+}
+
+.ap-ampm-combo .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #1e293b;
+    -fx-padding: 6 8;
+    -fx-alignment: center;
+}
+
+.ap-ampm-combo .list-cell:selected {
+    -fx-background-color: #457b9d;
+    -fx-text-fill: white;
+}
+
+/* ===== SEPARATOR ===== */
+.ap-separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 1;
+}
+
+/* ===== BUTTONS ===== */
+.ap-cancel-btn {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.ap-cancel-btn:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #cbd5e1;
+    -fx-text-fill: #1d3557;
+}
+
+.ap-create-btn {
+    -fx-background-color: linear-gradient(to bottom right, #457b9d, #1d3557);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 12 24;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.3), 8, 0, 0, 2);
+}
+
+.ap-create-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 12, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.ap-create-btn:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeInScale {
+    from {
+        -fx-opacity: 0;
+        -fx-scale-x: 0.95;
+        -fx-scale-y: 0.95;
+    }
+    to {
+        -fx-opacity: 1;
+        -fx-scale-x: 1;
+        -fx-scale-y: 1;
+    }
+}
+
+.ap-modal {
+    -fx-animation: fadeInScale 0.25s ease-out;
+}

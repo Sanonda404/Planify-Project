@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="root-pane" stylesheets="@../css/analytics.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.AnalyticsController">
+
+    <!-- Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-bar">
+            <padding><Insets bottom="16" left="28" right="28" top="16" /></padding>
+
+            <Button onAction="#goBack" styleClass="back-button" text="←" />
+            <StackPane styleClass="logo-box">
+                <Label styleClass="logo-emoji" text="📈" />
+            </StackPane>
+            <VBox spacing="2">
+                <Label styleClass="app-title" text="Analytics" />
+                <Label styleClass="app-subtitle" text="Productivity Insights &amp; Analytics" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#goDashboard" styleClass="dashboard-button" text="Dashboard" />
+            <Button fx:id="notifBtn" onAction="#toggleNotifications" styleClass="icon-button" text="🔔" />
+            <Button onAction="#handleLogout" styleClass="logout-button" text="Logout" />
+        </HBox>
+    </top>
+
+    <!-- Notification Panel -->
+    <right>
+        <VBox fx:id="notifPanel" managed="false" spacing="12" styleClass="notification-panel" visible="false">
+            <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label styleClass="notif-title" text="Notifications" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#toggleNotifications" styleClass="close-btn" text="×" />
+            </HBox>
+            <Separator styleClass="notification-separator" />
+            <ScrollPane fitToWidth="true" prefHeight="600" styleClass="notif-scroll">
+                <ListView fx:id="notificationsList" />
+            </ScrollPane>
+        </VBox>
+    </right>
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="main-scroll">
+            <VBox spacing="28" styleClass="main-container">
+                <padding><Insets bottom="28" left="28" right="28" top="24" /></padding>
+
+                <!-- Hero Section -->
+                <VBox spacing="8" styleClass="hero-section">
+                    <Label styleClass="page-title" text="Productivity Analytics" />
+                    <Label styleClass="page-subtitle" text="Comprehensive insights into your productivity patterns" />
+                </VBox>
+
+                <!-- Date Range Selector -->
+                <HBox alignment="CENTER_RIGHT" spacing="12" styleClass="date-range-container">
+                    <Label styleClass="date-range-label" text="Date Range:" />
+                    <Button fx:id="weekBtn" onAction="#showWeeklyView" styleClass="date-range-btn-active" text="This Week" />
+                    <Button fx:id="monthBtn" onAction="#showMonthlyView" styleClass="date-range-btn" text="This Month" />
+                    <Button fx:id="yearBtn" onAction="#showYearlyView" styleClass="date-range-btn" text="This Year" />
+                </HBox>
+
+                <!-- KPI Cards -->
+                <GridPane hgap="18" vgap="18" styleClass="kpi-grid">
+                    <VBox styleClass="kpi-card, kpi-purple" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="📊" styleClass="kpi-icon" />
+                        <Label fx:id="completionRateLabel" styleClass="kpi-value" text="0%" />
+                        <Label styleClass="kpi-label" text="Completion Rate" />
+                        <Label fx:id="completionTrendLabel" styleClass="kpi-trend" text="+0% vs last week" />
+                    </VBox>
+                    <VBox styleClass="kpi-card, kpi-green" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="✅" styleClass="kpi-icon" />
+                        <Label fx:id="totalCompletedLabel" styleClass="kpi-value" text="0" />
+                        <Label styleClass="kpi-label" text="Tasks Completed" />
+                        <Label fx:id="completedTrendLabel" styleClass="kpi-trend" text="+0 vs last week" />
+                    </VBox>
+                    <VBox styleClass="kpi-card, kpi-blue" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Label text="⏱️" styleClass="kpi-icon" />
+                        <Label fx:id="productivityScoreLabel" styleClass="kpi-value" text="0" />
+                        <Label styleClass="kpi-label" text="Productivity Score" />
+                        <Label fx:id="scoreTrendLabel" styleClass="kpi-trend" text="↑ +5 pts" />
+                    </VBox>
+                    <VBox styleClass="kpi-card, kpi-orange" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <Label text="🎯" styleClass="kpi-icon" />
+                        <Label fx:id="streakLabel" styleClass="kpi-value" text="0" />
+                        <Label styleClass="kpi-label" text="Day Streak" />
+                        <Label fx:id="streakTrendLabel" styleClass="kpi-trend" text="🔥 Best: 0 days" />
+                    </VBox>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                    </columnConstraints>
+                    <rowConstraints><RowConstraints /></rowConstraints>
+                </GridPane>
+
+                <!-- Stats Overview Cards -->
+                <GridPane hgap="18" vgap="18" styleClass="stats-overview">
+                    <VBox styleClass="stat-overview-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="📋 Total Tasks" styleClass="stat-overview-label" />
+                        <Label fx:id="totalTasksLabel" styleClass="stat-overview-value" text="0" />
+                    </VBox>
+                    <VBox styleClass="stat-overview-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="✅ Completed" styleClass="stat-overview-label" />
+                        <Label fx:id="completedTasksLabel" styleClass="stat-overview-value, stat-completed" text="0" />
+                    </VBox>
+                    <VBox styleClass="stat-overview-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Label text="📅 Events" styleClass="stat-overview-label" />
+                        <Label fx:id="totalEventsLabel" styleClass="stat-overview-value" text="0" />
+                    </VBox>
+                    <VBox styleClass="stat-overview-card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <Label text="🚀 Projects" styleClass="stat-overview-label" />
+                        <Label fx:id="totalProjectsLabel" styleClass="stat-overview-value" text="0" />
+                    </VBox>
+                    <VBox styleClass="stat-overview-card" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                        <Label text="⏰ Deadlines" styleClass="stat-overview-label" />
+                        <Label fx:id="totalDeadlinesLabel" styleClass="stat-overview-value, stat-warning" text="0" />
+                    </VBox>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20" />
+                        <ColumnConstraints percentWidth="20" />
+                        <ColumnConstraints percentWidth="20" />
+                        <ColumnConstraints percentWidth="20" />
+                        <ColumnConstraints percentWidth="20" />
+                    </columnConstraints>
+                    <rowConstraints><RowConstraints /></rowConstraints>
+                </GridPane>
+
+                <!-- Main Analytics Grid -->
+                <GridPane hgap="24" vgap="24" styleClass="analytics-grid">
+
+                    <!-- Left Column -->
+                    <VBox spacing="24" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <!-- Daily Activity Chart -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="📊 Daily Activity" />
+                            <Label styleClass="section-subtitle" text="Tasks completed per day" />
+                            <Canvas fx:id="dailyActivityChart" height="250" width="500" />
+                        </VBox>
+
+                        <!-- Task Distribution Chart -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="🎯 Task Distribution" />
+                            <Label styleClass="section-subtitle" text="Breakdown by status" />
+                            <HBox spacing="30" alignment="CENTER">
+                                <Canvas fx:id="taskDistributionChart" height="180" width="180" />
+                                <VBox spacing="10">
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Region styleClass="legend-dot, legend-completed" />
+                                        <Label text="Completed" styleClass="legend-text" />
+                                        <Label fx:id="completedPercentLabel" styleClass="legend-percent" text="0%" />
+                                    </HBox>
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Region styleClass="legend-dot, legend-inprogress" />
+                                        <Label text="In Progress" styleClass="legend-text" />
+                                        <Label fx:id="inProgressPercentLabel" styleClass="legend-percent" text="0%" />
+                                    </HBox>
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Region styleClass="legend-dot, legend-pending" />
+                                        <Label text="Pending" styleClass="legend-text" />
+                                        <Label fx:id="pendingPercentLabel" styleClass="legend-percent" text="0%" />
+                                    </HBox>
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Region styleClass="legend-dot, legend-overdue" />
+                                        <Label text="Overdue" styleClass="legend-text" />
+                                        <Label fx:id="overduePercentLabel" styleClass="legend-percent" text="0%" />
+                                    </HBox>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Category Performance -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="📂 Category Performance" />
+                            <Label styleClass="section-subtitle" text="Completion rate by category" />
+                            <VBox fx:id="categoryContainer" spacing="12" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Right Column -->
+                    <VBox spacing="24" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <!-- Productivity Heat Map -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="🔥 Productivity Heat Map" />
+                            <Label styleClass="section-subtitle" text="Activity intensity by hour and day" />
+                            <ScrollPane fitToWidth="true" prefHeight="300">
+                                <GridPane fx:id="heatMapContainer" hgap="4" vgap="4" styleClass="heatmap-grid" />
+                            </ScrollPane>
+                        </VBox>
+
+                        <!-- Project Progress -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="🚀 Project Progress" />
+                            <Label styleClass="section-subtitle" text="Active projects and completion status" />
+                            <ScrollPane fitToWidth="true" prefHeight="280">
+                                <VBox fx:id="projectProgressContainer" spacing="12" />
+                            </ScrollPane>
+                        </VBox>
+
+                        <!-- Group Activity -->
+                        <VBox spacing="16" styleClass="glass-card">
+                            <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                            <Label styleClass="section-title" text="👥 Group Activity" />
+                            <Label styleClass="section-subtitle" text="Team engagement metrics" />
+                            <ScrollPane fitToWidth="true" prefHeight="200">
+                                <VBox fx:id="groupActivityContainer" spacing="10" />
+                            </ScrollPane>
+                        </VBox>
+                    </VBox>
+
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50" />
+                        <ColumnConstraints percentWidth="50" />
+                    </columnConstraints>
+                    <rowConstraints><RowConstraints /></rowConstraints>
+                </GridPane>
+
+                <!-- Insights & Recommendations -->
+                <VBox spacing="16" styleClass="glass-card, insights-card">
+                    <padding><Insets bottom="22" left="22" right="22" top="22" /></padding>
+                    <Label styleClass="section-title" text="💡 AI Insights &amp; Recommendations" />
+                    <VBox fx:id="insightsContainer" spacing="10" />
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

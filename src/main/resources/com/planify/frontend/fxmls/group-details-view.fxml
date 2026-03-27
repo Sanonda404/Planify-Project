@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ListView?>
+
+<BorderPane prefHeight="900" prefWidth="1400"
+            styleClass="border-pane" stylesheets="@../css/groups.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.planify.frontend.controllers.group.GroupDetailsController">
+
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="14" styleClass="header">
+            <padding>
+                <Insets bottom="14" left="18" right="18" top="14" />
+            </padding>
+
+            <Button onAction="#goBack" styleClass="iconBtn" text="←" />
+            <StackPane styleClass="logoBox">
+                <Label fx:id="heroEmojiLabel" styleClass="logoEmoji" text="👥" />
+            </StackPane>
+            <VBox spacing="2">
+                <Label styleClass="title" text="Group Details" />
+                <Label styleClass="subtitle" text="Collaborate &amp; Connect" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#goDashboard" styleClass="ghostBtn" text="Dashboard" />
+            <Button fx:id="notifBtn" onAction="#toggleNotifications" styleClass="icon-button" text="🔔" />
+            <Button onAction="#handleLogout" styleClass="logout-button" text="Logout" />
+        </HBox>
+    </top>
+
+    <!-- NOTIFICATION PANEL -->
+    <right>
+        <VBox fx:id="notifPanel" managed="false" spacing="15" styleClass="notification-panel" visible="false">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <HBox alignment="CENTER_LEFT">
+                <Label styleClass="notif-title" text="Notifications" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#toggleNotifications" styleClass="close-btn" text="×" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Circle fx:id="connectionStatusCircle" fill="#ff4b4b" radius="6.0" />
+                <Label fx:id="connectionStatusLabel" text="Offline" textFill="#888888">
+                    <font><Font size="11.0" /></font>
+                </Label>
+            </HBox>
+            <ScrollPane fitToWidth="true" prefHeight="600" styleClass="notif-scroll">
+                <ListView fx:id="notificationsList" />
+            </ScrollPane>
+        </VBox>
+    </right>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="rootScroll">
+            <content>
+                <VBox spacing="24" styleClass="page">
+                    <padding>
+                        <Insets bottom="40" left="40" right="40" top="30" />
+                    </padding>
+
+                    <!-- GROUP HEADER CARD -->
+                    <HBox alignment="CENTER_LEFT" spacing="24" styleClass="glass-card">
+                        <padding>
+                            <Insets bottom="32" left="32" right="32" top="32" />
+                        </padding>
+
+                        <StackPane styleClass="emoji-bg">
+                            <Label styleClass="hero-emoji" text="👥" />
+                        </StackPane>
+
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <Label fx:id="groupNameLabel" styleClass="group-name" text="Design Team" />
+                            <Label fx:id="groupMetaLabel" styleClass="group-meta" text="professional • 5 members" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label styleClass="code-text" text="Group Code:" />
+                                <Label fx:id="groupCodeLabel" styleClass="code-badge" text="DESIGN99" />
+                            </HBox>
+                        </VBox>
+
+                        <Label fx:id="roleBadgeLabel" styleClass="role-badge-admin" text="⭐ Admin" />
+                    </HBox>
+
+                    <!-- STATS ROW -->
+                    <HBox spacing="16" alignment="CENTER">
+                        <VBox alignment="CENTER" spacing="8" styleClass="stat-mini-card">
+                            <Label text="👥" styleClass="stat-mini-icon" />
+                            <Label fx:id="memberCountLabel" styleClass="stat-mini-value" text="0" />
+                            <Label styleClass="stat-mini-label" text="Members" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="8" styleClass="stat-mini-card">
+                            <Label text="📅" styleClass="stat-mini-icon" />
+                            <Label fx:id="eventCountLabel" styleClass="stat-mini-value" text="0" />
+                            <Label styleClass="stat-mini-label" text="Events" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="8" styleClass="stat-mini-card">
+                            <Label text="🚀" styleClass="stat-mini-icon" />
+                            <Label fx:id="projectCountLabel" styleClass="stat-mini-value" text="0" />
+                            <Label styleClass="stat-mini-label" text="Projects" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="8" styleClass="stat-mini-card">
+                            <Label text="⭐" styleClass="stat-mini-icon" />
+                            <Label fx:id="adminCountLabel" styleClass="stat-mini-value" text="0" />
+                            <Label styleClass="stat-mini-label" text="Admins" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- TABS -->
+                    <HBox spacing="8" styleClass="tab-container">
+                        <padding>
+                            <Insets bottom="8" left="8" right="8" top="8" />
+                        </padding>
+                        <ToggleButton fx:id="membersTab" maxWidth="Infinity" selected="true" styleClass="nav-tab" text="👥 Members" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="eventsTab" maxWidth="Infinity" styleClass="nav-tab" text="📅 Events" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="projectsTab" maxWidth="Infinity" styleClass="nav-tab" text="📊 Projects" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="infoTab" maxWidth="Infinity" styleClass="nav-tab" text="ℹ️ Info" HBox.hgrow="ALWAYS" />
+                    </HBox>
+
+                    <!-- TAB CONTENT LOAD AREA -->
+                    <StackPane fx:id="dynamicContent" styleClass="glass-card">
+                        <padding>
+                            <Insets bottom="32" left="32" right="32" top="32" />
+                        </padding>
+                    </StackPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

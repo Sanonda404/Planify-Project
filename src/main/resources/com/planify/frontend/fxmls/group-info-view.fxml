@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="28"
+      fillWidth="true"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.planify.frontend.controllers.group.GroupInfoController"
+      stylesheets="@../css/groups.css"
+      styleClass="info-root">
+
+    <!-- Description -->
+    <VBox spacing="14">
+        <Label text="Description" styleClass="info-section-title"/>
+        <Label fx:id="descriptionLabel"
+               text="UI/UX Design and Development Team"
+               wrapText="true"
+               styleClass="info-description-text"/>
+    </VBox>
+
+    <!-- Group Settings -->
+    <VBox spacing="18">
+        <Label text="Group Settings" styleClass="info-section-title"/>
+
+        <GridPane hgap="18" vgap="18" maxWidth="Infinity">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+            </columnConstraints>
+
+            <!-- Card 1 -->
+            <VBox GridPane.rowIndex="0" GridPane.columnIndex="0"
+                  spacing="10" maxWidth="Infinity" styleClass="info-card">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="Your Role" styleClass="info-card-label"/>
+                <Label fx:id="roleLabel" text="Admin" styleClass="info-card-value"/>
+            </VBox>
+
+            <!-- Card 2 -->
+            <VBox GridPane.rowIndex="0" GridPane.columnIndex="1"
+                  spacing="10" maxWidth="Infinity" styleClass="info-card">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="Group Type" styleClass="info-card-label"/>
+                <Label fx:id="groupTypeLabel" text="Professional" styleClass="info-card-value"/>
+            </VBox>
+
+            <!-- Card 3 -->
+            <VBox GridPane.rowIndex="1" GridPane.columnIndex="0"
+                  spacing="10" maxWidth="Infinity" styleClass="info-card">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="Posting Access" styleClass="info-card-label"/>
+                <Label fx:id="postingAccessLabel" text="Admin" styleClass="info-card-value"/>
+            </VBox>
+
+            <!-- Card 4 -->
+            <VBox GridPane.rowIndex="1" GridPane.columnIndex="1"
+                  spacing="10" maxWidth="Infinity" styleClass="info-card">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="Created" styleClass="info-card-label"/>
+                <Label fx:id="createdLabel" text="9/1/2023" styleClass="info-card-value"/>
+            </VBox>
+        </GridPane>
+    </VBox>
+
+    <!-- Separator -->
+    <Separator styleClass="info-separator"/>
+
+    <!-- Danger Zone -->
+    <VBox spacing="12">
+        <Button text="Leave Group" maxWidth="Infinity" styleClass="leave-group-btn" onAction="#handleLeaveGroup"/>
+    </VBox>
+
+</VBox>

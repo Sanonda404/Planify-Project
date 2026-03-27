@@ -1,0 +1,86 @@
+.notification-toast {
+    -fx-background-color: rgba(45, 45, 45, 0.9);
+    -fx-background-radius: 10;
+    -fx-border-color: #444000;
+    -fx-border-radius: 10;
+    -fx-padding: 15;
+}
+
+.toast-title {
+    -fx-text-fill: #00ffcc; /* Cyan accents for titles */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.toast-message {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+
+/* Notification Container */
+.notif-item {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
+}
+
+.notif-unread {
+    -fx-background-color: #2D2D3D; /* Slightly lighter than main bg */
+    -fx-border-color: #00FFCC;    /* Planify Cyan */
+}
+
+.notif-read {
+    -fx-background-color: #1E1E2C;
+    -fx-border-color: #3D3D4D;
+    -fx-opacity: 0.7;
+}
+
+.notif-item:hover {
+    -fx-background-color: #353545;
+}
+
+/* Text Styling */
+.notif-item-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.notif-item-text {
+    -fx-text-fill: #B0B0B0;
+    -fx-font-size: 12px;
+}
+
+.notif-time {
+    -fx-text-fill: #666666;
+    -fx-font-size: 10px;
+}
+
+/* Action Buttons */
+.btn-accept {
+    -fx-background-color: #00FFCC;
+    -fx-text-fill: #121212;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 5 15;
+}
+
+.btn-accept:hover {
+    -fx-background-color: #00CCAA;
+}
+
+.btn-decline {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FF4B4B;
+    -fx-border-color: #FF4B4B;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 15;
+}
+
+.btn-decline:hover {
+    -fx-background-color: rgba(255, 75, 75, 0.1);
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="28"
+      fillWidth="true"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/project_details.css"
+      styleClass="po-root"
+      fx:controller="com.planify.frontend.controllers.project.ProjectOverviewController">
+
+    <!-- Team Members -->
+    <VBox spacing="18">
+        <Label text="Team Members" styleClass="po-section-title"/>
+        <HBox fx:id="teamMembersBox" spacing="12"/>
+    </VBox>
+
+    <!-- Milestones Timeline -->
+    <VBox spacing="18">
+        <Label text="Milestones Timeline" styleClass="po-section-title"/>
+        <VBox fx:id="milestonesBox" spacing="12"/>
+    </VBox>
+</VBox>

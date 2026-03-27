@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           stylesheets="@../css/AddResource.css"
+           fx:controller="com.planify.frontend.controllers.resources.AddResourceController"
+           styleClass="overlay-backdrop">
+
+    <!-- Modal Container -->
+    <VBox styleClass="modal-container" maxWidth="750" maxHeight="650">
+
+        <!-- Header -->
+        <HBox styleClass="modal-header" alignment="CENTER_LEFT" spacing="15">
+            <padding>
+                <Insets top="22" right="28" bottom="22" left="28"/>
+            </padding>
+
+            <Label styleClass="header-emoji" text="📎"/>
+            <Label styleClass="header-title" text="Add Resource"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#handleClose"/>
+        </HBox>
+
+        <!-- Content Area -->
+        <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox styleClass="content-container" spacing="20">
+                <padding>
+                    <Insets top="28" right="28" bottom="28" left="28"/>
+                </padding>
+
+                <!-- Resource Name -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Resource Name *"/>
+                    <TextField fx:id="nameField" styleClass="styled-textfield" promptText="Enter resource name"/>
+                </VBox>
+
+                <!-- Resource Type -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Resource Type *"/>
+                    <ComboBox fx:id="typeCombo" styleClass="styled-combobox" promptText="Select resource type">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="LINK"/>
+                                <String fx:value="FILE"/>
+                                <String fx:value="IMAGE"/>
+                                <String fx:value="DOCUMENT"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <!-- URL / File Path -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="URL / File Path *"/>
+                    <TextField fx:id="urlField" styleClass="styled-textfield" promptText="https://... or /path/to/file"/>
+                </VBox>
+
+                <!-- Description (Optional) -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Description"/>
+                    <TextArea fx:id="descriptionField" styleClass="styled-textarea"
+                              promptText="Enter description (optional)" wrapText="true" prefRowCount="2"/>
+                </VBox>
+
+                <!-- Link to Task Section (Conditional) -->
+                <VBox spacing="12">
+                    <Label styleClass="section-title" text="🔗 Link to Task (Optional)"/>
+
+                    <VBox spacing="8">
+                        <RadioButton fx:id="noTaskRadio" styleClass="styled-radio" text="Not linked to any task" selected="true">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="taskToggleGroup"/>
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <RadioButton fx:id="selectTaskRadio" styleClass="styled-radio" text="Link to existing task" toggleGroup="$taskToggleGroup"/>
+
+                        <!-- Task Selection (Hidden by default) -->
+                        <VBox fx:id="taskSelectionBox" spacing="8" visible="false" managed="false">
+                            <Label styleClass="field-label-small" text="Select Task"/>
+
+                            <!-- Search Field -->
+                            <TextField fx:id="taskSearchField" styleClass="search-field" promptText="🔍 Search tasks..."
+                                       visible="false" managed="false"/>
+
+                            <!-- Task List with Scroll -->
+                            <ScrollPane styleClass="task-scroll" fitToWidth="true" prefHeight="180" maxHeight="220">
+                                <VBox fx:id="taskListContainer" spacing="6" styleClass="task-list">
+                                    <Label styleClass="empty-tasks-label" text="Loading tasks..."/>
+                                </VBox>
+                            </ScrollPane>
+
+                            <Label fx:id="selectedTaskLabel" styleClass="selected-task-label" visible="false" managed="false"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Project Context (Hidden if task already linked) -->
+                <VBox fx:id="projectContextBox" spacing="12" visible="true" managed="true">
+                    <Label styleClass="section-title" text="📁 Project Context"/>
+
+                    <VBox spacing="8">
+                        <RadioButton fx:id="noProjectRadio" styleClass="styled-radio" text="Not linked to any project" selected="true">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="projectToggleGroup"/>
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <RadioButton fx:id="selectProjectRadio" styleClass="styled-radio" text="Link to project" toggleGroup="$projectToggleGroup"/>
+
+                        <!-- Project Selection (Hidden by default) -->
+                        <VBox fx:id="projectSelectionBox" spacing="8" visible="false" managed="false">
+                            <Label styleClass="field-label-small" text="Select Project"/>
+                            <ComboBox fx:id="projectCombo" styleClass="styled-combobox" promptText="Choose a project"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+        <!-- Footer Buttons -->
+        <HBox styleClass="modal-footer" spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="18" right="28" bottom="22" left="28"/>
+            </padding>
+
+            <Button styleClass="cancel-button" text="Cancel" onAction="#handleClose" prefWidth="140"/>
+            <Button styleClass="create-button" text="Add Resource" onAction="#handleAddResource" prefWidth="140"/>
+        </HBox>
+
+    </VBox>
+
+</StackPane>

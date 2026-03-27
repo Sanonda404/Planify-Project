@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="22"
+      fillWidth="true"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/groups.css"
+      styleClass="members-root"
+      fx:controller="com.planify.frontend.controllers.group.GroupMemberController">
+
+    <HBox alignment="CENTER_LEFT">
+        <Label text="👥 Group Members" styleClass="gm-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="addMemberBtn" text="+ Invite Member" styleClass="gm-add-btn" onAction="#openAddMember"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" styleClass="members-scroll" VBox.vgrow="ALWAYS">
+        <VBox spacing="18" fillWidth="true" fx:id="membersContainer" styleClass="members-container"/>
+    </ScrollPane>
+</VBox>

@@ -1,0 +1,31 @@
+.success-alert {
+    -fx-background-color: linear-gradient(to bottom, #e0ffe0, #ffffff);
+}
+
+.success-alert .label {
+    -fx-text-fill: #2e7d32;   /* Dark green text */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.success-alert .button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.error-alert {
+    -fx-background-color: linear-gradient(to bottom, #ffe0e0, #ffffff);
+}
+
+.error-alert .label {
+    -fx-text-fill: #c62828;   /* Dark red text */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.error-alert .button {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

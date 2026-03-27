@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.planify.frontend.controllers.auth.AuthController"
+           stylesheets="@../css/auth.css"
+           styleClass="root-pane"
+           prefWidth="1200"
+           prefHeight="700">
+
+    <!-- Main Container -->
+    <HBox styleClass="auth-container">
+
+        <!-- Left Side - Purple Gradient with Wave -->
+        <StackPane styleClass="left-section" HBox.hgrow="ALWAYS">
+
+            <!-- Background Gradient -->
+            <Region styleClass="gradient-bg" />
+
+            <!-- Wave SVG Overlay -->
+            <SVGPath content="M0,0 L0,700 Q50,650 100,700 L100,0 Z" styleClass="wave-shape" StackPane.alignment="CENTER_RIGHT" />
+
+            <!-- Content -->
+            <VBox alignment="CENTER" maxWidth="480" spacing="30">
+                <padding>
+                    <Insets bottom="80" left="80" right="100" top="80" />
+                </padding>
+
+                <!-- Logo/Brand -->
+                <VBox alignment="CENTER_LEFT" spacing="15">
+                    <Label styleClass="brand-name" text="Planify" />
+                    <Region styleClass="brand-underline" />
+                </VBox>
+
+                <!-- Welcome Message -->
+                <VBox alignment="CENTER_LEFT" spacing="20">
+                    <Label styleClass="welcome-title" text="Welcome to" wrapText="true" />
+                    <Label styleClass="welcome-highlight" text="Your Productivity Hub" wrapText="true" />
+                    <Label styleClass="welcome-subtitle" text="Untangle Time, Unlock Life" wrapText="true" />
+                </VBox>
+
+                <!-- Description -->
+                <Label styleClass="welcome-description" text="Experience seamless task management, intelligent scheduling, and collaborative project tracking—all in one powerful platform." wrapText="true" />
+
+                <!-- Feature Pills -->
+                <VBox spacing="12">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Region styleClass="feature-dot" />
+                        <Label styleClass="feature-text" text="Smart Task Automation" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Region styleClass="feature-dot" />
+                        <Label styleClass="feature-text" text="Real-time Collaboration" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Region styleClass="feature-dot" />
+                        <Label styleClass="feature-text" text="Advanced Analytics" />
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </StackPane>
+
+        <!-- Right Side - White Form Area -->
+        <VBox styleClass="right-section" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets bottom="60" left="80" right="80" top="60" />
+            </padding>
+
+            <!-- Tab Indicator Background -->
+            <StackPane>
+                <HBox spacing="0" styleClass="tab-background">
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <!-- Animated Tab Indicator -->
+                <Pane fx:id="tabIndicator" styleClass="tab-indicator" StackPane.alignment="TOP_LEFT" />
+
+                <!-- Tab Buttons -->
+                <HBox spacing="0" StackPane.alignment="TOP_CENTER">
+                    <Button fx:id="loginTabBtn" onAction="#showLogin" prefWidth="140" styleClass="tab-btn" text="Login" />
+                    <Button fx:id="signupTabBtn" onAction="#showSignup" prefWidth="140" styleClass="tab-btn" text="Sign Up" />
+                </HBox>
+            </StackPane>
+
+            <Region prefHeight="40" VBox.vgrow="ALWAYS" />
+
+            <!-- Forms Container -->
+            <VBox spacing="25" VBox.vgrow="ALWAYS">
+
+                <!-- Login Form -->
+                <VBox fx:id="loginForm" spacing="25">
+
+                    <!-- Header -->
+                    <VBox spacing="8">
+                        <Label styleClass="form-title" text="Welcome Back" />
+                        <Label styleClass="form-subtitle" text="Enter your credentials to access your workspace" />
+                    </VBox>
+
+                    <!-- Inputs -->
+                    <VBox spacing="20">
+                        <!-- Email/Username -->
+                        <VBox spacing="8">
+                            <Label styleClass="input-label" text="Email" />
+                            <TextField fx:id="loginNameOrEmail" promptText="Enter your email or username" styleClass="input-field" />
+                        </VBox>
+
+                        <!-- Password -->
+                        <VBox spacing="8">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label styleClass="input-label" text="Password" HBox.hgrow="ALWAYS" />
+
+                            </HBox>
+                            <PasswordField fx:id="loginPassword" promptText="Enter your password" styleClass="input-field" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Error Label -->
+                    <Label fx:id="loginErrorLabel" managed="false" styleClass="error-label" visible="false" wrapText="true" />
+
+                    <!-- Login Button -->
+                    <Button fx:id="loginButton" onAction="#handleLogin" prefHeight="54.0" prefWidth="94.0" styleClass="login-btn" text="Sign In" />
+
+                </VBox>
+
+                <!-- Signup Form -->
+                <VBox fx:id="signupForm" managed="false" spacing="25" visible="false">
+
+                    <!-- Header -->
+                    <VBox spacing="8">
+                        <Label styleClass="form-title" text="Create Your Account" />
+                        <Label styleClass="form-subtitle" text="Join thousands of productive users today" />
+                    </VBox>
+
+                    <!-- Inputs -->
+                    <VBox spacing="18">
+                        <!-- Name -->
+                        <VBox spacing="8">
+                            <Label styleClass="input-label" text="Full Name" />
+                            <TextField fx:id="signupName" promptText="Enter your full name" styleClass="input-field" />
+                        </VBox>
+
+                        <!-- Email -->
+                        <VBox spacing="8">
+                            <Label styleClass="input-label" text="Email Address" />
+                            <TextField fx:id="signupEmail" promptText="Enter your email address" styleClass="input-field" />
+                        </VBox>
+
+                        <!-- Password -->
+                        <VBox spacing="8">
+                            <Label styleClass="input-label" text="Password" />
+                            <PasswordField fx:id="signupPassword" promptText="Create a strong password" styleClass="input-field" />
+                            <Label styleClass="hint-label" text="Must be 6-20 characters" />
+                        </VBox>
+
+                    </VBox>
+
+                    <!-- Error Label -->
+                    <Label fx:id="signupErrorLabel" managed="false" styleClass="error-label" visible="false" wrapText="true" />
+
+                    <!-- Signup Button -->
+                    <Button fx:id="signupButton" onAction="#handleSignup" styleClass="signup-btn" text="Create Account" />
+
+                </VBox>
+
+            </VBox>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+        </VBox>
+
+    </HBox>
+</StackPane>

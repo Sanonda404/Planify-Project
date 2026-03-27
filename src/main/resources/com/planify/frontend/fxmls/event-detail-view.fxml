@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="20" prefWidth="480" styleClass="event-detail-root" stylesheets="@../css/schedules.css"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.planify.frontend.controllers.events.EventDetailController">
+
+    <padding><Insets top="28" right="28" bottom="28" left="28"/></padding>
+
+    <!-- Header with Icon and Title -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label fx:id="eventIcon" styleClass="event-detail-icon" text="📅" />
+        <Label fx:id="titleLabel" styleClass="event-detail-title" text="Event Title" wrapText="true" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button styleClass="event-detail-close" text="×" onAction="#handleClose" />
+    </HBox>
+
+    <Separator styleClass="event-detail-separator" />
+
+    <!-- Event Type Badge -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label fx:id="typeBadge" styleClass="event-type-badge" text="Slot" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="repeatBadge" styleClass="event-repeat-badge" text="No Repeat" visible="false" managed="false" />
+    </HBox>
+
+    <!-- Main Info Grid -->
+    <GridPane hgap="16" vgap="12" styleClass="event-detail-grid">
+        <columnConstraints>
+            <ColumnConstraints minWidth="80" halignment="RIGHT" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <!-- Group -->
+        <Label text="Group" styleClass="event-detail-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="groupLabel" styleClass="event-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <!-- Type -->
+        <Label text="Type" styleClass="event-detail-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label fx:id="typeLabel" styleClass="event-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <!-- Start Date & Time -->
+        <Label text="Start" styleClass="event-detail-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label fx:id="startLabel" styleClass="event-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+        <!-- End Date & Time (for Slot/Span) -->
+        <Label text="End" styleClass="event-detail-label" GridPane.columnIndex="0" GridPane.rowIndex="3" fx:id="endLabelHeader" />
+        <Label fx:id="endLabel" styleClass="event-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <!-- Duration (for Slot) -->
+        <Label text="Duration" styleClass="event-detail-label" GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="durationLabelHeader" visible="false" managed="false" />
+        <Label fx:id="durationLabel" styleClass="event-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false" managed="false" />
+    </GridPane>
+
+    <Separator styleClass="event-detail-separator" />
+
+    <!-- Description -->
+    <VBox spacing="8">
+        <Label text="Description" styleClass="event-detail-section-title" />
+        <Label fx:id="descriptionLabel" wrapText="true" styleClass="event-detail-description" text="No description provided" />
+    </VBox>
+
+    <!-- Repeat Info -->
+    <VBox spacing="8" fx:id="repeatInfoBox" visible="false" managed="false">
+        <Label text="Repeat Settings" styleClass="event-detail-section-title" />
+        <GridPane hgap="16" vgap="8">
+            <Label text="Pattern:" styleClass="event-detail-label-small" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="repeatPatternLabel" styleClass="event-detail-value-small" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Excluded Days:" styleClass="event-detail-label-small" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="excludedLabelHeader" visible="false" managed="false" />
+            <Label fx:id="excludedDaysLabel" styleClass="event-detail-value-small" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Monthly Date:" styleClass="event-detail-label-small" GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="monthlyLabelHeader" visible="false" managed="false" />
+            <Label fx:id="monthlyDateLabel" styleClass="event-detail-value-small" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </GridPane>
+    </VBox>
+
+    <!-- Reminder & Attachment -->
+    <GridPane hgap="16" vgap="8" styleClass="event-detail-footer-grid">
+        <Label text="Reminder" styleClass="event-detail-label-small" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="reminderLabel" styleClass="event-detail-value-small" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Attachment" styleClass="event-detail-label-small" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Hyperlink fx:id="attachmentLink" styleClass="event-detail-link" GridPane.columnIndex="1" GridPane.rowIndex="1" text="No attachment" />
+    </GridPane>
+
+    <Separator styleClass="event-detail-separator" />
+
+    <!-- Creator Info -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Created by:" styleClass="event-detail-creator-label" />
+        <Label fx:id="creatorLabel" styleClass="event-detail-creator-name" text="Unknown" />
+        <Label fx:id="createdAtLabel" styleClass="event-detail-created-at" text="" />
+    </HBox>
+
+    <!-- Action Buttons -->
+    <HBox spacing="12" alignment="CENTER" styleClass="event-detail-actions">
+        <Button fx:id="editButton" styleClass="event-detail-edit-btn" text="✏️ Edit" onAction="#handleEdit" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+        <Button fx:id="deleteButton" styleClass="event-detail-delete-btn" text="🗑️ Delete" onAction="#handleDelete" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+        <Button styleClass="event-detail-close-btn" text="Close" onAction="#handleClose" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+    </HBox>
+
+</VBox>

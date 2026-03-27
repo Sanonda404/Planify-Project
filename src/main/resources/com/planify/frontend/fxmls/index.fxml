@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.Glow?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1100.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.planify.frontend.controllers.auth.AuthController"
+            stylesheets="@../css/ayth.css">
+
+    <HBox prefHeight="720.0" prefWidth="1100.0"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <!-- Branding Pane -->
+        <VBox alignment="CENTER_LEFT" prefWidth="520.0" spacing="16.0" styleClass="brandPane">
+            <padding>
+                <Insets top="56.0" right="48.0" bottom="56.0" left="48.0"/>
+            </padding>
+            <StackPane prefHeight="86.0" prefWidth="86.0">
+                <Label styleClass="logoEmoji" text="📅">
+                    <font><Font size="41.0"/></font>
+                    <effect><Glow/></effect>
+                </Label>
+            </StackPane>
+            <Label styleClass="brandTitle" text="Planify"/>
+            <Label styleClass="brandSubtitle" text="Untangle Time, Unlock Life"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <VBox spacing="12.0" styleClass="featureCard">
+                <children>
+                    <Label styleClass="sectionTitle" text="What's inside"/>
+                    <FlowPane hgap="10.0" vgap="10.0">
+                        <children>
+                            <Label styleClass="chip" text="📅 Smart Calendar"/>
+                            <Label styleClass="chip" text="✅ Kanban Todos"/>
+                            <Label styleClass="chip" text="👥 Group Management"/>
+                            <Label styleClass="chip" text="📊 Project Tracking"/>
+                            <Label styleClass="chip" text="📈 Analytics"/>
+                            <Label styleClass="chip" text="🔔 Smart Notifications"/>
+                        </children>
+                    </FlowPane>
+                </children>
+            </VBox>
+        </VBox>
+
+        <!-- Right Pane with Tab System -->
+        <StackPane styleClass="rightPane">
+            <VBox spacing="18.0" styleClass="card">
+                <children>
+                    <Label styleClass="cardTitle" text="Welcome!"/>
+                    <Label styleClass="cardSubtitle" text="Access your dashboard"/>
+
+                    <!-- TabPane for Login & Signup -->
+                    <TabPane prefWidth="580.0" prefHeight="400.0" styleClass="main-tabs">
+                        <tabs>
+                            <!-- Login Tab -->
+                            <Tab text="Login">
+                                <VBox spacing="12.0">
+                                    <padding>
+                                        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+                                    </padding>
+
+                                    <Label text="Name/Email"/>
+                                    <TextField fx:id="loginNameOrEmail" promptText="Enter name or email" styleClass="field"/>
+                                    <Label text="Password"/>
+                                    <PasswordField fx:id="loginPassword" promptText="Enter password" styleClass="field"/>
+                                    <Button fx:id="loginButton" text="Login" styleClass="primaryBtn" onAction="#handleLogin"/>
+                                </VBox>
+                            </Tab>
+
+                            <!-- Signup Tab -->
+                            <Tab text="Sign Up">
+                                <VBox spacing="12.0">
+                                    <padding>
+                                        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+                                    </padding>
+
+                                    <Label text="Name"/>
+                                    <TextField fx:id="signupName" promptText="Choose a unique username" styleClass="field"/>
+                                    <Label text="Email"/>
+                                    <TextField fx:id="signupEmail" promptText="your.email@example.com" styleClass="field"/>
+                                    <Label text="Password"/>
+                                    <PasswordField fx:id="signupPassword" promptText="Choose a password" styleClass="field"/>
+                                    <Label fx:id="pwHint" text="Must be 6-20 characters" styleClass="hint" visible="false" managed="false"/>
+                                    <Button fx:id="signupButton" text="Sign Up" styleClass="primaryBtn" onAction="#handleSignup"/>
+                                </VBox>
+                            </Tab>
+                        </tabs>
+                    </TabPane>
+                </children>
+            </VBox>
+        </StackPane>
+    </HBox>
+</AnchorPane>
