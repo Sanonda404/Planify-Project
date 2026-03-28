@@ -161,6 +161,8 @@ public class AuthController {
         String email = signupEmail.getText().trim();
         String password = signupPassword.getText();
 
+        System.out.println("pass: ");
+
         // Validate password length
         if (password.length() < 6 || password.length() > 20) {
             showError(signupErrorLabel, "Password must be 6-20 characters.");
@@ -172,10 +174,7 @@ public class AuthController {
             showError(signupErrorLabel, "Please enter a valid email address.");
             return;
         }
-
-        // Hash password and create account
-        String hashedPassword = PasswordHasher.hashPassword(password);
-        SignupDetails req = new SignupDetails(username, email, hashedPassword);
+        SignupDetails req = new SignupDetails(username, email, password);
         CreateRequestController.handleSignUp(req, this);
     }
 

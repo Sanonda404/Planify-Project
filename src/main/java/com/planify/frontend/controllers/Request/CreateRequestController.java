@@ -17,6 +17,7 @@ import com.planify.frontend.models.milestone.MilestoneCreateRequest;
 import com.planify.frontend.models.project.ProjectCreateRequest;
 import com.planify.frontend.models.resources.ResourceCreateRequest;
 import com.planify.frontend.models.tasks.TaskRequest;
+import com.planify.frontend.utils.helpers.AlertCreator;
 import com.planify.frontend.utils.services.ApiService;
 import com.google.gson.Gson;
 import com.planify.frontend.utils.UserSession;
@@ -126,6 +127,7 @@ public class CreateRequestController {
             } catch (Exception e) {
                 Platform.runLater(() -> {
                    System.out.println(e.getMessage());
+                            AlertCreator.showErrorAlert("Failed",e.getMessage());
                 }
                 );
             }
