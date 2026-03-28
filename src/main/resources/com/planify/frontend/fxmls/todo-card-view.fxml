@@ -48,7 +48,7 @@
         <!-- Attachment -->
         <Label fx:id="attachmentLabel" styleClass="task-attachment" text="📎 Attachment" visible="false" managed="false"/>
 
-        <!-- Weight & Priority Info -->
+        <!-- Weight -->
         <HBox spacing="12" alignment="CENTER_LEFT">
             <Label fx:id="weightLabel" styleClass="task-weight" text="⚡ Weight: 5" visible="false" managed="false"/>
         </HBox>

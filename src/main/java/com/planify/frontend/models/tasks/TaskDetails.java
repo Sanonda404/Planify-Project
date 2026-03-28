@@ -153,4 +153,8 @@ public class TaskDetails {
     public void setCompletedAt(String completedAt) {
         this.completedAt = completedAt;
     }
+
+    public boolean isDaily(){
+        return isDaily;
+    }
 }

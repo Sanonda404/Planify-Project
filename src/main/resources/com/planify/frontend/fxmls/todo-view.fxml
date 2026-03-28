@@ -71,15 +71,24 @@
             <VBox styleClass="filter-bar">
                 <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
 
+                <!-- Row 1: View Toggle & Action Button -->
                 <HBox alignment="CENTER_LEFT" spacing="16">
-                    <HBox spacing="0" styleClass="view-toggle-group">
-                        <Button fx:id="personalTasksBtn" styleClass="view-toggle-btn" text="📋 Personal Tasks"/>
-                        <Button fx:id="projectTasksBtn" styleClass="view-toggle-btn" text="🚀 Project Tasks"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button fx:id="personalTasksBtn" styleClass="view-toggle-btn" text="📋 Personal"/>
+                        <Button fx:id="projectTasksBtn" styleClass="view-toggle-btn" text="🚀 Project"/>
                     </HBox>
                     <Region HBox.hgrow="ALWAYS"/>
+
+                    <!-- View Mode Toggle -->
+                    <HBox spacing="8" styleClass="view-mode-toggle">
+                        <Button fx:id="kanbanViewBtn" styleClass="view-mode-btn, view-mode-active" text="📊 Kanban" onAction="#switchToKanbanView"/>
+                        <Button fx:id="listViewBtn" styleClass="view-mode-btn" text="📋 List" onAction="#switchToListView"/>
+                    </HBox>
+
                     <Button styleClass="new-task-btn" text="+ New Task" onAction="#openAddTask"/>
                 </HBox>
 
+                <!-- Row 2: Filters -->
                 <HBox alignment="CENTER_LEFT" spacing="20" styleClass="filters-row">
                     <VBox spacing="4">
                         <Label styleClass="filter-label" text="TIME PERIOD"/>
@@ -107,23 +116,19 @@
                 </HBox>
             </VBox>
 
-            <!-- Kanban Board - Fixed Height Columns with Scroll -->
-            <HBox spacing="24" styleClass="kanban-board" VBox.vgrow="ALWAYS">
+            <!-- Kanban Board View -->
+            <HBox fx:id="kanbanView" spacing="24" styleClass="kanban-board" VBox.vgrow="ALWAYS">
 
                 <!-- Pending Column -->
                 <VBox styleClass="kanban-column" HBox.hgrow="ALWAYS">
                     <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
-
                     <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
                         <Region styleClass="column-indicator, indicator-pending"/>
                         <Label styleClass="column-title" text="Pending"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="pendingBadge" styleClass="column-badge" text="0"/>
                     </HBox>
-
                     <Separator styleClass="column-separator"/>
-
-                    <!-- Scrollable Task Container -->
                     <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pendingContainer" spacing="12" styleClass="tasks-container"/>
                     </ScrollPane>
@@ -132,16 +137,13 @@
                 <!-- In Progress Column -->
                 <VBox styleClass="kanban-column" HBox.hgrow="ALWAYS">
                     <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
-
                     <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
                         <Region styleClass="column-indicator, indicator-progress"/>
                         <Label styleClass="column-title" text="In Progress"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="inProgressBadge" styleClass="column-badge" text="0"/>
                     </HBox>
-
                     <Separator styleClass="column-separator"/>
-
                     <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="inProgressContainer" spacing="12" styleClass="tasks-container"/>
                     </ScrollPane>
@@ -150,24 +152,37 @@
                 <!-- Completed Column -->
                 <VBox fx:id="completedColumn" styleClass="kanban-column" HBox.hgrow="ALWAYS">
                     <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
-
                     <HBox alignment="CENTER_LEFT" spacing="12" styleClass="column-header">
                         <Region styleClass="column-indicator, indicator-completed"/>
                         <Label styleClass="column-title" text="Completed"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="completedBadge" styleClass="column-badge" text="0"/>
                     </HBox>
-
                     <Separator styleClass="column-separator"/>
-
                     <ScrollPane styleClass="column-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="completedContainer" spacing="12" styleClass="tasks-container"/>
                     </ScrollPane>
                 </VBox>
-
             </HBox>
+
+            <!-- List View (Initially Hidden) -->
+            <VBox fx:id="listView" spacing="16" styleClass="list-view-container" VBox.vgrow="ALWAYS" visible="false" managed="false">
+                <VBox spacing="12" styleClass="list-view-header">
+                    <HBox spacing="16" alignment="CENTER_LEFT" styleClass="list-header-row">
+                        <Region prefWidth="24"/>
+                        <Label text="Task Name" styleClass="list-header-cell, list-header-task" prefWidth="280"/>
+                        <Label text="Status" styleClass="list-header-cell" prefWidth="100"/>
+                        <Label text="Priority" styleClass="list-header-cell" prefWidth="80"/>
+                        <Label text="Due Date" styleClass="list-header-cell" prefWidth="100"/>
+                        <Label text="Weight" styleClass="list-header-cell" prefWidth="60"/>
+                        <Label text="Actions" styleClass="list-header-cell" prefWidth="70"/>
+                    </HBox>
+                </VBox>
+                <ScrollPane fitToWidth="true" styleClass="list-scroll" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="listContainer" spacing="8" styleClass="list-container"/>
+                </ScrollPane>
+            </VBox>
 
         </VBox>
     </center>
-
 </BorderPane>

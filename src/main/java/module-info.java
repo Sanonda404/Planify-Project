@@ -35,6 +35,7 @@ module com.planify.frontend {
     opens com.planify.frontend.models.resources to com.google.gson;
     opens com.planify.frontend.controllers.task to javafx.fxml;
     opens com.planify.frontend.controllers.project to com.google.gson, javafx.fxml;
+    opens com.planify.frontend.controllers.bot to com.google.gson, javafx.fxml;
     opens com.planify.frontend.models.tasks to com.google.gson;
     opens com.planify.frontend.controllers.events to javafx.fxml;
     opens com.planify.frontend.models.auth to com.google.gson;

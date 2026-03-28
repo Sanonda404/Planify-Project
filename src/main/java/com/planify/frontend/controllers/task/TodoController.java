@@ -5,7 +5,6 @@ import com.planify.frontend.controllers.notification.NotificationController;
 import com.planify.frontend.models.SceneParent;
 import com.planify.frontend.models.notification.NotificationResponse;
 import com.planify.frontend.models.project.ProjectSummary;
-import com.planify.frontend.models.tasks.PersonalTaskResponse;
 import com.planify.frontend.models.tasks.TaskDetails;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.utils.managers.SceneManager;
@@ -13,9 +12,12 @@ import com.planify.frontend.utils.managers.NotificationManager;
 import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.data.personal.TaskDataManager;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,8 +25,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +41,6 @@ public class TodoController extends SceneParent implements Initializable {
     @FXML private Label navProgressLabel;
     @FXML private Button notificationBtn;
     @FXML private VBox notificationPanel;
-    @FXML private VBox notificationList;
 
     // ========== FILTER BAR ==========
     @FXML private Button personalTasksBtn;
@@ -53,6 +52,11 @@ public class TodoController extends SceneParent implements Initializable {
     @FXML private ComboBox<String> categoryFilterCombo;
     @FXML private CheckBox showCompletedCheck;
     @FXML private ComboBox<String> dailyTodoCombo;
+    @FXML private Button kanbanViewBtn;
+    @FXML private Button listViewBtn;
+    @FXML private HBox kanbanView;
+    @FXML private VBox listView;
+    @FXML private VBox listContainer;
 
     // ========== KANBAN COLUMNS ==========
     @FXML private VBox pendingContainer;
@@ -65,32 +69,40 @@ public class TodoController extends SceneParent implements Initializable {
 
     // ========== DATA ==========
     private final List<TaskDetails> allTasks = new ArrayList<>();
-    private final List<PersonalTaskResponse> personalTasks = new ArrayList<>();
     private List<ProjectSummary> projectSummaries = new ArrayList<>();
 
-    private String currentView = "personal"; // "personal" or "project"
+    private String currentView = "personal";
     private String timeFilter = "All Time";
     private String projectFilter = "All Projects";
     private String milestoneFilter = "All Milestones";
     private String categoryFilter = "All Categories";
     private boolean showCompleted = true;
+    private boolean isKanbanView = true;
 
     @FXML private Circle connectionStatusCircle;
-
     @FXML private Label connectionStatusLabel;
-    @FXML private ListView<NotificationResponse>notificationsList;
+    @FXML private ListView<NotificationResponse> notificationsList;
     @FXML public Button notifBtn;
     @FXML public VBox notifPanel;
 
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        notificationsList.setItems(NotificationManager.getNotifications());
+        setupNotificationPanel();
+        init();
+        setupFilters();
+        setupViewToggle();
+        loadData();
+        applyFilters();
+    }
 
+    private void setupNotificationPanel() {
+        notificationsList.setItems(NotificationManager.getNotifications());
         notificationsList.setCellFactory(list -> new ListCell<>() {
             @Override
             protected void updateItem(NotificationResponse notif, boolean empty) {
                 super.updateItem(notif, empty);
-
                 if (empty || notif == null) {
                     setGraphic(null);
                 } else {
@@ -98,47 +110,26 @@ public class TodoController extends SceneParent implements Initializable {
                 }
             }
         });
-
-        init();
         NotificationManager.setParent(this);
-        setupFilters();
-        setupViewToggle();
-        loadData();
-        applyFilters();
     }
 
-    public void init(){
-        NotificationController.setStatusControls(connectionStatusCircle,connectionStatusLabel);
+    public void init() {
+        NotificationController.setStatusControls(connectionStatusCircle, connectionStatusLabel);
     }
-
-    // ========== INITIALIZATION ==========
 
     private void setupFilters() {
-        // Time Filter
         timeFilterCombo.getItems().addAll("All Time", "Today", "This Week", "This Month");
         timeFilterCombo.setValue("All Time");
-        timeFilterCombo.setOnAction(e -> {
-            timeFilter = timeFilterCombo.getValue();
-            applyFilters();
-        });
+        timeFilterCombo.setOnAction(e -> { timeFilter = timeFilterCombo.getValue(); applyFilters(); });
 
-        // Milestone Filter
         milestoneFilterCombo.getItems().add("All Milestones");
         milestoneFilterCombo.setValue("All Milestones");
-        milestoneFilterCombo.setOnAction(e -> {
-            milestoneFilter = milestoneFilterCombo.getValue();
-            applyFilters();
-        });
+        milestoneFilterCombo.setOnAction(e -> { milestoneFilter = milestoneFilterCombo.getValue(); applyFilters(); });
 
-        // Category Filter
         categoryFilterCombo.getItems().add("All Categories");
         categoryFilterCombo.setValue("All Categories");
-        categoryFilterCombo.setOnAction(e -> {
-            categoryFilter = categoryFilterCombo.getValue();
-            applyFilters();
-        });
+        categoryFilterCombo.setOnAction(e -> { categoryFilter = categoryFilterCombo.getValue(); applyFilters(); });
 
-        // Show Completed
         showCompletedCheck.setSelected(true);
         showCompletedCheck.setOnAction(e -> {
             showCompleted = showCompletedCheck.isSelected();
@@ -147,23 +138,17 @@ public class TodoController extends SceneParent implements Initializable {
             applyFilters();
         });
 
-        // Project Filter
         projectFilterCombo.getItems().add("All Projects");
         projectFilterCombo.setValue("All Projects");
-        projectFilterCombo.setOnAction(e -> {
-            projectFilter = projectFilterCombo.getValue();
-            applyFilters();
-        });
+        projectFilterCombo.setOnAction(e -> { projectFilter = projectFilterCombo.getValue(); applyFilters(); });
 
+        dailyTodoCombo.setItems(FXCollections.observableArrayList("All Tasks", "Daily Tasks", "Long Tasks"));
         dailyTodoCombo.setValue("All Tasks");
-        dailyTodoCombo.setOnAction(e -> {
-            applyFilters();
-        });
+        dailyTodoCombo.setOnAction(e -> applyFilters());
     }
 
     private void setupViewToggle() {
         personalTasksBtn.getStyleClass().add("active");
-
         personalTasksBtn.setOnAction(e -> {
             currentView = "personal";
             personalTasksBtn.getStyleClass().add("active");
@@ -183,9 +168,32 @@ public class TodoController extends SceneParent implements Initializable {
         });
     }
 
-    // ========== DATA LOADING ==========
+    @FXML
+    private void switchToKanbanView() {
+        isKanbanView = true;
+        kanbanView.setVisible(true);
+        kanbanView.setManaged(true);
+        listView.setVisible(false);
+        listView.setManaged(false);
+        kanbanViewBtn.getStyleClass().add("view-mode-active");
+        listViewBtn.getStyleClass().remove("view-mode-active");
+        applyFilters();
+    }
+
+    @FXML
+    private void switchToListView() {
+        isKanbanView = false;
+        kanbanView.setVisible(false);
+        kanbanView.setManaged(false);
+        listView.setVisible(true);
+        listView.setManaged(true);
+        listViewBtn.getStyleClass().add("view-mode-active");
+        kanbanViewBtn.getStyleClass().remove("view-mode-active");
+        applyFilters();
+    }
 
     private void loadData() {
+        allTasks.clear();
         loadPersonalTasks();
         loadProjectTasks();
         loadProjects();
@@ -194,88 +202,53 @@ public class TodoController extends SceneParent implements Initializable {
     }
 
     private void loadPersonalTasks() {
-       allTasks.addAll(TaskDataManager.getAllPersonalTasks());
+        allTasks.addAll(TaskDataManager.getAllPersonalTasks()) ;
     }
 
-    /**
-     * TODO: Backend Integration - Load project tasks
-     */
     private void loadProjectTasks() {
-        // TODO: Load from backend
         allTasks.addAll(GroupProjectDataManager.getAllTasks());
-
-        // Load from local storage
         allTasks.addAll(ProjectDataManager.getAllTasks());
-        // Call: GET /api/tasks/projects
     }
 
-    /**
-     * TODO: Backend Integration - Load projects
-     */
     private void loadProjects() {
         projectSummaries.clear();
-
         projectSummaries = GroupProjectDataManager.getGroupProjectSummary();
-
         projectSummaries.addAll(ProjectDataManager.getPersonalProjectSummary());
         updateProjectFilter();
-
-        System.out.println("TODO: Fetch user projects from backend");
-        // Call: GET /api/projects/user
     }
 
     private void updateProjectFilter() {
         projectFilterCombo.getItems().clear();
         projectFilterCombo.getItems().add("All Projects");
-
         for (ProjectSummary project : projectSummaries) {
             projectFilterCombo.getItems().add(project.getName());
         }
-
         projectFilterCombo.setValue("All Projects");
     }
 
     private void loadMilestones() {
         milestoneFilterCombo.getItems().clear();
         milestoneFilterCombo.getItems().add("All Milestones");
-
-        // Get unique milestones from tasks
         Set<String> milestones = allTasks.stream()
                 .map(TaskDetails::getMilestoneName)
                 .filter(Objects::nonNull)
                 .filter(m -> !m.isBlank())
                 .collect(Collectors.toSet());
-
         milestoneFilterCombo.getItems().addAll(milestones);
         milestoneFilterCombo.setValue("All Milestones");
-
-        System.out.println("TODO: Fetch milestones from backend");
-        // Call: GET /api/milestones/all
     }
 
     private void loadCategories() {
         categoryFilterCombo.getItems().clear();
         categoryFilterCombo.getItems().add("All Categories");
-
-        // Get unique categories from tasks
         Set<String> categories = allTasks.stream()
                 .map(TaskDetails::getCategory)
                 .filter(Objects::nonNull)
                 .filter(c -> !c.isBlank())
                 .collect(Collectors.toSet());
-
         categoryFilterCombo.getItems().addAll(categories);
         categoryFilterCombo.setValue("All Categories");
-
-        System.out.println("TODO: Fetch categories from backend");
-        // Call: GET /api/categories/all
     }
-
-    /**
-     * TODO: Backend Integration - Load notifications
-     */
-
-    // ========== FILTERING ==========
 
     @FXML
     private void clearFilters() {
@@ -284,16 +257,14 @@ public class TodoController extends SceneParent implements Initializable {
         milestoneFilterCombo.setValue("All Milestones");
         categoryFilterCombo.setValue("All Categories");
         showCompletedCheck.setSelected(true);
-
+        dailyTodoCombo.setValue("All Tasks");
         timeFilter = "All Time";
         projectFilter = "All Projects";
         milestoneFilter = "All Milestones";
         categoryFilter = "All Categories";
         showCompleted = true;
-
         completedColumn.setVisible(true);
         completedColumn.setManaged(true);
-
         applyFilters();
     }
 
@@ -301,7 +272,7 @@ public class TodoController extends SceneParent implements Initializable {
         List<TaskDetails> filtered = allTasks.stream()
                 .filter(this::matchesViewFilter)
                 .filter(this::matchesTimeFilter)
-                .filter(this::matchesDailyTodoFilter)  // Add this
+                .filter(this::matchesDailyTodoFilter)
                 .filter(this::matchesProjectFilter)
                 .filter(this::matchesMilestoneFilter)
                 .filter(this::matchesCategoryFilter)
@@ -321,111 +292,65 @@ public class TodoController extends SceneParent implements Initializable {
     }
 
     private boolean matchesTimeFilter(TaskDetails task) {
-        if ("All Time".equals(timeFilter)) {
-            return true;
-        }
-
-        if (task.getDueDate() == null || task.getDueDate().isBlank()) {
-            return false;
-        }
-
+        if ("All Time".equals(timeFilter)) return true;
+        if (task.getDueDate() == null || task.getDueDate().isBlank()) return false;
         try {
             LocalDate dueDate = LocalDate.parse(task.getDueDate());
             LocalDate today = LocalDate.now();
-
             switch (timeFilter) {
-                case "Today":
-                    return dueDate.equals(today);
+                case "Today": return dueDate.equals(today);
                 case "This Week":
                     LocalDate weekStart = today.minusDays(today.getDayOfWeek().getValue() - 1);
                     LocalDate weekEnd = weekStart.plusDays(6);
                     return !dueDate.isBefore(weekStart) && !dueDate.isAfter(weekEnd);
                 case "This Month":
-                    return dueDate.getYear() == today.getYear() &&
-                            dueDate.getMonth() == today.getMonth();
-                default:
-                    return true;
+                    return dueDate.getYear() == today.getYear() && dueDate.getMonth() == today.getMonth();
+                default: return true;
             }
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private boolean matchesProjectFilter(TaskDetails task) {
-        if ("All Projects".equals(projectFilter)) {
-            return true;
-        }
-        return projectFilter.equals(task.getProjectName());
-    }
-
-    private boolean matchesMilestoneFilter(TaskDetails task) {
-        if ("All Milestones".equals(milestoneFilter)) {
-            return true;
-        }
-        return milestoneFilter.equals(task.getMilestoneName());
-    }
-
-    private boolean matchesCategoryFilter(TaskDetails task) {
-        if ("All Categories".equals(categoryFilter)) {
-            return true;
-        }
-        return categoryFilter.equals(task.getCategory());
-    }
-
-    private boolean matchesCompletedFilter(TaskDetails task) {
-        if (showCompleted) {
-            return true;
-        }
-        return !"COMPLETED".equalsIgnoreCase(task.getStatus());
+        } catch (Exception e) { return false; }
     }
 
     private boolean matchesDailyTodoFilter(TaskDetails task) {
         String filter = dailyTodoCombo.getValue();
-        if (filter == null || "All Tasks".equals(filter)) {
-            return true;
-        }
-
-        boolean isDailyTask = isDailyTask(task);
-
-        if ("Daily Tasks".equals(filter)) {
-            return isDailyTask;
-        } else if ("Long Tasks".equals(filter)) {
-            return !isDailyTask;
-        }
-
-        return true;
+        if (filter == null || "All Tasks".equals(filter)) return true;
+        boolean isDailyTask = task.isDaily();
+        return "Daily Tasks".equals(filter) ? isDailyTask : !isDailyTask;
     }
 
-    // Helper method to determine if task is daily (duration <= 24 hours)
-    private boolean isDailyTask(TaskDetails task) {
-        if (task.getDueDate() == null || task.getDueDate().isEmpty()) {
-            return false;
-        }
-
-        try {
-            // If task has start date and due date, check duration
-            /*if (task.getStartDate() != null && !task.getStartDate().isEmpty()) {
-
-            }*/
-            LocalDate startDate = LocalDate.now();
-            LocalDate dueDate = LocalDate.parse(task.getDueDate());
-            long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startDate, dueDate);
-            return daysBetween <= 1;
-        } catch (Exception e) {
-            return false;
-        }
+    private boolean matchesProjectFilter(TaskDetails task) {
+        if ("All Projects".equals(projectFilter)) return true;
+        return projectFilter.equals(task.getProjectName());
     }
 
-    // ========== KANBAN POPULATION ==========
+    private boolean matchesMilestoneFilter(TaskDetails task) {
+        if ("All Milestones".equals(milestoneFilter)) return true;
+        return milestoneFilter.equals(task.getMilestoneName());
+    }
+
+    private boolean matchesCategoryFilter(TaskDetails task) {
+        if ("All Categories".equals(categoryFilter)) return true;
+        return categoryFilter.equals(task.getCategory());
+    }
+
+    private boolean matchesCompletedFilter(TaskDetails task) {
+        if (showCompleted) return true;
+        return !"COMPLETED".equalsIgnoreCase(task.getStatus());
+    }
 
     private void populateKanban(List<TaskDetails> tasks) {
+        if (isKanbanView) {
+            populateKanbanView(tasks);
+        } else {
+            populateListView(tasks);
+        }
+    }
+
+    private void populateKanbanView(List<TaskDetails> tasks) {
         pendingContainer.getChildren().clear();
         inProgressContainer.getChildren().clear();
         completedContainer.getChildren().clear();
 
-        int pendingCount = 0;
-        int progressCount = 0;
-        int completedCount = 0;
+        int pendingCount = 0, progressCount = 0, completedCount = 0;
 
         for (TaskDetails task : tasks) {
             VBox card = loadTaskCard(task);
@@ -457,10 +382,8 @@ public class TodoController extends SceneParent implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/com/planify/frontend/fxmls/todo-card-view.fxml"));
             VBox card = loader.load();
-
             TodoCardController controller = loader.getController();
             controller.setData(task, this::advanceTaskState, this);
-
             return card;
         } catch (IOException e) {
             e.printStackTrace();
@@ -468,60 +391,202 @@ public class TodoController extends SceneParent implements Initializable {
         }
     }
 
+    private void populateListView(List<TaskDetails> tasks) {
+        listContainer.getChildren().clear();
+        if (tasks.isEmpty()) {
+            listContainer.getChildren().add(createEmptyState());
+            return;
+        }
+
+        for (TaskDetails task : tasks) {
+            listContainer.getChildren().add(createListItem(task));
+        }
+    }
+
+    private VBox createListItem(TaskDetails task) {
+        VBox item = new VBox();
+        item.getStyleClass().add("list-task-item");
+        item.setOnMouseClicked(e -> showTaskDetails(task));
+
+        HBox row = new HBox(16);
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.getStyleClass().add("list-task-row");
+
+        CheckBox checkBox = new CheckBox();
+        checkBox.getStyleClass().add("list-task-checkbox");
+        checkBox.setSelected("COMPLETED".equalsIgnoreCase(task.getStatus()));
+        checkBox.setOnAction(e -> {
+            e.consume();
+            if (checkBox.isSelected()) {
+                task.setStatus("COMPLETED");
+            } else {
+                task.setStatus("PENDING");
+            }
+            updateTaskStatus(task);
+            applyFilters();
+        });
+
+        VBox taskInfoBox = new VBox(4);
+        taskInfoBox.setPrefWidth(280);
+        Label titleLabel = new Label(task.getTitle());
+        titleLabel.getStyleClass().add("list-task-title");
+        if ("COMPLETED".equalsIgnoreCase(task.getStatus())) {
+            titleLabel.getStyleClass().add("list-task-title-completed");
+        }
+
+        HBox chipsBox = new HBox(8);
+        Label categoryChip = new Label(task.getCategory() != null ? task.getCategory() : "General");
+        categoryChip.getStyleClass().add("list-task-chip");
+        chipsBox.getChildren().add(categoryChip);
+        if (task.getMilestoneName() != null && !task.getMilestoneName().isEmpty()) {
+            Label milestoneChip = new Label("🎯 " + task.getMilestoneName());
+            milestoneChip.getStyleClass().add("list-task-chip");
+            chipsBox.getChildren().add(milestoneChip);
+        }
+        taskInfoBox.getChildren().addAll(titleLabel, chipsBox);
+
+        Label statusLabel = new Label(task.getStatus());
+        statusLabel.getStyleClass().addAll("list-task-status", getStatusBadgeClass(task.getStatus()));
+        statusLabel.setPrefWidth(100);
+
+        Label priorityLabel = new Label(getPriorityText(task));
+        priorityLabel.getStyleClass().addAll("list-task-priority", getPriorityBadgeClass(task));
+        priorityLabel.setPrefWidth(80);
+
+        Label dueLabel = new Label(formatDate(task.getDueDate()));
+        dueLabel.getStyleClass().add("list-task-due");
+        dueLabel.setPrefWidth(100);
+        if (isOverdue(task.getDueDate()) && !"COMPLETED".equalsIgnoreCase(task.getStatus())) {
+            dueLabel.getStyleClass().add("list-task-due-overdue");
+        }
+
+        Label weightLabel = new Label("⚡ " + task.getWeight());
+        weightLabel.getStyleClass().add("list-task-weight");
+        weightLabel.setPrefWidth(60);
+
+        HBox actionsBox = new HBox(8);
+        Button viewBtn = new Button("👁");
+        viewBtn.getStyleClass().add("list-action-btn");
+        viewBtn.setOnAction(e -> { e.consume(); showTaskDetails(task); });
+        Button editBtn = new Button("✏️");
+        editBtn.getStyleClass().add("list-action-btn");
+        editBtn.setOnAction(e -> { e.consume(); showEditTaskDialog(task); });
+        actionsBox.getChildren().addAll(viewBtn, editBtn);
+        actionsBox.setPrefWidth(70);
+
+        row.getChildren().addAll(checkBox, taskInfoBox, statusLabel, priorityLabel, dueLabel, weightLabel, actionsBox);
+        HBox.setHgrow(taskInfoBox, Priority.ALWAYS);
+        item.getChildren().add(row);
+        return item;
+    }
+
+    private VBox createEmptyState() {
+        VBox emptyState = new VBox(12);
+        emptyState.setAlignment(Pos.CENTER);
+        emptyState.setPadding(new Insets(60));
+        emptyState.getStyleClass().add("empty-state");
+        Label iconLabel = new Label("📋");
+        iconLabel.getStyleClass().add("empty-icon");
+        Label titleLabel = new Label("No tasks found");
+        titleLabel.getStyleClass().add("empty-text");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: 600;");
+        Label messageLabel = new Label("Create a new task to get started");
+        messageLabel.getStyleClass().add("empty-text");
+        emptyState.getChildren().addAll(iconLabel, titleLabel, messageLabel);
+        return emptyState;
+    }
+
+    private String getStatusBadgeClass(String status) {
+        if (status == null) return "status-pending-badge";
+        switch (status.toUpperCase()) {
+            case "COMPLETED": return "status-completed-badge";
+            case "IN_PROGRESS": return "status-in_progress-badge";
+            default: return "status-pending-badge";
+        }
+    }
+
+    private String getPriorityBadgeClass(TaskDetails task) {
+        String priority = getPriorityText(task).toLowerCase();
+        switch (priority) {
+            case "high": return "priority-high-badge";
+            case "medium": return "priority-medium-badge";
+            case "low": return "priority-low-badge";
+            default: return "priority-medium-badge";
+        }
+    }
+
+    private String getPriorityText(TaskDetails task) {
+        if (task.getPriority() != null && !task.getPriority().isEmpty()) return task.getPriority();
+        if (task.getDueDate() != null && !task.getDueDate().isEmpty()) {
+            try {
+                LocalDate dueDate = LocalDate.parse(task.getDueDate());
+                long daysUntil = LocalDate.now().until(dueDate).getDays();
+                if (daysUntil < 0 || daysUntil <= 2) return "High";
+                if (daysUntil <= 7) return "Medium";
+            } catch (Exception e) {}
+        }
+        return "Medium";
+    }
+
+    private boolean isOverdue(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) return false;
+        try {
+            return LocalDate.parse(dateStr).isBefore(LocalDate.now());
+        } catch (Exception e) { return false; }
+    }
+
+    private String formatDate(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) return "No date";
+        try {
+            LocalDate date = LocalDate.parse(dateStr);
+            LocalDate today = LocalDate.now();
+            if (date.equals(today)) return "Today";
+            if (date.equals(today.plusDays(1))) return "Tomorrow";
+            return date.format(dateFormatter);
+        } catch (Exception e) { return dateStr; }
+    }
+
+    private void updateTaskStatus(TaskDetails task) {
+        if (task.getUuid().trim().isEmpty()) {
+            TaskDataManager.updatePersonalTaskStatus(task.getTitle(), task.getStatus());
+        } else {
+            EditRequestController.updateTaskStatus(task.getUuid(), task.getStatus(), this);
+        }
+    }
+
+    private void advanceTaskState(TaskDetails task) {
+        String currentStatus = task.getStatus().toUpperCase();
+        String newStatus;
+        switch (currentStatus) {
+            case "PENDING": newStatus = "IN_PROGRESS"; break;
+            case "IN_PROGRESS": newStatus = "COMPLETED"; break;
+            default: return;
+        }
+        task.setStatus(newStatus);
+        updateTaskStatus(task);
+        applyFilters();
+    }
+
     private void updateNavStats(List<TaskDetails> tasks) {
         int total = tasks.size();
         long completed = tasks.stream().filter(t -> "COMPLETED".equalsIgnoreCase(t.getStatus())).count();
         long progress = tasks.stream().filter(t -> "IN_PROGRESS".equalsIgnoreCase(t.getStatus())).count();
-
         navTotalLabel.setText(String.valueOf(total));
         navCompletedLabel.setText(String.valueOf(completed));
         navProgressLabel.setText(String.valueOf(progress));
     }
 
-    // ========== TASK ACTIONS ==========
-
-    private void advanceTaskState(TaskDetails task) {
-        String currentStatus = task.getStatus().toUpperCase();
-
-        switch (currentStatus) {
-            case "PENDING":
-                task.setStatus("IN_PROGRESS");
-                break;
-            case "IN_PROGRESS":
-                task.setStatus("COMPLETED");
-                break;
-            case "COMPLETED":
-                // Already completed, no action
-                return;
-        }
-
-        if(task.getUuid().trim().isEmpty()){
-            TaskDataManager.updatePersonalTaskStatus(task.getTitle(),task.getStatus());
-        }
-        else EditRequestController.updateTaskStatus(task.getUuid(),task.getStatus(),this);
-
-        applyFilters();
-    }
-
-
     public void showTaskDetails(TaskDetails task) {
-        // Create dialog with full task details
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Task Details");
-        dialog.getDialogPane().getStylesheets().add(
-                getClass().getResource("/css/TodoProfessional.css").toExternalForm()
-        );
-
         VBox content = new VBox(15);
         content.setPadding(new Insets(20));
         content.getStyleClass().add("task-detail-dialog");
 
-        // Title
         Label titleLabel = new Label(task.getTitle());
         titleLabel.getStyleClass().add("detail-title");
         titleLabel.setWrapText(true);
 
-        // Status
         HBox statusBox = new HBox(10);
         statusBox.setAlignment(Pos.CENTER_LEFT);
         Label statusLabel = new Label("Status:");
@@ -532,56 +597,26 @@ public class TodoController extends SceneParent implements Initializable {
 
         content.getChildren().addAll(titleLabel, new Separator(), statusBox);
 
-        // Description
-        if (task.getDescription() != null && !task.getDescription().isBlank()) {
-            addDetailRow(content, "Description:", task.getDescription());
-        }
+        addDetailRow(content, "Description:", task.getDescription());
+        addDetailRow(content, "Due Date:", formatDate(task.getDueDate()));
+        addDetailRow(content, "Category:", task.getCategory());
+        addDetailRow(content, "Milestone:", task.getMilestoneName());
+        addDetailRow(content, "Project:", task.getProjectName());
 
-        // Due Date
-        if (task.getDueDate() != null && !task.getDueDate().isBlank()) {
-            addDetailRow(content, "Due Date:", formatDate(task.getDueDate()));
-        }
-
-        // Category
-        if (task.getCategory() != null && !task.getCategory().isBlank()) {
-            addDetailRow(content, "Category:", task.getCategory());
-        }
-
-        // Milestone
-        if (task.getMilestoneName() != null && !task.getMilestoneName().isBlank()) {
-            addDetailRow(content, "Milestone:", task.getMilestoneName());
-        }
-
-        // Project
-        if (task.getProjectName() != null && !task.getProjectName().isBlank()) {
-            addDetailRow(content, "Project:", task.getProjectName());
-        }
-
-        // Creator
         if (task.getCreator() != null) {
-            addDetailRow(content, "Created By:",
-                    task.getCreator().getName() + " (" + task.getCreator().getEmail() + ")");
+            addDetailRow(content, "Created By:", task.getCreator().getName() + " (" + task.getCreator().getEmail() + ")");
         }
 
-        // Assignees
         if (task.getAssigneeMembers() != null && !task.getAssigneeMembers().isEmpty()) {
-            String assignees = task.getAssigneeMembers().stream()
-                    .map(MemberInfo::getName)
-                    .collect(Collectors.joining(", "));
+            String assignees = task.getAssigneeMembers().stream().map(MemberInfo::getName).collect(Collectors.joining(", "));
             addDetailRow(content, "Assignees:", assignees);
         }
 
-        // Attachment
         if (task.getAttachmentUrl() != null && !task.getAttachmentUrl().isBlank()) {
             Hyperlink link = new Hyperlink(task.getAttachmentUrl());
-            link.setOnAction(e -> {
-                // TODO: Open URL in browser
-                System.out.println("Open attachment: " + task.getAttachmentUrl());
-            });
+            link.setOnAction(e -> System.out.println("Open: " + task.getAttachmentUrl()));
             VBox attachBox = new VBox(5);
-            Label attachLabel = new Label("Attachment:");
-            attachLabel.getStyleClass().add("detail-label");
-            attachBox.getChildren().addAll(attachLabel, link);
+            attachBox.getChildren().addAll(new Label("Attachment:"), link);
             content.getChildren().add(attachBox);
         }
 
@@ -590,99 +625,59 @@ public class TodoController extends SceneParent implements Initializable {
         scroll.setPrefHeight(400);
 
         dialog.getDialogPane().setContent(scroll);
-        dialog.getDialogPane().getButtonTypes().addAll(
-                new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE),
-                ButtonType.CLOSE
-        );
-
+        dialog.getDialogPane().getButtonTypes().addAll(new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE), ButtonType.CLOSE);
         dialog.showAndWait().ifPresent(response -> {
-            if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                showEditTaskDialog(task);
-            }
+            if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) showEditTaskDialog(task);
         });
     }
 
     private void addDetailRow(VBox container, String label, String value) {
+        if (value == null || value.isBlank()) return;
         VBox row = new VBox(5);
-        Label labelWidget = new Label(label);
-        labelWidget.getStyleClass().add("detail-label");
-        Label valueWidget = new Label(value);
-        valueWidget.getStyleClass().add("detail-value");
-        valueWidget.setWrapText(true);
-        row.getChildren().addAll(labelWidget, valueWidget);
+        row.getChildren().addAll(new Label(label), new Label(value));
         container.getChildren().add(row);
     }
 
     public void showEditTaskDialog(TaskDetails task) {
-        // TODO: Open edit dialog similar to AddTask
-        // For now, show alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit Task");
-        alert.setHeaderText("Edit: " + task.getTitle());
-        alert.setContentText("Edit dialog will be implemented with full task editing capabilities.");
-        alert.showAndWait();
-
-        System.out.println("TODO: Implement edit task dialog");
-    }
-
-    private String formatDate(String dateStr) {
         try {
-            LocalDate date = LocalDate.parse(dateStr);
-            return date.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-        } catch (Exception e) {
-            return dateStr;
-        }
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/com/planify/frontend/fxmls/edit-todo-view.fxml"));
+            Parent root = loader.load();
+            EditTodoController controller = loader.getController();
+            controller.setTask(task, projectSummaries, this);
+            Stage stage = new Stage();
+            stage.setTitle("Edit Task");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            loadData();
+            applyFilters();
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
-    // ========== EVENT HANDLERS ==========
-
-    @FXML
-    private void toggleNotifications() {
+    @FXML private void toggleNotifications() {
         boolean isVisible = notificationPanel.isVisible();
         notificationPanel.setVisible(!isVisible);
         notificationPanel.setManaged(!isVisible);
     }
 
-    @FXML
-    private void openAddTask() {
+    @FXML private void openAddTask() {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/com/planify/frontend/fxmls/add-todo-view.fxml"));
             Parent root = loader.load();
-
             AddTodoController controller = loader.getController();
             controller.setContext(projectSummaries, this);
-
             Stage stage = new Stage();
             stage.setTitle("Add Task");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            // Refresh after adding
             loadData();
             applyFilters();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
-    @FXML
-    private void goBack() {
-        SceneManager.switchScene("dashboard-view.fxml", "Dashboard");
-    }
-
-    @FXML
-    private void handleLogout() {
-        //LocalDataManager.clearUserData();
-        SceneManager.switchScene("login-view.fxml", "Login");
-    }
-
-    public void refresh() {
-        loadData();
-        applyFilters();
-    }
-
-    // ========== DATA CLASSES ==========
+    @FXML private void goBack() { SceneManager.switchScene("dashboard-view.fxml", "Dashboard"); }
+    @FXML private void handleLogout() { SceneManager.switchScene("login-view.fxml", "Login"); }
+    public void refresh() { loadData(); applyFilters(); }
 
 }
