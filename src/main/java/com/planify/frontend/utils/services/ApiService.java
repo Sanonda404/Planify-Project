@@ -27,7 +27,7 @@ public class ApiService {
         System.out.println(response.body());
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
-            AlertCreator.showErrorAlert("Group Created Successfully");
+            AlertCreator.showSuccessAlert("Success");
             return response.body();
         } else {
             System.out.println("erorrrrr");

@@ -3,6 +3,7 @@ package com.planify.frontend.models.group;
 import com.planify.frontend.models.events.EventGetRequest;
 import com.planify.frontend.models.project.ProjectDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailedGroup {
@@ -30,9 +31,9 @@ public class DetailedGroup {
         this.groupType = groupType;
         this.postingAceess = postingAceess;
         this.createdAt = createdAt;
-        this.events = events;
-        this.projects = projects;
-        this.members = members;
+        this.events = (events==null?new ArrayList<>():events);
+        this.projects = (projects==null? new ArrayList<>(): projects);
+        this.members = (members==null? new ArrayList<>(): members);
         this.role = role;
     }
     public String getUuid() { return  uuid; }

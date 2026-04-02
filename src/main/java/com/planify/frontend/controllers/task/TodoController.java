@@ -547,7 +547,7 @@ public class TodoController extends SceneParent implements Initializable {
     }
 
     private void updateTaskStatus(TaskDetails task) {
-        if (task.getUuid().trim().isEmpty()) {
+        if (task.getUuid()==null || task.getUuid().trim().isEmpty()) {
             TaskDataManager.updatePersonalTaskStatus(task.getTitle(), task.getStatus());
         } else {
             EditRequestController.updateTaskStatus(task.getUuid(), task.getStatus(), this);

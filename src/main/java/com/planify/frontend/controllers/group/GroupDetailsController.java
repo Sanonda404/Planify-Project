@@ -7,6 +7,7 @@ import com.planify.frontend.models.notification.NotificationResponse;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.managers.NotificationManager;
 import com.planify.frontend.utils.data.group.GroupDataManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -158,28 +159,30 @@ public class GroupDetailsController extends SceneParent {
     }
 
     public void refresh() {
-        groupDetails = GroupDataManager.getGroupDetails(groupDetails.getUuid());
-        if (groupDetails != null) {
-            updateStats();
+        Platform.runLater(()->{
+            groupDetails = GroupDataManager.getGroupDetails(groupDetails.getUuid());
+            if (groupDetails != null) {
+                updateStats();
 
-            if (groupMemberController != null) {
-                groupMemberController.setRole(groupDetails.getRole());
-                groupMemberController.setGrpUuid(groupDetails.getUuid());
-                groupMemberController.setMembers(groupDetails.getMembers());
-            }
+                if (groupMemberController != null) {
+                    groupMemberController.setRole(groupDetails.getRole());
+                    groupMemberController.setGrpUuid(groupDetails.getUuid());
+                    groupMemberController.setMembers(groupDetails.getMembers());
+                }
 
-            if (groupEventController != null) {
-                groupEventController.setEvents(groupDetails.getEvents());
-            }
+                if (groupEventController != null) {
+                    groupEventController.setEvents(groupDetails.getEvents());
+                }
 
-            if (groupProjectController != null) {
-                groupProjectController.setProjects(groupDetails.getProjects());
-            }
+                if (groupProjectController != null) {
+                    groupProjectController.setProjects(groupDetails.getProjects());
+                }
 
-            if (groupInfoController != null) {
-                groupInfoController.setGroupData(groupDetails);
+                if (groupInfoController != null) {
+                    groupInfoController.setGroupData(groupDetails);
+                }
             }
-        }
+        });
     }
 
     private void loadMembersTab() {

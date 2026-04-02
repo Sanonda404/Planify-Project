@@ -100,12 +100,6 @@
                                     <Label styleClass="gm-hint" text="Example: ABC123" />
                                 </VBox>
 
-                                <!-- Your Name -->
-                                <VBox spacing="8">
-                                    <Label styleClass="gm-label" text="Your Name" />
-                                    <TextField fx:id="joinNameField" promptText="Enter your display name" styleClass="gm-textfield" />
-                                </VBox>
-
                                 <!-- Optional Message -->
                                 <VBox spacing="8">
                                     <Label styleClass="gm-label" text="Optional Message" />

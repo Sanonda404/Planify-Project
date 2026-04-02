@@ -36,6 +36,11 @@ public class GroupDataManager {
                 System.out.println("Got details!!!");
                 if (summaries==null) {
                     detailedGroups = new ArrayList<>();
+                    saveAll(detailedGroups);
+                    GroupProjectDataManager.init();
+                    GroupEventDataManager.init();
+                    InitApp.init();
+                    SceneManager.switchScene("dashboard-view.fxml","Dashboard");
                 }else{
                     detailedGroups = summaries;
                     saveAll(detailedGroups);
@@ -123,6 +128,7 @@ public class GroupDataManager {
     //Add member to an existing group
     public static void saveNewGroupMember(Object data, String groupUuid, Object refresher){
         if (data instanceof GroupMember member) {
+            System.out.println("new mem "+member.getName()+" "+member.getRole());
             for(DetailedGroup g: detailedGroups){
                 if(g.getUuid().equals(groupUuid)){
                     g.getMembers().add(member);
@@ -155,7 +161,9 @@ public class GroupDataManager {
     public static List<ProjectDetails> getAllGroupProjects(){
         List<ProjectDetails> projectDetails = new ArrayList<>();
         for(DetailedGroup g: detailedGroups){
-            projectDetails.addAll(g.getProjects());
+            if(g.getProjects()!=null) {
+                projectDetails.addAll(g.getProjects());
+            }
         }
         return projectDetails;
     }
@@ -198,7 +206,9 @@ public class GroupDataManager {
         List<GroupSummaryRequest> groupSummaryRequests = new ArrayList<>();
         for (DetailedGroup g: detailedGroups){
             GroupSummaryRequest grp = new GroupSummaryRequest(g.getUuid(), g.getName(),
-                    g.getDescription(), g.getMembers().size(), g.getGroupType(), g.getEvents().size(), g.getProjects().size(), g.getRole());
+                    g.getDescription(), g.getMembers()==null?0:g.getMembers().size(),
+                    g.getGroupType(), g.getEvents()==null?0:g.getEvents().size(),
+                    g.getProjects()==null?0:g.getProjects().size(), g.getRole());
             groupSummaryRequests.add(grp);
         }
         return groupSummaryRequests;
@@ -285,17 +295,16 @@ public class GroupDataManager {
     //update role of a member
     public static void updateGroupMemberRole(Object data, String groupUuid, Object refresher) {
         if (data instanceof GroupMember updatedMember) {
+            System.out.println("mem: "+updatedMember.getRole()+" "+updatedMember.getName());
             for(DetailedGroup g: detailedGroups){
                 if(g.getUuid().equals(groupUuid)){
-                    List<GroupMember>members = new ArrayList<>();
-                    for(GroupMember m: g.getMembers()){
-                        if(m.getEmail().equals(updatedMember.getEmail())){
-                            members.add(updatedMember);
-                        }else{
-                            members.add(m);
+                    List<GroupMember> members = g.getMembers();
+                    for (int i = 0; i < members.size(); i++) {
+                        GroupMember m = members.get(i);
+                        if (m.getEmail().equals(updatedMember.getEmail())) {
+                            m.setRole("Admin");
                         }
                     }
-                    g.setMembers(members);
                 }
             }
             GroupProjectDataManager.refresh(refresher);
@@ -341,9 +350,6 @@ public class GroupDataManager {
         if (data instanceof GroupMember groupMember) {
             if(groupMember.getEmail().equals(UserSession.getInstance().getEmail())){
                 handleDeleteGroup(groupUuid);
-                if(refresher instanceof GroupDetailsController){
-                    SceneManager.switchScene("group-view","Groups");
-                }
             }
             else {
                 for(DetailedGroup g: detailedGroups){
@@ -365,13 +371,11 @@ public class GroupDataManager {
     }
 
     public static void handleDeleteGroup(String groupUuid){
-        if(groupUuid.trim().isEmpty())return;
-        for(DetailedGroup g: detailedGroups){
-            if(g.getUuid().equals(groupUuid)){
-                detailedGroups.remove(g);
-            }
+        if (groupUuid != null && !groupUuid.trim().isEmpty()) {
+            detailedGroups.removeIf(g -> g.getUuid().equals(groupUuid));
         }
         saveAll(detailedGroups);
+        SceneManager.switchScene("dashboard-view.fxml","Dashboard");
     }
 
     private static void showErrorAlert(String error) {

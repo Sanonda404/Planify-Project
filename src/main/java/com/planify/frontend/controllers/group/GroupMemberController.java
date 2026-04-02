@@ -63,6 +63,7 @@ public class GroupMemberController {
     }
 
     public void refresh(List<GroupMember> members) {
+        System.out.println("Refreshing Members..");
         membersContainer.getChildren().clear();
 
         if (members == null || members.isEmpty()) {
@@ -72,6 +73,7 @@ public class GroupMemberController {
         }
 
         for (GroupMember member : members) {
+            System.out.println("member: "+member.getName()+" "+member.getRole());
             HBox card = createMemberCard(member);
             membersContainer.getChildren().add(card);
         }
@@ -131,7 +133,7 @@ public class GroupMemberController {
         HBox actionsBox = new HBox(10);
         actionsBox.setAlignment(Pos.CENTER_RIGHT);
 
-        if (("admin".equalsIgnoreCase(role) || "owner".equalsIgnoreCase(role)) &&
+        if ("Admin".equalsIgnoreCase(role) &&
                 !member.getEmail().equals(currentUserEmail)) {
 
             if ("member".equals(memberRole)) {

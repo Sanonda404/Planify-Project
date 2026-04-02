@@ -21,4 +21,8 @@ public class GroupMember {
     public String getEmail() {
         return email;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

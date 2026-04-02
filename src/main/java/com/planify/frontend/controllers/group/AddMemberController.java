@@ -116,8 +116,11 @@ public class AddMemberController {
 
         List<String> finalEmails = new ArrayList<>(uniqueEmails);
 
+        System.out.println("going..");
+
         // Call backend
         CreateRequestController.handleAddMember(grpUuid, finalEmails, this);
+        handleClose();
     }
 
     private List<String> extractEmails() {

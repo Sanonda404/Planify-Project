@@ -3,6 +3,7 @@ package com.planify.frontend.controllers.project;
 import com.planify.frontend.controllers.Request.CreateRequestController;
 import com.planify.frontend.models.group.GroupSummaryRequest;
 import com.planify.frontend.models.project.ProjectCreateRequest;
+import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.managers.LocalDataManager;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.data.group.GroupDataManager;
@@ -231,7 +232,7 @@ public class AddProjectController {
                     name, description,
                     startDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                     deadlineDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                    groupUuid, LocalDataManager.getUserEmail()
+                    groupUuid, UserSession.getInstance().getEmail()
             );
             saveToBackend(request);
         } else {

@@ -67,7 +67,7 @@
                                 </columnConstraints>
 
                                 <!-- Project Type -->
-                                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="projectTypeContainer">
                                     <Label text="Project Type" styleClass="ap-label"/>
                                     <ComboBox fx:id="projectTypeCombo" styleClass="ap-combo" promptText="Select project type"/>
                                 </VBox>

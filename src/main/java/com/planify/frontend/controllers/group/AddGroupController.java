@@ -26,7 +26,6 @@ public class AddGroupController {
 
     // --- JOIN TAB FIELDS ---
     @FXML private TextField joinCodeField;
-    @FXML private TextField joinNameField;
     @FXML private TextArea joinMessageArea;
 
     private Object parent;
@@ -57,10 +56,6 @@ public class AddGroupController {
         joinTabBtn.getStyleClass().setAll("gm-tab-active");
         createTabBtn.getStyleClass().setAll("gm-tab-inactive");
 
-        // Pre-fill name if available
-        if (joinNameField.getText().isEmpty() && LocalDataManager.getUserName() != null) {
-            joinNameField.setText(LocalDataManager.getUserName());
-        }
     }
 
 
@@ -108,16 +103,12 @@ public class AddGroupController {
             return;
         }
 
-        String name = joinNameField.getText().trim();
-        if (name.isEmpty()) {
-            AlertCreator.showErrorAlert("Missing Name", "Please enter your display name.");
-            return;
-        }
 
         String message = joinMessageArea.getText() == null ? "" : joinMessageArea.getText().trim();
 
         GroupJoinRequest request = new GroupJoinRequest(code, message);
         CreateRequestController.handleJoinGroup(request, this);
+        closeWindow();
     }
 
     private String colorToHex(Color color) {

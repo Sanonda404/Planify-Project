@@ -34,6 +34,7 @@ public class GroupProjectDataManager {
     public static void saveGroupProject(Object data, Object refresher){
         if(data instanceof ProjectDetails projectDetails){
             GroupDataManager.saveNewGroupProject(projectDetails, projectDetails.getGroupUuid());
+            refresh(refresher);
         }
     }
 
