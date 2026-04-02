@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -28,7 +27,8 @@
                 <Insets bottom="18" left="28" right="28" top="18" />
             </padding>
             <Button fx:id="backButton" onAction="#handleBack" styleClass="header-icon-button" text="←" />
-            <Label styleClass="header-title" text="📆 Schedules" />
+            <Label id=" #FFE5B4 #FFE5B4" alignment="CENTER" prefHeight="37.0" prefWidth="52.0" style="-fx-background-color: #e7ab45;; -fx-background-radius: 5;" styleClass="header-title" text="📆" />
+            <Label layoutX="99.0" layoutY="37.0" styleClass="header-title" text=" Schedules" />
             <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="dashboardButton" onAction="#handleDashboard" styleClass="dashboard-button" text="Dashboard" />
             <Button fx:id="notifBtn" onAction="#toggleNotifications" styleClass="icon-button" text="🔔" />
@@ -62,7 +62,7 @@
             </VBox>
 
             <!-- Right Sidebar - always anchored to BorderPane right, never pushed by center content -->
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="sidebar-scroll" minWidth="320" maxWidth="320" prefWidth="320">
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxWidth="320" minWidth="320" prefWidth="320" styleClass="sidebar-scroll" vbarPolicy="AS_NEEDED">
                 <content>
                     <VBox maxWidth="308" minWidth="308" prefWidth="308" spacing="20" styleClass="sidebar-right">
 
@@ -71,25 +71,25 @@
                             <padding><Insets bottom="16" left="16" right="16" top="16" /></padding>
                             <Label styleClass="sidebar-title" text="📖 Event Types" />
                             <Separator styleClass="sidebar-separator" />
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <Region styleClass="legend-color-slot" prefWidth="20" prefHeight="20" />
-                                <Label text="Slot (Fixed Time)" styleClass="legend-text" />
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Region prefHeight="20" prefWidth="20" styleClass="legend-color-slot" />
+                                <Label styleClass="legend-text" text="Slot (Fixed Time)" />
                             </HBox>
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <Region styleClass="legend-color-span" prefWidth="20" prefHeight="20" />
-                                <Label text="Span (Phase Duration)" styleClass="legend-text" />
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Region prefHeight="20" prefWidth="20" styleClass="legend-color-span" />
+                                <Label styleClass="legend-text" text="Span (Phase Duration)" />
                             </HBox>
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <Region styleClass="legend-color-deadline" prefWidth="20" prefHeight="20" />
-                                <Label text="Deadline" styleClass="legend-text" />
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Region prefHeight="20" prefWidth="20" styleClass="legend-color-deadline" />
+                                <Label styleClass="legend-text" text="Deadline" />
                             </HBox>
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <Region styleClass="legend-color-marker" prefWidth="20" prefHeight="20" />
-                                <Label text="Marker (Reminder)" styleClass="legend-text" />
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Region prefHeight="20" prefWidth="20" styleClass="legend-color-marker" />
+                                <Label styleClass="legend-text" text="Marker (Reminder)" />
                             </HBox>
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <Region styleClass="legend-color-overlap" prefWidth="20" prefHeight="20" />
-                                <Label text="Overlapping Item" styleClass="legend-text" />
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Region prefHeight="20" prefWidth="20" styleClass="legend-color-overlap" />
+                                <Label styleClass="legend-text" text="Overlapping Item" />
                             </HBox>
                         </VBox>
 
@@ -100,7 +100,7 @@
                             <Separator styleClass="sidebar-separator" />
                             <VBox spacing="8">
                                 <Label styleClass="filter-section-title" text="Personal Events" />
-                                <CheckBox fx:id="personalFilterCheckbox" styleClass="filter-checkbox" selected="true" text="Show Personal Events">
+                                <CheckBox fx:id="personalFilterCheckbox" selected="true" styleClass="filter-checkbox" text="Show Personal Events">
                                     <tooltip><Tooltip text="Show/hide your personal events" /></tooltip>
                                 </CheckBox>
                             </VBox>
@@ -114,16 +114,16 @@
                             <Separator styleClass="sidebar-separator" />
                             <VBox spacing="8">
                                 <Label styleClass="filter-section-title" text="Event Types" />
-                                <CheckBox fx:id="slotFilterCheckbox" styleClass="filter-checkbox" selected="true" text="Show Slots">
+                                <CheckBox fx:id="slotFilterCheckbox" selected="true" styleClass="filter-checkbox" text="Show Slots">
                                     <tooltip><Tooltip text="Show/hide slot events" /></tooltip>
                                 </CheckBox>
-                                <CheckBox fx:id="spanFilterCheckbox" styleClass="filter-checkbox" selected="true" text="Show Spans">
+                                <CheckBox fx:id="spanFilterCheckbox" selected="true" styleClass="filter-checkbox" text="Show Spans">
                                     <tooltip><Tooltip text="Show/hide span events" /></tooltip>
                                 </CheckBox>
-                                <CheckBox fx:id="deadlineFilterCheckbox" styleClass="filter-checkbox" selected="true" text="Show Deadlines">
+                                <CheckBox fx:id="deadlineFilterCheckbox" selected="true" styleClass="filter-checkbox" text="Show Deadlines">
                                     <tooltip><Tooltip text="Show/hide deadlines" /></tooltip>
                                 </CheckBox>
-                                <CheckBox fx:id="markerFilterCheckbox" styleClass="filter-checkbox" selected="true" text="Show Markers">
+                                <CheckBox fx:id="markerFilterCheckbox" selected="true" styleClass="filter-checkbox" text="Show Markers">
                                     <tooltip><Tooltip text="Show/hide markers/reminders" /></tooltip>
                                 </CheckBox>
                             </VBox>
@@ -150,135 +150,158 @@
             </ScrollPane>
         </HBox>
     </right>
-
     <center>
-        <VBox spacing="0">
-            <padding>
-                <Insets bottom="26" left="26" right="26" top="26" />
-            </padding>
-            <VBox spacing="18" styleClass="glass-card" VBox.vgrow="ALWAYS">
-                <padding>
-                    <Insets bottom="24" left="24" right="24" top="24" />
-                </padding>
+        <AnchorPane fx:id="calendarContentRoot">
+            <children>
+                <VBox spacing="0"
+                      AnchorPane.topAnchor="0.0"
+                      AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0">
+                    <padding>
+                        <Insets bottom="26" left="26" right="26" top="26" />
+                    </padding>
 
-                <!-- Week Navigation -->
-                <HBox alignment="CENTER" spacing="14">
-                    <Button fx:id="prevWeekButton" onAction="#handlePreviousWeek" styleClass="week-nav-btn" text="← Previous" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Label fx:id="weekTitleLabel" styleClass="week-title" text="Week" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Button fx:id="nextWeekButton" onAction="#handleNextWeek" styleClass="week-nav-btn" text="Next →" />
-                </HBox>
+                    <VBox spacing="18" styleClass="glass-card" VBox.vgrow="ALWAYS">
+                        <padding>
+                            <Insets bottom="24" left="24" right="24" top="24" />
+                        </padding>
 
-                <!-- Spans Container -->
-                <AnchorPane fx:id="spansAnchor" styleClass="spans-anchor" minHeight="0" maxHeight="200">
-                    <VBox fx:id="spansContainer" spacing="4" styleClass="spans-container" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
-                </AnchorPane>
+                        <HBox alignment="CENTER" spacing="14">
+                            <Button fx:id="prevWeekButton" onAction="#handlePreviousWeek"
+                                    styleClass="week-nav-btn" text="← Previous" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label fx:id="weekTitleLabel" styleClass="week-title" text="Week" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button fx:id="nextWeekButton" onAction="#handleNextWeek"
+                                    styleClass="week-nav-btn" text="Next →" />
+                        </HBox>
 
-                <!-- Day Header Grid - With proper column sizing -->
-                <GridPane alignment="CENTER" hgap="12" GridPane.hgrow="ALWAYS">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="10.0" minWidth="70" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                        <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints />
-                    </rowConstraints>
-                    <children>
-                        <Label styleClass="time-header" text="Time" GridPane.columnIndex="0" />
-                        <VBox alignment="CENTER" GridPane.columnIndex="1">
-                            <Label styleClass="day-name" text="MON" />
-                            <Label fx:id="monDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="2">
-                            <Label styleClass="day-name" text="TUE" />
-                            <Label fx:id="tueDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="3">
-                            <Label styleClass="day-name" text="WED" />
-                            <Label fx:id="wedDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="4">
-                            <Label styleClass="day-name" text="THU" />
-                            <Label fx:id="thuDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="5">
-                            <Label styleClass="day-name" text="FRI" />
-                            <Label fx:id="friDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="6">
-                            <Label styleClass="day-name" text="SAT" />
-                            <Label fx:id="satDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                        <VBox alignment="CENTER" GridPane.columnIndex="7">
-                            <Label styleClass="day-name" text="SUN" />
-                            <Label fx:id="sunDateLabel" styleClass="day-date" text="--" />
-                        </VBox>
-                    </children>
-                </GridPane>
-
-                <!-- Calendar Grid - With proper column sizing -->
-                <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="calendar-scroll" VBox.vgrow="ALWAYS">
-                    <content>
-                        <GridPane hgap="12" GridPane.hgrow="ALWAYS">
-                            <columnConstraints>
-                                <ColumnConstraints percentWidth="10.0" minWidth="70" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                                <ColumnConstraints percentWidth="12.86" minWidth="100" hgrow="ALWAYS" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints />
-                            </rowConstraints>
+                        <AnchorPane fx:id="headerLayer" prefHeight="186.0" minHeight="186.0" maxHeight="186.0">
                             <children>
-                                <VBox spacing="0" styleClass="time-column" GridPane.columnIndex="0" GridPane.vgrow="ALWAYS">
-                                    <Label styleClass="time-label" text="12 AM" />
-                                    <Label styleClass="time-label" text="1 AM" />
-                                    <Label styleClass="time-label" text="2 AM" />
-                                    <Label styleClass="time-label" text="3 AM" />
-                                    <Label styleClass="time-label" text="4 AM" />
-                                    <Label styleClass="time-label" text="5 AM" />
-                                    <Label styleClass="time-label" text="6 AM" />
-                                    <Label styleClass="time-label" text="7 AM" />
-                                    <Label styleClass="time-label" text="8 AM" />
-                                    <Label styleClass="time-label" text="9 AM" />
-                                    <Label styleClass="time-label" text="10 AM" />
-                                    <Label styleClass="time-label" text="11 AM" />
-                                    <Label styleClass="time-label" text="12 PM" />
-                                    <Label styleClass="time-label" text="1 PM" />
-                                    <Label styleClass="time-label" text="2 PM" />
-                                    <Label styleClass="time-label" text="3 PM" />
-                                    <Label styleClass="time-label" text="4 PM" />
-                                    <Label styleClass="time-label" text="5 PM" />
-                                    <Label styleClass="time-label" text="6 PM" />
-                                    <Label styleClass="time-label" text="7 PM" />
-                                    <Label styleClass="time-label" text="8 PM" />
-                                    <Label styleClass="time-label" text="9 PM" />
-                                    <Label styleClass="time-label" text="10 PM" />
-                                    <Label styleClass="time-label" text="11 PM" />
-                                </VBox>
-                                <AnchorPane fx:id="mondayPane" styleClass="day-pane" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="tuesdayPane" styleClass="day-pane" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="wednesdayPane" styleClass="day-pane" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="thursdayPane" styleClass="day-pane" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="fridayPane" styleClass="day-pane" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="saturdayPane" styleClass="day-pane" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                <AnchorPane fx:id="sundayPane" styleClass="day-pane" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                <AnchorPane fx:id="spansAnchor"
+                                            managed="false"
+                                            pickOnBounds="false"
+                                            prefHeight="102.0"
+                                            minHeight="102.0"
+                                            maxHeight="102.0"
+                                            AnchorPane.topAnchor="0.0"
+                                            AnchorPane.leftAnchor="0.0"
+                                            AnchorPane.rightAnchor="0.0"/>
+
+                                <GridPane fx:id="dayHeaderGrid"
+                                          alignment="CENTER"
+                                          hgap="6"
+                                          AnchorPane.topAnchor="104.0"
+                                          AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0"
+                                          AnchorPane.rightAnchor="0.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints minWidth="64" prefWidth="64" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                    </columnConstraints>
+
+                                    <children>
+                                        <Label styleClass="time-header" text="Time" GridPane.columnIndex="0" />
+
+                                        <VBox alignment="CENTER" GridPane.columnIndex="1">
+                                            <Label styleClass="day-name" text="MON" />
+                                            <Label fx:id="monDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="2">
+                                            <Label styleClass="day-name" text="TUE" />
+                                            <Label fx:id="tueDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="3">
+                                            <Label styleClass="day-name" text="WED" />
+                                            <Label fx:id="wedDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="4">
+                                            <Label styleClass="day-name" text="THU" />
+                                            <Label fx:id="thuDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="5">
+                                            <Label styleClass="day-name" text="FRI" />
+                                            <Label fx:id="friDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="6">
+                                            <Label styleClass="day-name" text="SAT" />
+                                            <Label fx:id="satDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" GridPane.columnIndex="7">
+                                            <Label styleClass="day-name" text="SUN" />
+                                            <Label fx:id="sunDateLabel" styleClass="day-date" text="--" />
+                                        </VBox>
+                                    </children>
+                                </GridPane>
                             </children>
-                        </GridPane>
-                    </content>
-                </ScrollPane>
-            </VBox>
-        </VBox>
-</center>
+                        </AnchorPane>
+                        <ScrollPane fitToWidth="true" fitToHeight="false"
+                                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                                    styleClass="calendar-scroll" VBox.vgrow="ALWAYS">
+                            <content>
+                                <GridPane fx:id="calendarGrid" hgap="6">
+                                    <columnConstraints>
+                                        <ColumnConstraints minWidth="64" prefWidth="64" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="85" prefWidth="85" />
+                                    </columnConstraints>
+
+                                    <children>
+                                        <VBox spacing="0" styleClass="time-column"
+                                              prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0"
+                                              GridPane.columnIndex="0">
+                                            <Label styleClass="time-label" text="12 AM" />
+                                            <Label styleClass="time-label" text="1 AM" />
+                                            <Label styleClass="time-label" text="2 AM" />
+                                            <Label styleClass="time-label" text="3 AM" />
+                                            <Label styleClass="time-label" text="4 AM" />
+                                            <Label styleClass="time-label" text="5 AM" />
+                                            <Label styleClass="time-label" text="6 AM" />
+                                            <Label styleClass="time-label" text="7 AM" />
+                                            <Label styleClass="time-label" text="8 AM" />
+                                            <Label styleClass="time-label" text="9 AM" />
+                                            <Label styleClass="time-label" text="10 AM" />
+                                            <Label styleClass="time-label" text="11 AM" />
+                                            <Label styleClass="time-label" text="12 PM" />
+                                            <Label styleClass="time-label" text="1 PM" />
+                                            <Label styleClass="time-label" text="2 PM" />
+                                            <Label styleClass="time-label" text="3 PM" />
+                                            <Label styleClass="time-label" text="4 PM" />
+                                            <Label styleClass="time-label" text="5 PM" />
+                                            <Label styleClass="time-label" text="6 PM" />
+                                            <Label styleClass="time-label" text="7 PM" />
+                                            <Label styleClass="time-label" text="8 PM" />
+                                            <Label styleClass="time-label" text="9 PM" />
+                                            <Label styleClass="time-label" text="10 PM" />
+                                            <Label styleClass="time-label" text="11 PM" />
+                                        </VBox>
+
+                                        <AnchorPane fx:id="mondayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="1"/>
+                                        <AnchorPane fx:id="tuesdayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="2"/>
+                                        <AnchorPane fx:id="wednesdayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="3"/>
+                                        <AnchorPane fx:id="thursdayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="4"/>
+                                        <AnchorPane fx:id="fridayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="5"/>
+                                        <AnchorPane fx:id="saturdayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="6"/>
+                                        <AnchorPane fx:id="sundayPane" prefHeight="1728.0" minHeight="1728.0" maxHeight="1728.0" styleClass="day-pane" GridPane.columnIndex="7"/>
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </ScrollPane>
+                    </VBox>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </center>
 </BorderPane>

@@ -10,165 +10,114 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefWidth="950" prefHeight="800"
-            stylesheets="@../css/add-group.css"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.planify.frontend.controllers.group.AddGroupController">
+<AnchorPane prefHeight="800" prefWidth="950" stylesheets="@../css/add-group.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.group.AddGroupController">
 
     <children>
-        <StackPane AnchorPane.topAnchor="0.0"
-                   AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0"
-                   styleClass="gm-overlay">
+        <StackPane styleClass="gm-overlay" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-            <VBox maxWidth="820" prefWidth="820" maxHeight="760" styleClass="gm-modal">
+            <VBox maxHeight="760" maxWidth="820" prefWidth="820" styleClass="gm-modal">
 
                 <!-- Header -->
                 <HBox alignment="CENTER_LEFT" spacing="12" styleClass="gm-header">
                     <padding>
-                        <Insets top="18" right="24" bottom="18" left="24"/>
+                        <Insets bottom="18" left="24" right="24" top="18" />
                     </padding>
 
-                    <Label text="👥" styleClass="gm-header-icon"/>
-                    <Label text="Group Management" styleClass="gm-header-title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button onAction="#closeWindow" styleClass="gm-close-btn" text="×"/>
+                    <Label styleClass="gm-header-icon" text="👥" />
+                    <Label styleClass="gm-header-title" text="Group Management" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#closeWindow" styleClass="gm-close-btn" text="×" />
                 </HBox>
 
                 <ScrollPane fitToWidth="true" styleClass="gm-scroll">
                     <content>
-                        <VBox spacing="24" fillWidth="true" styleClass="gm-content">
+                        <VBox fillWidth="true" spacing="24" styleClass="gm-content">
                             <padding>
-                                <Insets top="28" right="32" bottom="32" left="32"/>
+                                <Insets bottom="32" left="32" right="32" top="28" />
                             </padding>
 
                             <!-- Tabs -->
                             <HBox spacing="12" styleClass="gm-tab-container">
-                                <Button fx:id="createTabBtn"
-                                        text="Create Group"
-                                        onAction="#showCreateTab"
-                                        styleClass="gm-tab-active"
-                                        HBox.hgrow="ALWAYS"
-                                        maxWidth="Infinity"/>
-                                <Button fx:id="joinTabBtn"
-                                        text="Join Group"
-                                        onAction="#showJoinTab"
-                                        styleClass="gm-tab-inactive"
-                                        HBox.hgrow="ALWAYS"
-                                        maxWidth="Infinity"/>
+                                <Button fx:id="createTabBtn" maxWidth="Infinity" onAction="#showCreateTab" styleClass="gm-tab-active" text="Create Group" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="joinTabBtn" maxWidth="Infinity" onAction="#showJoinTab" styleClass="gm-tab-inactive" text="Join Group" HBox.hgrow="ALWAYS" />
                             </HBox>
 
                             <!-- CREATE CONTENT -->
-                            <VBox fx:id="createSection" spacing="20" fillWidth="true">
+                            <VBox fx:id="createSection" fillWidth="true" spacing="20">
 
                                 <!-- Group Name -->
                                 <VBox spacing="8">
-                                    <Label text="Group Name" styleClass="gm-label"/>
-                                    <TextField fx:id="groupNameField" styleClass="gm-textfield"
-                                               promptText="Enter group name"/>
+                                    <Label styleClass="gm-label" text="Group Name" />
+                                    <TextField fx:id="groupNameField" promptText="Enter group name" styleClass="gm-textfield" />
                                 </VBox>
 
                                 <!-- Group Type -->
                                 <VBox spacing="8">
-                                    <Label text="Group Type" styleClass="gm-label"/>
-                                    <ComboBox fx:id="groupTypeCombo" styleClass="gm-combo"
-                                              promptText="Select group type" maxWidth="Infinity"/>
+                                    <Label styleClass="gm-label" text="Group Type" />
+                                    <ComboBox fx:id="groupTypeCombo" maxWidth="Infinity" promptText="Select group type" styleClass="gm-combo" />
                                 </VBox>
 
                                 <!-- Description -->
                                 <VBox spacing="8">
-                                    <Label text="Description" styleClass="gm-label"/>
-                                    <TextArea fx:id="descriptionArea"
-                                              prefRowCount="4"
-                                              wrapText="true"
-                                              styleClass="gm-textarea"
-                                              promptText="Describe what this group is about"/>
+                                    <Label styleClass="gm-label" text="Description" />
+                                    <TextArea fx:id="descriptionArea" prefRowCount="4" promptText="Describe what this group is about" styleClass="gm-textarea" wrapText="true" />
                                 </VBox>
 
                                 <!-- Posting Access -->
                                 <VBox spacing="8">
-                                    <Label text="Who can post events?" styleClass="gm-label"/>
-                                    <ComboBox fx:id="postingAccessCombo" styleClass="gm-combo"
-                                              promptText="Select posting permission" maxWidth="Infinity"/>
+                                    <Label styleClass="gm-label" text="Who can post events?" />
+                                    <ComboBox fx:id="postingAccessCombo" maxWidth="Infinity" promptText="Select posting permission" styleClass="gm-combo" />
                                 </VBox>
 
-                                <Separator styleClass="gm-separator"/>
+                                <Separator styleClass="gm-separator" />
 
                                 <!-- Appearance Section -->
-                                <Label text="Appearance" styleClass="gm-section-title"/>
+                                <Label styleClass="gm-section-title" text="Appearance" />
 
-                                <CheckBox fx:id="allowJoinCodeCheck"
-                                          text="Allow members to join using group code"
-                                          styleClass="gm-checkbox"/>
+                                <CheckBox fx:id="allowJoinCodeCheck" styleClass="gm-checkbox" text="Allow members to join using group code" />
 
-                                <Separator styleClass="gm-separator"/>
+                                <Separator styleClass="gm-separator" />
 
                                 <!-- Action Buttons -->
                                 <HBox spacing="16">
-                                    <Button text="Cancel"
-                                            onAction="#closeWindow"
-                                            styleClass="gm-cancel-btn"
-                                            HBox.hgrow="ALWAYS"
-                                            maxWidth="Infinity"/>
-                                    <Button text="Create Group"
-                                            onAction="#createGroup"
-                                            styleClass="gm-create-btn"
-                                            HBox.hgrow="ALWAYS"
-                                            maxWidth="Infinity"/>
+                                    <Button maxWidth="Infinity" onAction="#closeWindow" styleClass="gm-cancel-btn" text="Cancel" HBox.hgrow="ALWAYS" />
+                                    <Button maxWidth="Infinity" onAction="#createGroup" style="-fx-background-color: ORANGE;" styleClass="gm-create-btn" text="Create Group" HBox.hgrow="ALWAYS" />
                                 </HBox>
                             </VBox>
 
                             <!-- JOIN CONTENT -->
-                            <VBox fx:id="joinSection" spacing="20" fillWidth="true" visible="false" managed="false">
+                            <VBox fx:id="joinSection" fillWidth="true" managed="false" spacing="20" visible="false">
 
                                 <!-- Group Code -->
                                 <VBox spacing="8">
-                                    <Label text="Group Code" styleClass="gm-label"/>
-                                    <TextField fx:id="joinCodeField" promptText="Enter 6-digit group code"
-                                               styleClass="gm-textfield"/>
-                                    <Label styleClass="gm-hint" text="Example: ABC123"/>
+                                    <Label styleClass="gm-label" text="Group Code" />
+                                    <TextField fx:id="joinCodeField" promptText="Enter 6-digit group code" styleClass="gm-textfield" />
+                                    <Label styleClass="gm-hint" text="Example: ABC123" />
                                 </VBox>
 
                                 <!-- Your Name -->
                                 <VBox spacing="8">
-                                    <Label text="Your Name" styleClass="gm-label"/>
-                                    <TextField fx:id="joinNameField" styleClass="gm-textfield"
-                                               promptText="Enter your display name"/>
+                                    <Label styleClass="gm-label" text="Your Name" />
+                                    <TextField fx:id="joinNameField" promptText="Enter your display name" styleClass="gm-textfield" />
                                 </VBox>
 
                                 <!-- Optional Message -->
                                 <VBox spacing="8">
-                                    <Label text="Optional Message" styleClass="gm-label"/>
-                                    <TextArea fx:id="joinMessageArea"
-                                              prefRowCount="3"
-                                              wrapText="true"
-                                              styleClass="gm-textarea"
-                                              promptText="Add a note to the group admins (optional)"/>
+                                    <Label styleClass="gm-label" text="Optional Message" />
+                                    <TextArea fx:id="joinMessageArea" prefRowCount="3" promptText="Add a note to the group admins (optional)" styleClass="gm-textarea" wrapText="true" />
                                 </VBox>
 
-                                <Separator styleClass="gm-separator"/>
+                                <Separator styleClass="gm-separator" />
 
                                 <!-- Action Buttons -->
                                 <HBox spacing="16">
-                                    <Button text="Cancel"
-                                            onAction="#closeWindow"
-                                            styleClass="gm-cancel-btn"
-                                            HBox.hgrow="ALWAYS"
-                                            maxWidth="Infinity"/>
-                                    <Button text="Join Group"
-                                            onAction="#joinGroup"
-                                            styleClass="gm-join-btn"
-                                            HBox.hgrow="ALWAYS"
-                                            maxWidth="Infinity"/>
+                                    <Button maxWidth="Infinity" onAction="#closeWindow" styleClass="gm-cancel-btn" text="Cancel" HBox.hgrow="ALWAYS" />
+                                    <Button maxWidth="Infinity" onAction="#joinGroup" styleClass="gm-join-btn" text="Join Group" HBox.hgrow="ALWAYS" />
                                 </HBox>
                             </VBox>
 

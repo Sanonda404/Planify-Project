@@ -28,7 +28,8 @@
 }
 
 .logoBox {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #d1adf8, #e89cf6);
+   -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #93c5fd, #60a5fa);
+
     -fx-background-radius: 15;
     -fx-padding: 10;
     -fx-min-width: 50;
@@ -70,8 +71,9 @@
 }
 
 .icon-button {
-    -fx-background-color: #f1f5f9;
-    -fx-text-fill: #457b9d;
+      -fx-background-color: #e0f2fe;
+      -fx-text-fill: #2563eb;
+
     -fx-font-size: 18px;
     -fx-padding: 8 15;
     -fx-background-radius: 12;
@@ -79,7 +81,8 @@
 }
 
 .icon-button:hover {
-    -fx-background-color: #e2e8f0;
+    -fx-background-color: #bae6fd;
+      -fx-text-fill: #1d4ed8;
 }
 
 .logout-button {

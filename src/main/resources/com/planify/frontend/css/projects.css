@@ -21,7 +21,7 @@
 }
 
 .header-icon-button {
-    -fx-background-color: transparent;
+    -fx-background-color: #F3E8FF;
     -fx-font-size: 24px;
     -fx-text-fill: #685AFF;
     -fx-cursor: hand;

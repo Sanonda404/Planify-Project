@@ -25,7 +25,10 @@
 
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#goDashboard" styleClass="header-icon-button" text="←" />
 
-            <Label styleClass="header-title" text="📊 Projects" />
+            <Label styleClass="header-title" text=" Projects">
+            <graphic>
+               <Label alignment="CENTER" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #8A7BFF; -fx-background-radius: 8;" text="📊" />
+            </graphic></Label>
 
             <Region HBox.hgrow="ALWAYS" />
 

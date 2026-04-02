@@ -64,8 +64,10 @@
 
     <!-- Main Content -->
     <center>
-        <VBox spacing="20" styleClass="main-container">
-            <padding><Insets bottom="28" left="28" right="28" top="24" /></padding>
+        <VBox spacing="20" styleClass="main-container" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets bottom="28" left="28" right="28" top="24" />
+            </padding>
 
             <!-- Welcome Section -->
             <VBox spacing="12" styleClass="welcome-section">
@@ -76,6 +78,14 @@
             <!-- Chat Container -->
             <VBox spacing="16" styleClass="chat-container" VBox.vgrow="ALWAYS">
 
+                <!-- Top Utility Bar -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="section-title" text="Assistant Chat" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="🗑 Clear Chat" styleClass="secondary-btn" onAction="#clearChat" />
+                    <Button text="📌 Summary" styleClass="secondary-btn" onAction="#askDailySummary" />
+                </HBox>
+
                 <!-- Suggestions Row -->
                 <HBox spacing="12" styleClass="suggestions-row">
                     <Button styleClass="suggestion-btn" text="📅 What's my schedule today?" onAction="#askSchedule" />
@@ -85,32 +95,46 @@
                 </HBox>
 
                 <!-- Chat Messages Area -->
-                <ScrollPane fx:id="chatScrollPane" styleClass="chat-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="chatContainer" spacing="12" styleClass="chat-messages">
-                        <!-- Welcome Message -->
-                        <HBox styleClass="bot-message-container">
-                            <StackPane styleClass="bot-avatar">
-                                <Label text="🤖" styleClass="avatar-emoji" />
-                            </StackPane>
-                            <VBox spacing="6" styleClass="message-bubble, bot-bubble">
-                                <Label styleClass="message-text" wrapText="true"
-                                       text="Hi there! 👋 I'm your Planify assistant. I can help you manage your tasks, events, and boost your productivity. What would you like to do today?" />
-                                <Label styleClass="message-time" text="Just now" />
-                            </VBox>
-                        </HBox>
-                    </VBox>
+                <ScrollPane fx:id="chatScrollPane"
+                            fitToWidth="true"
+                            pannable="true"
+                            hbarPolicy="NEVER"
+                            vbarPolicy="AS_NEEDED"
+                            styleClass="chat-scroll"
+                            VBox.vgrow="ALWAYS">
+
+                    <content>
+                        <VBox fx:id="chatContainer"
+                              spacing="12"
+                              fillWidth="true"
+                              styleClass="chat-messages">
+                            <!-- Messages added dynamically -->
+                        </VBox>
+                    </content>
                 </ScrollPane>
+
+                <!-- Typing Indicator -->
+                <HBox fx:id="typingIndicator" spacing="8" alignment="CENTER_LEFT" managed="false" visible="false">
+                    <StackPane styleClass="bot-avatar-small">
+                        <Label text="🤖" styleClass="avatar-emoji" />
+                    </StackPane>
+                    <Label text="Planify Bot is typing..." styleClass="typing-label" />
+                </HBox>
 
                 <!-- Input Area -->
                 <VBox spacing="8" styleClass="input-area">
                     <Separator styleClass="input-separator" />
                     <HBox spacing="12" alignment="CENTER">
-                        <TextField fx:id="messageField" styleClass="message-input"
-                                   promptText="Type your message here..." onAction="#sendMessage" />
+                        <TextField fx:id="messageField"
+                                   styleClass="message-input"
+                                   promptText="Type your message here..."
+                                   HBox.hgrow="ALWAYS"
+                                   onAction="#sendMessage" />
                         <Button fx:id="sendButton" styleClass="send-btn" text="Send" onAction="#sendMessage" />
                         <Button styleClass="voice-btn" text="🎤" onAction="#voiceInput" />
                     </HBox>
-                    <Label styleClass="input-hint" text="Try: 'Create a task', 'Schedule meeting', 'How am I doing?'" />
+                    <Label styleClass="input-hint"
+                           text="Try: 'Create a task', 'Schedule meeting', 'How am I doing?', 'Give me today's summary'" />
                 </VBox>
             </VBox>
         </VBox>

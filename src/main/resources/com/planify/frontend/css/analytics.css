@@ -1,6 +1,6 @@
 /* ===== ROOT & BASE STYLES ===== */
 .root-pane {
-    -fx-background-color: linear-gradient(to right, #f1faee 0%, #ffffff 100%);
+-fx-background-color: linear-gradient(to right, #fff9fc, #ffffff);
     -fx-font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .logo-box {
-    -fx-background-color: linear-gradient(to right, #457b9d, #1d3557);
+-fx-background-color: linear-gradient(to right, #fbcfe8, #f9a8d4);
     -fx-background-radius: 12;
     -fx-padding: 8;
     -fx-min-width: 44;
@@ -49,7 +49,7 @@
 }
 
 .dashboard-button {
-    -fx-background-color: linear-gradient(to right, #457b9d, #1d3557);
+-fx-background-color: linear-gradient(to right, #fbcfe8, #f9a8d4);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 600;
@@ -222,11 +222,21 @@
     -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.15), 12, 0, 0, 4);
 }
 
-.kpi-purple { -fx-background-color: linear-gradient(to right, #8b5cf6, #7c3aed); }
-.kpi-green { -fx-background-color: linear-gradient(to right, #10b981, #059669); }
-.kpi-blue { -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb); }
-.kpi-orange { -fx-background-color: linear-gradient(to right, #f59e0b, #d97706); }
+.kpi-purple {
+    -fx-background-color: linear-gradient(to right, #B9A7FF, #9C8CFF);
+}
 
+.kpi-green {
+    -fx-background-color: linear-gradient(to right, #A7F3D0, #6EE7B7);
+}
+
+.kpi-blue {
+    -fx-background-color: linear-gradient(to right, #BFDBFE, #93C5FD);
+}
+
+.kpi-orange {
+    -fx-background-color: linear-gradient(to right, #FDE68A, #FCD34D);
+}
 .kpi-icon { -fx-font-size: 28px; }
 .kpi-value {
     -fx-font-size: 28px;
