@@ -24,6 +24,7 @@ public class ReminderManager {
         DATA_PATH = System.getProperty("user.home") + "/.planify/" + UserSession.getInstance().getName() + "/reminders";
         FILE_NAME = DATA_PATH + "/active_reminders.json";
         reminderList = loadAll();
+        removeExpiredReminders();
     }
 
     /**

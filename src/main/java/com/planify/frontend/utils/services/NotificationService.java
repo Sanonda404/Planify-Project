@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -201,7 +202,7 @@ public class NotificationService {
                 );
                 if (image == null) {
                     // Create a simple colored icon
-                    //image = Toolkit.getDefaultToolkit().createImage(16, 16);
+                    image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
                 }
 
                 SoundManager.playNotificationSound();
