@@ -84,12 +84,14 @@ public class SchedulesController extends SceneParent {
     @FXML public Button notifBtn;
     @FXML public VBox notifPanel;
     @FXML private ListView<NotificationResponse> notificationsList;
+    @FXML private CheckBox mergedFilterCheckbox;
 
     private final List<EventGetRequest> allEvents = new ArrayList<>();
     private final Map<String, CheckBox> groupCheckBoxMap = new HashMap<>();
 
     private final List<EventGetRequest> pendingTimedEvents = new ArrayList<>();
     private final List<EventGetRequest> pendingSpanEvents = new ArrayList<>();
+
 
     private LocalDate currentWeekStart;
     private boolean filterListenersInitialized = false;
@@ -417,6 +419,7 @@ public class SchedulesController extends SceneParent {
 
     private void setDefaultFilters() {
         if (personalFilterCheckbox != null) personalFilterCheckbox.setSelected(true);
+        if (mergedFilterCheckbox != null) mergedFilterCheckbox.setSelected(false);
         if (slotFilterCheckbox     != null) slotFilterCheckbox.setSelected(true);
         if (spanFilterCheckbox     != null) spanFilterCheckbox.setSelected(true);
         if (deadlineFilterCheckbox != null) deadlineFilterCheckbox.setSelected(true);
@@ -429,6 +432,8 @@ public class SchedulesController extends SceneParent {
 
         if (personalFilterCheckbox != null)
             personalFilterCheckbox.selectedProperty().addListener((obs, o, n) -> refreshCalendar());
+        if (mergedFilterCheckbox != null)
+            mergedFilterCheckbox.selectedProperty().addListener((obs, o, n) -> refreshCalendar());
         if (slotFilterCheckbox != null)
             slotFilterCheckbox.selectedProperty().addListener((obs, o, n) -> refreshCalendar());
         if (spanFilterCheckbox != null)
@@ -668,13 +673,22 @@ public class SchedulesController extends SceneParent {
                 .filter(Objects::nonNull)
                 .filter(this::isEventInCurrentWeek)
                 .filter(e -> {
-                    boolean isPersonal = e.getGroup() == null;
-                    if (isPersonal) {
-                        return personalFilterCheckbox == null || personalFilterCheckbox.isSelected();
-                    } else {
-                        String groupName = e.getGroup().getName();
-                        CheckBox cb = groupCheckBoxMap.get(groupName);
-                        return cb != null && cb.isSelected();
+                    boolean isMergedView = mergedFilterCheckbox != null && mergedFilterCheckbox.isSelected();
+
+                    if (isMergedView) {
+                        // MERGED VIEW: Show personal events + group events where mergeWithPersonal = true
+                        boolean isPersonal = e.getGroup() == null;
+                        boolean isMergedGroupEvent = e.getGroup() != null && e.isMergeWithPersonal();
+                        return isPersonal || isMergedGroupEvent;
+                    }else{
+                        boolean isPersonal = e.getGroup() == null;
+                        if (isPersonal) {
+                            return personalFilterCheckbox == null || personalFilterCheckbox.isSelected();
+                        } else {
+                            String groupName = e.getGroup().getName();
+                            CheckBox cb = groupCheckBoxMap.get(groupName);
+                            return cb != null && cb.isSelected();
+                        }
                     }
                 })
                 .filter(e -> {

@@ -197,7 +197,7 @@ public class GroupProjectDataManager {
             ProjectSummary summary = new ProjectSummary(p.getName(), p.getDescription(), p.getGroupName(), p.getUuid(), 0,1, 0, new ArrayList<>(), List.of(self));
 
             List<MilestoneSummary> msList = p.getMilestones().stream().map(md -> {
-                MilestoneSummary ms = new MilestoneSummary(md.getTitle(), md.getDescription(), "", md.getDeadline(),md.isCompleted()) ;
+                MilestoneSummary ms = new MilestoneSummary(md.getTitle(), md.getDescription(), md.getUuid(), md.getDeadline(),md.isCompleted()) ;
                 return ms;
             }).collect(Collectors.toList());
 
@@ -295,8 +295,10 @@ public class GroupProjectDataManager {
 
     // --- Deletes ---
 
-    public static void deleteGroupProject(ProjectDetails projectDetails) {
-        GroupDataManager.deleteGroupProject(projectDetails.getGroupUuid(), projectDetails.getUuid());
+    public static void deleteGroupProject(String projectUuid, Object refresher) {
+        projects.removeIf(p->p.getUuid().equals(projectUuid));
+        GroupDataManager.deleteGroupProject(projectUuid);
+        refresh(refresher);
     }
 
     public static void deleteGroupProjectMilestone(String milestoneUuid, Object refresher) {

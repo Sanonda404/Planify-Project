@@ -98,6 +98,7 @@ public class NotificationManager {
                 GroupProjectDataManager.deleteGroupProjectMilestone(notif.getTargetUuid(),parent);
                 break;
             case "PROJECT_DELETED":
+                GroupProjectDataManager.deleteGroupProject(notif.getTargetUuid(),parent);
                 break;
             case "GROUP_ADDED":
                 DetailedGroup groupDetails = gson.fromJson(dataJson, DetailedGroup.class);

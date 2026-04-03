@@ -51,8 +51,8 @@ public class ApiService {
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             return response.body();
         } else {
-            // IMPORTANT: Throw the body (JSON), not your own text!
-            throw new RuntimeException(response.body());
+            AlertCreator.showErrorAlert(response.body());
+            return null;
         }
     }
 
@@ -75,7 +75,7 @@ public class ApiService {
             return response.body();
         } else {
             AlertCreator.showErrorAlert(response.body());
-            throw new RuntimeException(response.body());
+            return null;
         }
     }
 
@@ -91,7 +91,8 @@ public class ApiService {
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             return response.body();
         } else {
-            throw new RuntimeException(response.body());
+            AlertCreator.showErrorAlert(response.body());
+            return null;
         }
     }
 
@@ -106,13 +107,12 @@ public class ApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Check for 2xx Success codes
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            AlertCreator.showSuccessAlert("Successfully deleted");
             return response.body();
         } else {
-            // We throw the response body (which is the JSON error from Spring)
-            // so the frontend catch block can parse it
-            throw new RuntimeException(response.body());
+            AlertCreator.showErrorAlert(response.body());
+            return null;
         }
     }
 

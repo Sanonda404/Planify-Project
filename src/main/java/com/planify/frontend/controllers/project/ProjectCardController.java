@@ -1,5 +1,6 @@
 package com.planify.frontend.controllers.project;
 
+import com.planify.frontend.controllers.Request.DeleteRequestController;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.models.project.MilestoneSummary;
 import com.planify.frontend.models.project.ProjectDetails;
@@ -172,7 +173,15 @@ public class ProjectCardController {
 
     @FXML
     private void handleDeleteProject() {
-        // TODO: open add-task view with project context
-        System.out.println("Add task: " + project.getName());
+        if (project != null) {
+            String uuid = project.getUuid();
+            System.out.println("Deleting for project UUID: " + uuid);
+            if (uuid!=null && !uuid.trim().isEmpty()) {
+                DeleteRequestController.deleteProject(uuid,this);
+            } else {
+                ProjectDataManager.deletePersonalProject(project.getName());
+            }
+
+        }
     }
 }

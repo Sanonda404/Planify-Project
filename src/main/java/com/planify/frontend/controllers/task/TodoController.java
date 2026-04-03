@@ -319,20 +319,21 @@ public class TodoController extends SceneParent implements Initializable {
     }
 
     private boolean matchesProjectFilter(TaskDetails task) {
-        if ("All Projects".equals(projectFilter)) return true;
-        return projectFilter.equals(task.getProjectName());
+        String filter = projectFilterCombo.getValue();
+        if ("All Projects".equals(filter)) return true;
+        return filter != null && filter.equals(task.getProjectName());
     }
 
     private boolean matchesMilestoneFilter(TaskDetails task) {
+        String filter = milestoneFilterCombo.getValue();
         if ("All Milestones".equals(milestoneFilter)) return true;
-        if(milestoneFilter==null)return false;
-        return milestoneFilter.equals(task.getMilestoneName());
+        return filter != null && filter.equals(task.getMilestoneName());
     }
 
     private boolean matchesCategoryFilter(TaskDetails task) {
+        String filter = categoryFilterCombo.getValue();
         if ("All Categories".equals(categoryFilter)) return true;
-        if(categoryFilter==null)return false;
-        return categoryFilter.equals(task.getCategory());
+        return filter != null && filter.equals(task.getCategory());
     }
 
     private boolean matchesCompletedFilter(TaskDetails task) {

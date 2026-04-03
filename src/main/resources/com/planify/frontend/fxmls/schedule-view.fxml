@@ -173,6 +173,18 @@
                                 </CheckBox>
                             </VBox>
 
+                            <VBox spacing="8">
+                                <Label styleClass="filter-section-title" text="View Mode" />
+                                <CheckBox fx:id="mergedFilterCheckbox"
+                                          selected="false"
+                                          styleClass="filter-checkbox"
+                                          text="Show Merged (Personal + Shared)">
+                                    <tooltip>
+                                        <Tooltip text="Show personal events plus group events that are merged with personal schedule" />
+                                    </tooltip>
+                                </CheckBox>
+                            </VBox>
+
                             <Separator styleClass="sidebar-separator" />
 
                             <VBox spacing="8">

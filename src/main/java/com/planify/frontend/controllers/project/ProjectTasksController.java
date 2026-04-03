@@ -679,7 +679,7 @@ public class ProjectTasksController {
         if(task.getUuid().trim().isEmpty()){
             ProjectDataManager.deletePersonalProjectTask(projectDetails.getName(), task.getMilestoneName(), task.getTitle());
         }else{
-            DeleteRequestController.deleteTask(task.getUuid(), LocalDataManager.getUserEmail(), projectDetailsController);
+            DeleteRequestController.deleteTask(task.getUuid(), projectDetailsController);
         }
     }
 

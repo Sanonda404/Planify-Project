@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +28,7 @@ import java.util.Objects;
 public class NotificationController {
 
     private static ObservableList<NotificationResponse> masterList = FXCollections.observableArrayList();;
-    private static final String NOTIFICATION_SOUND = "/sounds/notification_pop.mp3";
+    private static final String NOTIFICATION_SOUND = "/com/planify/frontend/audio/notification.mp3";
     private static Shape statusIndicator; // This could be a Circle or Rectangle in your UI
     private static Label statusLabel;
 

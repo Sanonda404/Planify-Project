@@ -80,11 +80,12 @@ public class ProjectController extends SceneParent implements Initializable {
     }
 
     public void refresh(){
+        System.out.println("Refreshing projects...");
         fetchProjects();
     }
 
     private void fetchProjects() {
-        GroupProjectDataManager.init();
+        allProjects.clear();
         allProjects.addAll(GroupProjectDataManager.getGroupProjectSummary());
         addPersonalProjects();
         renderProjects(allProjects);

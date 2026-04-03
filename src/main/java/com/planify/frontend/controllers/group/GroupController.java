@@ -81,7 +81,6 @@ public class GroupController extends SceneParent {
     @FXML
     private void initialize() {
         refresh();
-        NotificationManager.init();
         notificationsList.setItems(NotificationManager.getNotifications());
 
         notificationsList.setCellFactory(list -> new ListCell<>() {
@@ -266,7 +265,6 @@ public class GroupController extends SceneParent {
     private void openGroupDetails(String groupUuid) {
         GroupDetails groupDetails = GroupDataManager.getGroupDetails(groupUuid);
         if (groupDetails == null) {
-            System.out.println("No details found for group: " + groupUuid);
         } else {
             SceneManager.switchScene("group-details-view.fxml", "Group Details", groupDetails);
         }

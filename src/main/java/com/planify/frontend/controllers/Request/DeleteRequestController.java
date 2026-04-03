@@ -13,12 +13,12 @@ public class DeleteRequestController {
     private static final Gson gson = new Gson();
 
 
-    public static void deleteTask(String taskUuid, String email, Object refresher) {
+    public static void deleteTask(String taskUuid,  Object refresher) {
         // 1. Create a background task
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                String endpoint = "/tasks/delete/" + taskUuid + "?email=" + email;
+                String endpoint = "/tasks/delete/" + taskUuid;
                 ApiService.delete(endpoint);
                 return null;
             }
@@ -118,6 +118,39 @@ public class DeleteRequestController {
         thread.setDaemon(true); // Ensures the thread closes if the app exits
         thread.start();
     }
+
+    public static void deleteProject(String projectUuid, Object refresher) {
+        // 1. Create a background task
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                String endpoint = "/projects/delete/" + projectUuid;
+                ApiService.delete(endpoint);
+                return null;
+            }
+        };
+
+        // 2. Handle Success
+        task.setOnSucceeded(e -> {
+
+        });
+
+        // 3. Handle Failure
+        task.setOnFailed(e -> {
+            Throwable error = task.getException();
+            // Use Platform.runLater to show an alert if not already on FX thread
+            JSONObject errorJson = new JSONObject(error.getMessage());
+            String msg = errorJson.getString("error");
+            showErrorAlert("Failed to delete milestone: "+msg);
+            System.out.println(msg);
+        });
+
+        // 4. Run it on a background thread
+        Thread thread = new Thread(task);
+        thread.setDaemon(true); // Ensures the thread closes if the app exits
+        thread.start();
+    }
+
 
     private static void showErrorAlert(String error) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

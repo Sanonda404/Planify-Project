@@ -315,18 +315,9 @@ public class GroupDataManager {
 
     // --- Deletes ---
 
-    public static void deleteGroupProject(String groupUuid, String projectUuid) {
-        if(groupUuid.trim().isEmpty() || projectUuid.trim().isEmpty())return;
+    public static void deleteGroupProject( String projectUuid) {
         for(DetailedGroup g: detailedGroups){
-            if(g.getUuid().equals(groupUuid)){
-                List<ProjectDetails>projects = new ArrayList<>();
-                for(ProjectDetails p: g.getProjects()){
-                    if(!p.getUuid().equals(projectUuid)){
-                        projects.add(p);
-                    }
-                }
-                g.setProjects(projects);
-            }
+            g.getProjects().removeIf(p->p.getUuid().equals(projectUuid));
         }
         saveAll(detailedGroups);
     }

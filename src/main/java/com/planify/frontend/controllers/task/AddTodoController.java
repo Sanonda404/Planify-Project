@@ -140,9 +140,9 @@ public class AddTodoController implements Initializable {
     }
 
     public void setContextForMilestone(String projectUuid, String projectName,
-                                     String milestoneUuid, String milestoneName,
-                                     List<MemberInfo> projectMembers,
-                                     Object parent) {
+                                       String milestoneUuid, String milestoneName,
+                                       List<MemberInfo> projectMembers,
+                                       Object parent) {
         this.parentController = parent;
         this.isProjectTask = true;
         this.existingProjectUuid = projectUuid;
@@ -303,14 +303,14 @@ public class AddTodoController implements Initializable {
     }
 
     private void populateMilestoneDetails(List<MilestoneDetails>milestones) {
-            // Milestones
-            milestoneCombo.getItems().clear();
-            milestoneCombo.getItems().add("None");
-            milestoneCombo.getItems().addAll(
-                    milestones.stream()
-                            .map(MilestoneDetails::getTitle)
-                            .collect(Collectors.toList())
-            );
+        // Milestones
+        milestoneCombo.getItems().clear();
+        milestoneCombo.getItems().add("None");
+        milestoneCombo.getItems().addAll(
+                milestones.stream()
+                        .map(MilestoneDetails::getTitle)
+                        .collect(Collectors.toList())
+        );
     }
 
     private void populateMembers(List<MemberInfo> members) {
@@ -482,6 +482,7 @@ public class AddTodoController implements Initializable {
 
             if (project != null) {
                 MilestoneSummary milestone = null;
+                System.out.println(milestoneCombo.getValue());
                 String milestoneUuid = null;
                 String milestoneName = null;
 
@@ -490,8 +491,11 @@ public class AddTodoController implements Initializable {
                             .filter(m -> m.getTitle().equals(milestoneCombo.getValue()))
                             .findFirst().orElse(null);
                     if (milestone != null) {
+                        System.out.println(milestone.getUuid());
                         milestoneUuid = milestone.getUuid();
                         milestoneName = milestone.getTitle();
+                    }else{
+                        System.out.println("can't");
                     }
                 }
 
