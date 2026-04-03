@@ -103,6 +103,7 @@ public class CreateRequestController {
                 if(refresher instanceof AuthController)response = ApiService.postLogin(endpoint,jsonBody);
                 else response = ApiService.post(endpoint, jsonBody);
                 Platform.runLater(() -> {
+                    if(response.isEmpty())return;
                     if(refresher instanceof AuthController && data instanceof SignupDetails){
                         ((AuthController)refresher).signUpSuccessful();
                         Type listType = new TypeToken<LoginResponse>(){}.getType();

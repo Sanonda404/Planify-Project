@@ -27,7 +27,6 @@ public class DeleteRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Successfully deleted task");
-            showSuccessAlert("Successfully Deleted Task");
             // Optional: Trigger a UI refresh or show a notification
             if(refresher instanceof ProjectDetailsController){
                 ((ProjectDetailsController)refresher).refresh();
@@ -40,7 +39,6 @@ public class DeleteRequestController {
             // Use Platform.runLater to show an alert if not already on FX thread
             JSONObject errorJson = new JSONObject(error.getMessage());
             String msg = errorJson.getString("error");
-            showErrorAlert("Failed to delete task: "+msg);
         });
 
         // 4. Run it on a background thread
@@ -63,7 +61,6 @@ public class DeleteRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Successfully deleted Milestone");
-            showSuccessAlert("Successfully Deleted Milestone");
             // Optional: Trigger a UI refresh or show a notification
             if(refresher instanceof ProjectDetailsController){
                 ((ProjectDetailsController)refresher).refresh();
@@ -76,7 +73,6 @@ public class DeleteRequestController {
             // Use Platform.runLater to show an alert if not already on FX thread
             JSONObject errorJson = new JSONObject(error.getMessage());
             String msg = errorJson.getString("error");
-            showErrorAlert("Failed to delete milestone: "+msg);
             System.out.println(msg);
         });
 
@@ -100,7 +96,6 @@ public class DeleteRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Successfully deleted Milestone");
-            showSuccessAlert("Successfully Deleted Milestone");
         });
 
         // 3. Handle Failure
@@ -109,7 +104,6 @@ public class DeleteRequestController {
             // Use Platform.runLater to show an alert if not already on FX thread
             JSONObject errorJson = new JSONObject(error.getMessage());
             String msg = errorJson.getString("error");
-            showErrorAlert("Failed to delete milestone: "+msg);
             System.out.println(msg);
         });
 
@@ -141,7 +135,6 @@ public class DeleteRequestController {
             // Use Platform.runLater to show an alert if not already on FX thread
             JSONObject errorJson = new JSONObject(error.getMessage());
             String msg = errorJson.getString("error");
-            showErrorAlert("Failed to delete milestone: "+msg);
             System.out.println(msg);
         });
 
@@ -149,22 +142,5 @@ public class DeleteRequestController {
         Thread thread = new Thread(task);
         thread.setDaemon(true); // Ensures the thread closes if the app exits
         thread.start();
-    }
-
-
-    private static void showErrorAlert(String error) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText("Got into this error:");
-        alert.setContentText(error);
-        alert.showAndWait();
-    }
-
-    private static void showSuccessAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 }

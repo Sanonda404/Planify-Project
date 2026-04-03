@@ -103,6 +103,7 @@ public class GetRequestController {
 
                 // 3. Make the API call
                 String json = ApiService.get(endpoint);
+                if(json.isEmpty())return;
 
                 // 4. Parse JSON
                 java.lang.reflect.Type listType = new com.google.gson.reflect.TypeToken<List<DetailedGroup>>(){}.getType();

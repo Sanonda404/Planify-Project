@@ -28,11 +28,6 @@ public class EditRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Status updated successfully!");
-            showSuccessAlert("Successfully Changed Status");
-            // Optional: Trigger a UI refresh or show a notification
-            if(refresher instanceof ProjectDetailsController){
-                ((ProjectDetailsController)refresher).refresh();
-            }
         });
 
         // 3. Handle Failure
@@ -65,10 +60,6 @@ public class EditRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Status updated successfully!");
-            showSuccessAlert("Successfully Updated task");
-            if(refresher instanceof ProjectDetailsController){
-                ((ProjectDetailsController)refresher).refresh();
-            }
             // Optional: Trigger a UI refresh or show a notification
         });
 
@@ -90,7 +81,7 @@ public class EditRequestController {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                String endpoint = "/milestones/update/" + uuid + "?email=" + email;
+                String endpoint = "/milestones/update/" + uuid;
                 String jsonBody = gson.toJson(data);
                 ApiService.patch(endpoint, jsonBody);
                 return null;
@@ -100,11 +91,6 @@ public class EditRequestController {
         // 2. Handle Success
         task.setOnSucceeded(e -> {
             System.out.println("Status updated successfully!");
-            showSuccessAlert("Successfully Updated Milestone");
-            if(refresher instanceof ProjectDetailsController){
-                ((ProjectDetailsController)refresher).refresh();
-            }
-            // Optional: Trigger a UI refresh or show a notification
         });
 
         // 3. Handle Failure

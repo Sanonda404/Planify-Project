@@ -52,7 +52,7 @@ public class ApiService {
             return response.body();
         } else {
             AlertCreator.showErrorAlert(response.body());
-            return null;
+            return "";
         }
     }
 
@@ -75,7 +75,7 @@ public class ApiService {
             return response.body();
         } else {
             AlertCreator.showErrorAlert(response.body());
-            return null;
+            return "";
         }
     }
 
@@ -92,7 +92,7 @@ public class ApiService {
             return response.body();
         } else {
             AlertCreator.showErrorAlert(response.body());
-            return null;
+            return "";
         }
     }
 
@@ -112,7 +112,7 @@ public class ApiService {
             return response.body();
         } else {
             AlertCreator.showErrorAlert(response.body());
-            return null;
+            return "";
         }
     }
 
