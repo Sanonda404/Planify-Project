@@ -146,15 +146,15 @@ public class TaskDataManager {
         saveAll();
     }
 
-    public static void updatePersonalTask(String prevTitle, PersonalTaskResponse task) {
+    public static void updatePersonalTask(String prevTitle, TaskDetails task) {
         for(TaskDetails t: personalTasks){
             if(t.getTitle().equals(prevTitle)){
                 if(!task.getTitle().trim().isEmpty())t.setTitle(task.getTitle());
                 t.setDescription(task.getDescription());
                 if(!task.getStatus().trim().isEmpty())t.setStatus(task.getStatus());
                 t.setAttachmentUrl(task.getAttachmentUrl());
-                if(!task.getCategory().trim().isEmpty())t.setCategory(task.getCategory());
-                if(!task.getTitle().trim().isEmpty())t.setDueDate(task.getDueDateTime());
+                if(task.getCategory()!=null && !task.getCategory().trim().isEmpty())t.setCategory(task.getCategory());
+                if(!task.getTitle().trim().isEmpty())t.setDueDate(task.getDueDate());
                 AlertCreator.showSuccessAlert("Task Updated Successfully");
             }
         }

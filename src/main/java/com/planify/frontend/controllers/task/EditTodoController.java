@@ -1,10 +1,16 @@
 package com.planify.frontend.controllers.task;
 
+import com.planify.frontend.controllers.Request.EditRequestController;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.models.project.ProjectSummary;
 import com.planify.frontend.models.tasks.Category;
 import com.planify.frontend.models.tasks.TaskDetails;
+import com.planify.frontend.models.tasks.TaskRequest;
+import com.planify.frontend.utils.UserSession;
+import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.data.personal.TaskDataManager;
+import com.planify.frontend.utils.helpers.AlertCreator;
+import com.planify.frontend.utils.managers.LocalDataManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -297,43 +303,51 @@ public class EditTodoController implements Initializable {
         }
 
         // Personal task
-      /*  if (originalTask.getUuid().trim().isEmpty()) {
+        if (originalTask.getUuid().trim().isEmpty()) {
+            MemberInfo self = new MemberInfo(UserSession.getInstance().getName(), UserSession.getInstance().getEmail());
+            List<MemberInfo> assignees = new ArrayList<>();
+            assignees.add(self);
+            TaskDetails request = new TaskDetails(originalTask.getUuid(),
+                    title, description, dueDateTime, originalTask.getStatus(), category,
+                    originalTask.isDaily(),weight, priority, "",
+                    originalTask.getProjectUuid(), originalTask.getMilestoneUuid(),
+                    originalTask.getMilestoneName(), originalTask.getProjectName(),
+                    new MemberInfo(UserSession.getInstance().getName(), UserSession.getInstance().getEmail()),
+                    assignees, attachmentUrl
+            );
+
             // Update in personal task manager
             TaskDataManager.updatePersonalTask(
-                    originalTask.getTitle(), title, description, category, dueDateTime, attachmentUrl, weight, priority
+                    originalTask.getTitle(), request
             );
 
             // If it's part of a personal project
             if (originalTask.getProjectName() != null && !originalTask.getProjectName().isEmpty()) {
-                ProjectDataManager.updatePersonalProjectTask(
-                        originalTask.getProjectName(),
-                        originalTask.getMilestoneName(),
-                        originalTask.getTitle(),
-                        title, description, category, dueDateTime, attachmentUrl
-                );
+                ProjectDataManager.updatePersonalTask(originalTask.getTitle(),request);
             }
         }
         // Backend task
         else {
             List<MemberInfo> assignees = getSelectedAssignees();
 
-            TaskRequest request = new TaskRequest(
-                    title, description, category, dueDateTime,
-                    originalTask.getProjectUuid(), originalTask.getMilestoneUuid(), weight, priority,
+            TaskDetails request = new TaskDetails(originalTask.getUuid(),
+                    title, description, dueDateTime, originalTask.getStatus(), category,
+                    originalTask.isDaily(),weight, priority, "",
+                    originalTask.getProjectUuid(), originalTask.getMilestoneUuid(),
                     originalTask.getMilestoneName(), originalTask.getProjectName(),
-                    LocalDataManager.getUserEmail(), assignees, attachmentUrl
+                    new MemberInfo(UserSession.getInstance().getName(), UserSession.getInstance().getEmail()),
+                    assignees, attachmentUrl
             );
 
             EditRequestController.updateTask(originalTask.getUuid(), request, this);
         }
 
-        AlertCreator.showSuccessAlert("Task updated successfully!");
 
         if (parentController != null) {
             parentController.refresh();
         }
 
-        handleClose();*/
+        handleClose();
     }
 
     @FXML

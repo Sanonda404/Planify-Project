@@ -49,13 +49,13 @@ public class EditRequestController {
     }
 
 
-    public static void updateTask(String uuid, String email, TaskDetails data, Object refresher){
+    public static void updateTask(String uuid, TaskDetails data, Object refresher){
         // Run this in a Thread/Task!
         // 1. Create a background task
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                String endpoint = "/tasks/update/" + uuid + "?email=" + email;
+                String endpoint = "/tasks/update/" + uuid;
                 String jsonBody = gson.toJson(data);
                 ApiService.patch(endpoint, jsonBody);
                 return null;

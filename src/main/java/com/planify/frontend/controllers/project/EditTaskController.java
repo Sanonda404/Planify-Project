@@ -438,6 +438,7 @@ public class EditTaskController implements Initializable {
         String updatedAttachment = attachmentField.getText() != null ? attachmentField.getText().trim() : "";
         
         // Update task object
+        String prevTitle = task.getTitle();
         task.setTitle(updatedTitle);
         task.setDescription(updatedDescription);
         task.setCategory(updatedCategory);
@@ -450,15 +451,15 @@ public class EditTaskController implements Initializable {
         task.setCategory(updatedCategory);
         
         // Save
-        if(task.getProjectUuid().trim().isEmpty())saveLocally(task);
+        if(task.getProjectUuid().trim().isEmpty())saveLocally(prevTitle, task);
         else saveToBackend(task);
         
         // Close window
         handleClose();
     }
 
-    private void saveLocally(TaskDetails task){
-        ProjectDataManager.updatePersonalTask(task);
+    private void saveLocally(String prevTitle, TaskDetails task){
+        ProjectDataManager.updatePersonalTask(prevTitle,task);
         projectDetailsController.refresh();
         AlertCreator.showSuccessAlert("Task Updated Successfully!!");
     }
@@ -477,7 +478,7 @@ public class EditTaskController implements Initializable {
     private void saveToBackend(TaskDetails task) {
         // TODO: Call backend API to update task
         // Example: taskService.updateTask(task.getUuid(), taskUpdateRequest);
-        EditRequestController.updateTask(task.getUuid(), LocalDataManager.getUserEmail(), task, projectDetailsController);
+        EditRequestController.updateTask(task.getUuid(), task, projectDetailsController);
 
         
         // Refresh parent view

@@ -508,6 +508,13 @@ public class PlanifyBotController extends SceneParent implements Initializable {
         notifPanel.setManaged(!isVisible);
     }
 
+    @FXML private void clearChat(){
+
+    }
+    @FXML private void askDailySummary(){
+
+    }
+
     @FXML private void goBack() { SceneManager.switchScene("dashboard-view.fxml", "Dashboard"); }
     @FXML private void goDashboard() { SceneManager.switchScene("dashboard-view.fxml", "Dashboard"); }
     @FXML private void handleLogout() { SceneManager.switchScene("login-view.fxml", "Login"); }

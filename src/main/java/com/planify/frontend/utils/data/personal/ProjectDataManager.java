@@ -228,14 +228,14 @@ public class ProjectDataManager {
         saveAll();
     }
 
-    public static void updatePersonalTask(TaskDetails updatedTask) {
+    public static void updatePersonalTask(String prevTitle, TaskDetails updatedTask) {
 
         for (ProjectDetails project : projects) {
 
             for (MilestoneDetails milestone : project.getMilestones()) {
 
                 TaskDetails taskToUpdate = milestone.getTasks().stream()
-                        .filter(t -> t.getTitle().equals(updatedTask.getTitle()))
+                        .filter(t -> t.getTitle().equals(prevTitle))
                         .findFirst()
                         .orElse(null);
 

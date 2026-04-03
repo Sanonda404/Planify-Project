@@ -325,11 +325,13 @@ public class TodoController extends SceneParent implements Initializable {
 
     private boolean matchesMilestoneFilter(TaskDetails task) {
         if ("All Milestones".equals(milestoneFilter)) return true;
+        if(milestoneFilter==null)return false;
         return milestoneFilter.equals(task.getMilestoneName());
     }
 
     private boolean matchesCategoryFilter(TaskDetails task) {
         if ("All Categories".equals(categoryFilter)) return true;
+        if(categoryFilter==null)return false;
         return categoryFilter.equals(task.getCategory());
     }
 
