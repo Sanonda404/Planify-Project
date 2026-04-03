@@ -35,7 +35,6 @@ public class NotificationManager {
                 if (notification != null) {
                     notifications.addAll(notification);
                     System.out.println(notification.size());
-                    System.out.println(parent.getClass().getName());
                     InitApp.initialize();
                 }
 

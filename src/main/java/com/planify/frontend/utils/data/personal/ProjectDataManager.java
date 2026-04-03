@@ -9,6 +9,7 @@ import com.planify.frontend.models.project.MilestoneSummary;
 import com.planify.frontend.models.project.ProjectDetails;
 import com.planify.frontend.models.project.ProjectSummary;
 import com.planify.frontend.models.tasks.TaskDetails;
+import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.managers.LocalDataManager;
 
 import java.io.*;
@@ -19,11 +20,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProjectDataManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/personal/projects";
-    private static final String FILE_NAME = DATA_PATH + "/projects.json";
+    private static String DATA_PATH;
+    private static String FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static List<ProjectDetails> projects;
 
     // --- Core JSON Helpers ---
+    public static void init(){
+       DATA_PATH = System.getProperty("user.home") + "/.planify/"+ UserSession.getInstance().getName()+"personal/projects";
+        FILE_NAME  = DATA_PATH + "/projects.json";
+       projects = loadAll();
+    }
 
     private static List<ProjectDetails> loadAll() {
         File file = new File(FILE_NAME);
@@ -37,7 +44,11 @@ public class ProjectDataManager {
         }
     }
 
-    private static void saveAll(List<ProjectDetails> projects) {
+    public static void clearData(){
+        projects = new ArrayList<>();
+    }
+
+    private static void saveAll() {
         File directory = new File(DATA_PATH);
         if (!directory.exists()) directory.mkdirs();
         try (Writer writer = new FileWriter(FILE_NAME)) {
@@ -50,25 +61,22 @@ public class ProjectDataManager {
     // --- Creators ---
 
     public static void savePersonalProject(String name, String description, String start, String deadline) {
-        List<ProjectDetails> projects = loadAll();
         List<MemberInfo> memberInfos = new ArrayList<>();
         memberInfos.add(new MemberInfo(LocalDataManager.getUserName(), LocalDataManager.getUserEmail()));
         ProjectDetails project = new ProjectDetails(name, description, start, deadline, "Personal", "", "", 0, 0, 1, 0, new ArrayList<>(), new ArrayList<>(), memberInfos, false);
         projects.add(project);
-        saveAll(projects);
+        saveAll();
     }
 
     public static void savePersonalProjectMilestone(String title, String description, String deadline, String projectName) {
-        List<ProjectDetails> projects = loadAll();
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             MilestoneDetails m = new MilestoneDetails(title, description, "", "", false, deadline, 0, new ArrayList<>());
             p.getMilestones().add(m);
         });
-        saveAll(projects);
+        saveAll();
     }
 
     public static void savePersonalProjectMilestone(String title, String description, String deadline, String projectName, List<String> taskNamesToAssign) {
-        List<ProjectDetails> projects = loadAll();
 
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             // 1. Create the new milestone
@@ -103,11 +111,10 @@ public class ProjectDataManager {
             p.getMilestones().add(newMilestone);
         });
 
-        saveAll(projects);
+        saveAll();
     }
 
     public static void savePersonalProjectTask(String title, String description, String category, String dueDate, boolean isDaily, int weight, String priority, String projectName, String milestoneName, String attachmentUrl) {
-        List<ProjectDetails> projects = loadAll();
         List<MemberInfo> memberInfos = new ArrayList<>();
         memberInfos.add(new MemberInfo(LocalDataManager.getUserName(), LocalDataManager.getUserEmail()));
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
@@ -126,7 +133,7 @@ public class ProjectDataManager {
                         p.getMilestones().add(uncategorized);
                     });
         });
-        saveAll(projects);
+        saveAll();
     }
 
     // --- Detailed Getters ---
@@ -135,7 +142,7 @@ public class ProjectDataManager {
      * Gets the full ProjectDetails for a specific project name
      */
     public static ProjectDetails getPersonalProjectDetails(String projectName) {
-        return loadAll().stream()
+        return projects.stream()
                 .filter(p -> p.getName().equals(projectName))
                 .findFirst()
                 .orElse(null);
@@ -161,7 +168,6 @@ public class ProjectDataManager {
     }
 
     public static List<TaskDetails> getAllTasks(){
-        List<ProjectDetails>projects = loadAll();
         List<TaskDetails>tasks = new ArrayList<>();
         for(ProjectDetails p: projects){
             for(MilestoneDetails m: p.getMilestones()){
@@ -174,7 +180,7 @@ public class ProjectDataManager {
     public static List<ProjectSummary> getPersonalProjectSummary() {
         MemberInfo self = new MemberInfo(LocalDataManager.getUserName(), LocalDataManager.getUserEmail());
 
-        return loadAll().stream().map(p -> {
+        return projects.stream().map(p -> {
             ProjectSummary summary = new ProjectSummary(p.getName(), p.getDescription(), "Personal", "", 0,1, 0, new ArrayList<>(), List.of(self));
 
             List<MilestoneSummary> msList = p.getMilestones().stream().map(md -> {
@@ -198,13 +204,12 @@ public class ProjectDataManager {
     }
 
     public static List<ProjectDetails> getAllPersonalProjects(){
-        return loadAll();
+        return projects;
     }
 
     // --- Updates ---
 
     public static void updatePersonalTaskStatus(String projectName, String milestoneName, String taskName, String status) {
-        List<ProjectDetails> projects = loadAll();
         for (ProjectDetails p : projects) {
             if (p.getName().equals(projectName)) {
                 for (MilestoneDetails m : p.getMilestones()) {
@@ -220,11 +225,10 @@ public class ProjectDataManager {
                 }
             }
         }
-        saveAll(projects);
+        saveAll();
     }
 
     public static void updatePersonalTask(TaskDetails updatedTask) {
-        List<ProjectDetails> projects = loadAll();
 
         for (ProjectDetails project : projects) {
 
@@ -262,11 +266,10 @@ public class ProjectDataManager {
             }
         }
 
-        saveAll(projects);
+        saveAll();
     }
 
     public static void updatePersonalMilestone(MilestoneDetails updatedMilestone) {
-        List<ProjectDetails> projects = loadAll();
         String projectName = updatedMilestone.getUuid();
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             for (MilestoneDetails m : p.getMilestones()) {
@@ -277,33 +280,30 @@ public class ProjectDataManager {
                 }
             }
         });
-        saveAll(projects);
+        saveAll();
     }
 
     // --- Deletes ---
 
     public static void deletePersonalProject(String projectName) {
-        List<ProjectDetails> projects = loadAll();
         projects.removeIf(p -> p.getName().equals(projectName));
-        saveAll(projects);
+        saveAll();
     }
 
     public static void deletePersonalProjectMilestone(String projectName, String milestoneName) {
-        List<ProjectDetails> projects = loadAll();
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             p.getMilestones().removeIf(m -> m.getTitle().equals(milestoneName));
         });
-        saveAll(projects);
+        saveAll();
     }
 
     public static void deletePersonalProjectTask(String projectName, String milestoneName, String taskName) {
-        List<ProjectDetails> projects = loadAll();
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             p.getMilestones().stream().filter(m -> m.getTitle().equals(milestoneName)).findFirst().ifPresent(m -> {
                 m.getTasks().removeIf(t -> t.getTitle().equals(taskName));
             });
         });
-        saveAll(projects);
+        saveAll();
     }
 
 }

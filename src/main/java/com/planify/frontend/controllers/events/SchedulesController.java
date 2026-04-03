@@ -1686,9 +1686,4 @@ public class SchedulesController extends SceneParent {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    public void handleLogout() {
-        SceneManager.switchScene("main-view.fxml", "Login");
-    }
 }

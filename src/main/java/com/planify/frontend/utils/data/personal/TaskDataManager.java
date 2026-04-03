@@ -18,15 +18,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDataManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/personal/tasks";
-    private static final String FILE_NAME = DATA_PATH + "/tasks.json";
-    private static final String CATEGORY_FILE_NAME = DATA_PATH + "/categories.json";
+    private static String DATA_PATH;
+    private static String FILE_NAME;
+    private static String CATEGORY_FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static List<TaskDetails>personalTasks = new ArrayList<>();
 
     // --- Core JSON Helpers ---
     public static void init(){
+        DATA_PATH = System.getProperty("user.home") + "/.planify/"+UserSession.getInstance().getName()+"/personal/tasks";
+        FILE_NAME = DATA_PATH + "/tasks.json";
+        CATEGORY_FILE_NAME  = DATA_PATH + "/categories.json";
+        System.out.println(UserSession.getInstance().getName()+ "for tasks");
         personalTasks = loadAll();
+    }
+
+    public static void clearData(){
+        personalTasks = new ArrayList<>();
     }
 
     private static List<TaskDetails> loadAll() {

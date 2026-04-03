@@ -2,6 +2,7 @@ package com.planify.frontend.models;
 
 import com.planify.frontend.controllers.Request.CreateRequestController;
 import com.planify.frontend.models.notification.NotificationResponse;
+import com.planify.frontend.utils.InitApp;
 import com.planify.frontend.utils.managers.SceneManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -77,7 +78,7 @@ public abstract class SceneParent {
     @FXML
     private void handleLogout() {
         // TODO: Clear session data
-        //LocalDataManager.clearUserData();
+        InitApp.clearData();
         SceneManager.switchScene("login-view.fxml", "Login");
     }
 

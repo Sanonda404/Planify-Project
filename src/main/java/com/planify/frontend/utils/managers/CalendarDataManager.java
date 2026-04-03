@@ -3,6 +3,7 @@ package com.planify.frontend.utils.managers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.planify.frontend.models.events.EventGetRequest;
+import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.data.group.GroupEventDataManager;
 import com.planify.frontend.utils.data.personal.EventDataManager;
 import java.io.*;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CalendarDataManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/calendar";
+    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/"+ UserSession.getInstance().getName()+"/calendar";
     private static final String FILE_NAME = DATA_PATH + "/display_events.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

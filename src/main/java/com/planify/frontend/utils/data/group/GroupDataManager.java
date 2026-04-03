@@ -22,14 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDataManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/group";
-    private static final String FILE_NAME = DATA_PATH + "/groups.json";
+    private static String DATA_PATH;
+    private static String FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static List<DetailedGroup>detailedGroups = new ArrayList<>();
 
     // --- Core JSON Helpers ---
 
     public static void init(){
+        DATA_PATH  = System.getProperty("user.home") + "/.planify/"+UserSession.getInstance().getName()+"/group";
+        FILE_NAME  = DATA_PATH + "/groups.json";
+
         GetRequestController.getAllUserGroup((summaries)->{
             // Update UI with summaries
             Platform.runLater(() -> {
@@ -40,14 +43,12 @@ public class GroupDataManager {
                     GroupProjectDataManager.init();
                     GroupEventDataManager.init();
                     InitApp.init();
-                    SceneManager.switchScene("dashboard-view.fxml","Dashboard");
                 }else{
                     detailedGroups = summaries;
                     saveAll(detailedGroups);
                     GroupProjectDataManager.init();
                     GroupEventDataManager.init();
                     InitApp.init();
-                    SceneManager.switchScene("dashboard-view.fxml","Dashboard");
                 }
 
             });

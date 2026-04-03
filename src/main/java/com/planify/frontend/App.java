@@ -16,8 +16,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        ReminderManager.init();
-        NotificationService.startMonitoring();
 
         SceneManager.setStage(stage);
         SceneManager.switchScene("login-view.fxml", "Login");

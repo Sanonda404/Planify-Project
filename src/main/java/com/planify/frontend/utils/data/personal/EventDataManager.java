@@ -22,15 +22,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventDataManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/personal/events";
-    private static final String FILE_NAME = DATA_PATH + "/events.json";
+    private static String DATA_PATH;
+    private static String FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static List<EventGetRequest> personalEvents = new ArrayList<>();
 
     // --- Core JSON Helpers ---
 
     public static void init(){
+        DATA_PATH = System.getProperty("user.home") + "/.planify/"+UserSession.getInstance().getName()+"/personal/events";
+        FILE_NAME  = DATA_PATH + "/events.json";
         personalEvents = loadAll();
+    }
+
+    public static void clearData(){
+        personalEvents = new ArrayList<>();
     }
 
     private static List<EventGetRequest> loadAll() {

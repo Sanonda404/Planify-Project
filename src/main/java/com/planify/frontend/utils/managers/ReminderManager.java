@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.planify.frontend.models.events.EventGetRequest;
 import com.planify.frontend.models.notification.ReminderTask;
+import com.planify.frontend.utils.UserSession;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -13,12 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReminderManager {
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/reminders";
-    private static final String FILE_NAME = DATA_PATH + "/active_reminders.json";
+    private static String DATA_PATH;
+    private static String FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static List<ReminderTask> reminderList = new ArrayList<>();
 
     public static void init(){
+        DATA_PATH = System.getProperty("user.home") + "/.planify/"+ UserSession.getInstance().getName()+"/reminders";
+        FILE_NAME =DATA_PATH + "/active_reminders.json";
         reminderList = loadAll();
     }
 
