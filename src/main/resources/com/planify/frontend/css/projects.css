@@ -35,7 +35,7 @@
 }
 
 .dashboard-button {
-    -fx-background-color: linear-gradient(to right, #685AFF 0%, #8b7eff 100%);
+    -fx-background-color: #3a0ca3;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 500;
@@ -46,7 +46,7 @@
 }
 
 .dashboard-button:hover {
-    -fx-background-color: linear-gradient(to right, #5a4ee6 0%, #7a6df2 100%);
+    -fx-background-color: #03045e;
     -fx-effect: dropshadow(gaussian, rgba(104, 90, 255, 0.4), 6, 0, 0, 2);
 }
 
@@ -154,7 +154,7 @@
 }
 
 .filter-btn-active {
-    -fx-background-color: linear-gradient(to right, #685AFF 0%, #8b7eff 100%);
+    -fx-background-color: #3a0ca3;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 500;
@@ -165,7 +165,7 @@
 }
 
 .new-project-btn {
-    -fx-background-color: linear-gradient(to right, #FF5B5B 0%, #FF8A5B 100%);
+    -fx-background-color: #d90429;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
@@ -176,6 +176,7 @@
 }
 
 .new-project-btn:hover {
+    -fx-background-color: #780000;
     -fx-effect: dropshadow(gaussian, rgba(255, 91, 91, 0.5), 8, 0, 0, 2);
 }
 
@@ -284,7 +285,7 @@
 .section-title {
     -fx-font-size: 12px;
     -fx-font-weight: 700;
-    -fx-text-fill: #685AFF;
+    -fx-text-fill: #293241;
     -fx-letter-spacing: 0.5px;
     -fx-padding: 0 0 4 0;
 }
@@ -395,19 +396,36 @@
 
 /* View Details Button */
 .view-details-btn {
-    -fx-background-color: linear-gradient(to right, #685AFF 0%, #8b7eff 100%);
+    -fx-background-color: #0077b6;
     -fx-text-fill: white;
     -fx-font-size: 13px;
-    -fx-font-weight: 600;
+    -fx-font-weight: bold;
     -fx-padding: 12 20 12 20;
     -fx-background-radius: 12;
     -fx-cursor: hand;
 }
 
 .view-details-btn:hover {
-    -fx-background-color: linear-gradient(to right, #5a4ee6 0%, #7a6df2 100%);
+    -fx-background-color: #03045e;
     -fx-effect: dropshadow(gaussian, rgba(104, 90, 255, 0.3), 4, 0, 0, 1);
 }
+
+
+.delete-btn {
+    -fx-background-color: #e63946;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-padding: 12 20 12 20;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+}
+
+.delete-btn:hover {
+    -fx-background-color: #9a031e;
+    -fx-effect: dropshadow(gaussian, rgba(104, 90, 255, 0.3), 4, 0, 0, 1);
+}
+
 
 /* ==================== SCROLLBAR STYLING ==================== */
 .scroll-pane {

@@ -332,14 +332,7 @@ public class GroupDataManager {
 
     public static void deleteGroupEvent (String eventUuid) {
         for(DetailedGroup g: detailedGroups){
-            List<EventGetRequest>events = new ArrayList<>();
-            for(EventGetRequest e: g.getEvents()){
-                if(!e.getUuid().equals(eventUuid)){
-                    events.add(e);
-                }
-            }
-            g.setEvents(events);
-
+            g.getEvents().removeIf(e -> e.getUuid().equals(eventUuid));
         }
 
         saveAll(detailedGroups);

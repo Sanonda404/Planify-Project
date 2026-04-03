@@ -397,7 +397,7 @@ public class DashboardController implements Initializable {
         gc.strokeArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 90, 360, javafx.scene.shape.ArcType.OPEN);
 
         double progressAngle = (percent / 100.0) * 360;
-        gc.setStroke(Color.web("#457b9d"));
+        gc.setStroke(Color.web("#679436"));
         gc.setLineWidth(lineWidth);
         gc.setLineCap(javafx.scene.shape.StrokeLineCap.ROUND);
         gc.strokeArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 90, -progressAngle, javafx.scene.shape.ArcType.OPEN);

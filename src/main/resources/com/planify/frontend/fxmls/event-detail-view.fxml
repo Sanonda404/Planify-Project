@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="20" prefWidth="480" styleClass="event-detail-root" stylesheets="@../css/schedules.css"
+<VBox spacing="20" prefWidth="480" stylesheets="@../css/event-details.css"
+      styleClass="event-detail-root"
       xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.planify.frontend.controllers.events.EventDetailController">
 

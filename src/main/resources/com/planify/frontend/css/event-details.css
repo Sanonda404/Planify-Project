@@ -1,0 +1,306 @@
+/* ===== EVENT DETAIL DIALOG ===== */
+.event-detail-root {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 20, 0, 0, 5);
+}
+
+/* ===== HEADER SECTION ===== */
+.event-detail-icon {
+    -fx-font-size: 32px;
+}
+
+.event-detail-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1d3557;
+    -fx-wrap-text: true;
+    -fx-font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+.event-detail-close {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 28px;
+    -fx-cursor: hand;
+    -fx-padding: 0 5;
+    -fx-background-radius: 12;
+}
+
+.event-detail-close:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #e63946;
+}
+
+/* ===== SEPARATOR ===== */
+.event-detail-separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 1;
+}
+
+/* ===== EVENT TYPE BADGES ===== */
+.event-type-badge {
+    -fx-padding: 4 12;
+    -fx-background-radius: 20;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+}
+
+/* Slot Event */
+.event-type-badge-Slot {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+/* Span Event */
+.event-type-badge-Span {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+}
+
+/* Deadline Event */
+.event-type-badge-Deadline {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #dc2626;
+}
+
+/* Marker Event */
+.event-type-badge-Marker {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #d97706;
+}
+
+.event-repeat-badge {
+    -fx-padding: 4 12;
+    -fx-background-radius: 20;
+    -fx-font-size: 10px;
+    -fx-font-weight: 600;
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #457b9d;
+}
+
+/* ===== MAIN INFO GRID ===== */
+.event-detail-grid {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 16;
+    -fx-border-width: 1;
+}
+
+.event-detail-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1d3557;
+}
+
+.event-detail-value {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+}
+
+/* ===== DESCRIPTION SECTION ===== */
+.event-detail-section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #457b9d;
+}
+
+.event-detail-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #475569;
+    -fx-line-spacing: 3px;
+    -fx-background-color: #f8fafc;
+    -fx-padding: 12;
+    -fx-background-radius: 12;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+}
+
+/* ===== REPEAT INFO ===== */
+.event-detail-label-small {
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #64748b;
+}
+
+.event-detail-value-small {
+    -fx-font-size: 12px;
+    -fx-text-fill: #1e293b;
+}
+
+/* ===== FOOTER GRID ===== */
+.event-detail-footer-grid {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+}
+
+.event-detail-link {
+    -fx-text-fill: #457b9d;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+.event-detail-link:hover {
+    -fx-underline: true;
+}
+
+/* ===== CREATOR INFO ===== */
+.event-detail-creator-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748b;
+}
+
+.event-detail-creator-name {
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1d3557;
+}
+
+.event-detail-created-at {
+    -fx-font-size: 10px;
+    -fx-text-fill: #94a3b8;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.event-detail-actions {
+    -fx-padding: 8 0 0 0;
+}
+
+.event-detail-edit-btn {
+    -fx-background-color: linear-gradient(to left, #457b9d, #1d3557);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 16;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.2), 4, 0, 0, 1);
+}
+
+.event-detail-edit-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.4), 8, 0, 0, 2);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.event-detail-delete-btn {
+    -fx-background-color: #e63946;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 16;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(230, 57, 70, 0.2), 4, 0, 0, 1);
+}
+
+.event-detail-delete-btn:hover {
+    -fx-background-color: #c1121f;
+    -fx-effect: dropshadow(gaussian, rgba(230, 57, 70, 0.4), 8, 0, 0, 2);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.event-detail-close-btn {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 16;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+}
+
+.event-detail-close-btn:hover {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #1d3557;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* ===== DISABLED BUTTON STATES ===== */
+.event-detail-edit-btn:disabled,
+.event-detail-delete-btn:disabled {
+    -fx-opacity: 0.5;
+    -fx-cursor: default;
+}
+
+.event-detail-edit-btn:disabled:hover,
+.event-detail-delete-btn:disabled:hover {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.2), 4, 0, 0, 1);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInScale {
+    from {
+        -fx-opacity: 0;
+        -fx-scale-x: 0.95;
+        -fx-scale-y: 0.95;
+    }
+    to {
+        -fx-opacity: 1;
+        -fx-scale-x: 1;
+        -fx-scale-y: 1;
+    }
+}
+
+.event-detail-root {
+    -fx-animation: fadeInScale 0.25s ease-out;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #a8dadc;
+    -fx-background-radius: 4;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #457b9d;
+}
+
+/* ===== DYNAMIC EVENT TYPE BADGES ===== */
+.event-type-slot {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+.event-type-span {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+}
+
+.event-type-deadline {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #dc2626;
+}
+
+.event-type-marker {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #d97706;
+}
+
+/* ===== REPEAT PATTERN BADGES ===== */
+.repeat-daily {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+.repeat-weekly {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+}
+
+.repeat-monthly {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #d97706;
+}

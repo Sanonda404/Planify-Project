@@ -1,6 +1,7 @@
 package com.planify.frontend.controllers.Request;
 
 import com.google.gson.Gson;
+import com.planify.frontend.controllers.events.EventDetailController;
 import com.planify.frontend.controllers.project.ProjectDetailsController;
 import com.planify.frontend.utils.services.ApiService;
 import javafx.concurrent.Task;
@@ -67,6 +68,39 @@ public class DeleteRequestController {
             if(refresher instanceof ProjectDetailsController){
                 ((ProjectDetailsController)refresher).refresh();
             }
+        });
+
+        // 3. Handle Failure
+        task.setOnFailed(e -> {
+            Throwable error = task.getException();
+            // Use Platform.runLater to show an alert if not already on FX thread
+            JSONObject errorJson = new JSONObject(error.getMessage());
+            String msg = errorJson.getString("error");
+            showErrorAlert("Failed to delete milestone: "+msg);
+            System.out.println(msg);
+        });
+
+        // 4. Run it on a background thread
+        Thread thread = new Thread(task);
+        thread.setDaemon(true); // Ensures the thread closes if the app exits
+        thread.start();
+    }
+
+    public static void deleteEvent(String eventUuid, String email, Object refresher) {
+        // 1. Create a background task
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                String endpoint = "/events/delete/" + eventUuid;
+                ApiService.delete(endpoint);
+                return null;
+            }
+        };
+
+        // 2. Handle Success
+        task.setOnSucceeded(e -> {
+            System.out.println("Successfully deleted Milestone");
+            showSuccessAlert("Successfully Deleted Milestone");
         });
 
         // 3. Handle Failure

@@ -171,7 +171,7 @@ public class ProjectCardController {
     }
 
     @FXML
-    private void handleAddTask() {
+    private void handleDeleteProject() {
         // TODO: open add-task view with project context
         System.out.println("Add task: " + project.getName());
     }

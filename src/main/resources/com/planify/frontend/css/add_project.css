@@ -14,8 +14,8 @@
 
 /* ===== HEADER ===== */
 .ap-header {
-    -fx-background-color: linear-gradient(to bottom right, #b197fc 0%, #a78bfa 20%, #9d7bff 45%, #8b5cf6 70%, #6d28d9 100%);
-    -fx-background-radius: 24 24 0 0;
+    -fx-background-color: #6d28d9;
+    -fx-background-radius: 5 5 0 0;
     -fx-padding: 20 24 20 24;
 }
 
@@ -357,6 +357,11 @@
     -fx-text-fill: #1e293b;
     -fx-padding: 8 10 8 10;
     -fx-alignment: center;
+}
+
+.ap-ampm-combo .list-cell:selected {
+    -fx-background-color: #b675ea;
+    -fx-text-fill: white;
 }
 
 .ap-ampm-combo .arrow-button {

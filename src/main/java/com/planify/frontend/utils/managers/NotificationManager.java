@@ -130,7 +130,6 @@ public class NotificationManager {
                 GroupEventDataManager.saveOrUpdateGroupEvent(event, parent);
                 break;
             case "GROUP_EVENT_DELETED":
-                event = gson.fromJson(dataJson, EventGetRequest.class);
                 GroupEventDataManager.deleteGroupEvent(notif.getTargetUuid(), parent);
                 break;
             case "GROUP_EVENT_SCHEDULE_CONFLICT":

@@ -224,7 +224,7 @@
 }
 
 .am-pm-combo .arrow {
-    -fx-background-color: #685AFF;
+    -fx-background-color: #847bfd;
 }
 
 /* ===== DATE PICKER ===== */
@@ -241,7 +241,7 @@
 }
 
 .styled-datepicker .text-field {
-    -fx-background-color: transparent;
+    -fx-background-color: nevi;
     -fx-padding: 8 12;
     -fx-font-size: 13px;
 }

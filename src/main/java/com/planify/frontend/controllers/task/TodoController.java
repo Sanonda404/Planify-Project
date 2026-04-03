@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -579,56 +580,216 @@ public class TodoController extends SceneParent implements Initializable {
     public void showTaskDetails(TaskDetails task) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Task Details");
-        VBox content = new VBox(15);
-        content.setPadding(new Insets(20));
-        content.getStyleClass().add("task-detail-dialog");
+        dialog.setHeaderText(null);
 
+        // Apply CSS to dialog
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("/com/planify/frontend/css/Todo.css").toExternalForm()
+        );
+        dialogPane.getStyleClass().add("task-detail-dialog");
+
+        VBox content = new VBox(16);
+        content.setPadding(new Insets(20));
+        content.setStyle("-fx-background-color: white; -fx-background-radius: 16;");
+
+        // Title Section
         Label titleLabel = new Label(task.getTitle());
         titleLabel.getStyleClass().add("detail-title");
         titleLabel.setWrapText(true);
+        titleLabel.setMaxWidth(Double.MAX_VALUE);
 
-        HBox statusBox = new HBox(10);
+        // Status Section
+        HBox statusBox = new HBox(12);
         statusBox.setAlignment(Pos.CENTER_LEFT);
+        statusBox.getStyleClass().add("status-box");
+
         Label statusLabel = new Label("Status:");
         statusLabel.getStyleClass().add("detail-label");
+
         Label statusValue = new Label(task.getStatus());
-        statusValue.getStyleClass().addAll("detail-value", "status-badge", "status-" + task.getStatus().toLowerCase());
+        String statusClass = "status-" + task.getStatus().toLowerCase().replace("_", "");
+        statusValue.getStyleClass().addAll("detail-value", "status-badge", statusClass);
+
         statusBox.getChildren().addAll(statusLabel, statusValue);
+        HBox.setHgrow(statusValue, Priority.ALWAYS);
 
         content.getChildren().addAll(titleLabel, new Separator(), statusBox);
 
-        addDetailRow(content, "Description:", task.getDescription());
-        addDetailRow(content, "Due Date:", formatDate(task.getDueDate()));
-        addDetailRow(content, "Category:", task.getCategory());
-        addDetailRow(content, "Milestone:", task.getMilestoneName());
-        addDetailRow(content, "Project:", task.getProjectName());
+        // Details Grid
+        GridPane detailsGrid = new GridPane();
+        detailsGrid.setHgap(16);
+        detailsGrid.setVgap(12);
+        detailsGrid.setPadding(new Insets(8, 0, 8, 0));
 
+        int row = 0;
+
+        // Description
+        if (task.getDescription() != null && !task.getDescription().isBlank()) {
+            addGridRow(detailsGrid, row++, "📝 Description:", task.getDescription());
+        }
+
+        // Due Date
+        if (task.getDueDate() != null && !task.getDueDate().isBlank()) {
+            addGridRow(detailsGrid, row++, "📅 Due Date:", formatDate(task.getDueDate()));
+        }
+
+        // Category
+        if (task.getCategory() != null && !task.getCategory().isBlank()) {
+            addGridRow(detailsGrid, row++, "🏷️ Category:", task.getCategory());
+        }
+
+        // Milestone
+        if (task.getMilestoneName() != null && !task.getMilestoneName().isBlank()) {
+            addGridRow(detailsGrid, row++, "🎯 Milestone:", task.getMilestoneName());
+        }
+
+        // Project
+        if (task.getProjectName() != null && !task.getProjectName().isBlank()) {
+            addGridRow(detailsGrid, row++, "📊 Project:", task.getProjectName());
+        }
+
+        // Weight & Priority
+        HBox metaBox = new HBox(20);
+        if (task.getWeight() > 0) {
+            Label weightLabel = new Label("⚡ Weight: " + task.getWeight());
+            weightLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #457b9d; -fx-font-weight: 600;");
+            metaBox.getChildren().add(weightLabel);
+        }
+        if (task.getPriority() != null && !task.getPriority().isBlank()) {
+            String priorityColor = getPriorityColor(task.getPriority());
+            Label priorityLabel = new Label("🔴 Priority: " + task.getPriority());
+            priorityLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: " + priorityColor + "; -fx-font-weight: 600;");
+            metaBox.getChildren().add(priorityLabel);
+        }
+        if (!metaBox.getChildren().isEmpty()) {
+            detailsGrid.add(metaBox, 0, row++, 2, 1);
+        }
+
+        content.getChildren().add(detailsGrid);
+
+        // Creator Info
         if (task.getCreator() != null) {
-            addDetailRow(content, "Created By:", task.getCreator().getName() + " (" + task.getCreator().getEmail() + ")");
+            VBox creatorBox = new VBox(4);
+            creatorBox.getStyleClass().add("content-box");
+            Label creatorLabel = new Label("👤 Created By");
+            creatorLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #64748b;");
+            Label creatorValue = new Label(task.getCreator().getName() + " (" + task.getCreator().getEmail() + ")");
+            creatorValue.setStyle("-fx-font-size: 12px; -fx-text-fill: #1e293b;");
+            creatorBox.getChildren().addAll(creatorLabel, creatorValue);
+            content.getChildren().add(creatorBox);
         }
 
+        // Assignees
         if (task.getAssigneeMembers() != null && !task.getAssigneeMembers().isEmpty()) {
-            String assignees = task.getAssigneeMembers().stream().map(MemberInfo::getName).collect(Collectors.joining(", "));
-            addDetailRow(content, "Assignees:", assignees);
+            VBox assigneesBox = new VBox(8);
+            assigneesBox.getStyleClass().add("assignees-container");
+
+            Label assigneesHeader = new Label("👥 Assigned To");
+            assigneesHeader.setStyle("-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #64748b;");
+
+            FlowPane assigneesFlow = new FlowPane(8, 6);
+            for (MemberInfo assignee : task.getAssigneeMembers()) {
+                Label chip = new Label(assignee.getName());
+                chip.getStyleClass().add("assignee-chip");
+                assigneesFlow.getChildren().add(chip);
+            }
+
+            assigneesBox.getChildren().addAll(assigneesHeader, assigneesFlow);
+            content.getChildren().add(assigneesBox);
         }
 
+        // Attachment
         if (task.getAttachmentUrl() != null && !task.getAttachmentUrl().isBlank()) {
+            VBox attachBox = new VBox(8);
+            attachBox.getStyleClass().add("content-box");
+
+            Label attachHeader = new Label("📎 Attachment");
+            attachHeader.setStyle("-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #64748b;");
+
             Hyperlink link = new Hyperlink(task.getAttachmentUrl());
-            link.setOnAction(e -> System.out.println("Open: " + task.getAttachmentUrl()));
-            VBox attachBox = new VBox(5);
-            attachBox.getChildren().addAll(new Label("Attachment:"), link);
+            link.getStyleClass().add("attachment-link");
+            link.setOnAction(e -> {
+                try {
+                    java.awt.Desktop.getDesktop().browse(new java.net.URI(task.getAttachmentUrl()));
+                } catch (Exception ex) {
+                    System.out.println("Cannot open: " + task.getAttachmentUrl());
+                }
+            });
+
+            attachBox.getChildren().addAll(attachHeader, link);
             content.getChildren().add(attachBox);
         }
 
+        // ScrollPane
         ScrollPane scroll = new ScrollPane(content);
         scroll.setFitToWidth(true);
-        scroll.setPrefHeight(400);
+        scroll.setPrefHeight(450);
+        scroll.setMaxHeight(550);
+        scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scroll.getStyleClass().add("detail-scroll-pane");
 
-        dialog.getDialogPane().setContent(scroll);
-        dialog.getDialogPane().getButtonTypes().addAll(new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE), ButtonType.CLOSE);
+        dialogPane.setContent(scroll);
+        dialogPane.getButtonTypes().addAll(
+                new ButtonType("✏️ Edit", ButtonBar.ButtonData.OK_DONE),
+                ButtonType.CLOSE
+        );
+
+        // Style the buttons
+        Node editButton = dialogPane.lookupButton(new ButtonType("✏️ Edit", ButtonBar.ButtonData.OK_DONE));
+        if (editButton != null) {
+            editButton.setStyle(
+                    "-fx-background-color: linear-gradient(135deg, #457b9d, #1d3557);" +
+                            "-fx-text-fill: white;" +
+                            "-fx-font-weight: 600;" +
+                            "-fx-padding: 8 20;" +
+                            "-fx-background-radius: 8;" +
+                            "-fx-cursor: hand;"
+            );
+        }
+
+        Node closeButton = dialogPane.lookupButton(ButtonType.CLOSE);
+        if (closeButton != null) {
+            closeButton.setStyle(
+                    "-fx-background-color: #f1f5f9;" +
+                            "-fx-text-fill: #475569;" +
+                            "-fx-font-weight: 600;" +
+                            "-fx-padding: 8 20;" +
+                            "-fx-background-radius: 8;" +
+                            "-fx-cursor: hand;"
+            );
+        }
+
         dialog.showAndWait().ifPresent(response -> {
-            if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) showEditTaskDialog(task);
+            if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                showEditTaskDialog(task);
+            }
         });
+    }
+
+    private void addGridRow(GridPane grid, int row, String label, String value) {
+        if (value == null || value.isBlank()) return;
+
+        Label labelWidget = new Label(label);
+        labelWidget.getStyleClass().add("detail-label");
+
+        Label valueWidget = new Label(value);
+        valueWidget.getStyleClass().add("detail-value");
+        valueWidget.setWrapText(true);
+
+        grid.add(labelWidget, 0, row);
+        grid.add(valueWidget, 1, row);
+
+        GridPane.setHgrow(valueWidget, Priority.ALWAYS);
+    }
+
+    private String getPriorityColor(String priority) {
+        switch (priority.toLowerCase()) {
+            case "high": return "#dc2626";
+            case "medium": return "#d97706";
+            case "low": return "#10b981";
+            default: return "#64748b";
+        }
     }
 
     private void addDetailRow(VBox container, String label, String value) {

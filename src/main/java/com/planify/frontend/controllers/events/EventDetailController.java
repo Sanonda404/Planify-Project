@@ -3,6 +3,7 @@ package com.planify.frontend.controllers.events;
 import com.planify.frontend.controllers.Request.DeleteRequestController;
 import com.planify.frontend.controllers.Request.EditRequestController;
 import com.planify.frontend.models.events.EventGetRequest;
+import com.planify.frontend.utils.data.personal.EventDataManager;
 import com.planify.frontend.utils.managers.LocalDataManager;
 import com.planify.frontend.utils.helpers.AlertCreator;
 import javafx.fxml.FXML;
@@ -204,6 +205,7 @@ public class EventDetailController {
         }
     }
 
+
     private void populateRepeatInfo() {
         if (event.getRepeatPattern() != null && !"NO_REPEAT".equalsIgnoreCase(event.getRepeatPattern())) {
             repeatInfoBox.setVisible(true);
@@ -306,10 +308,10 @@ public class EventDetailController {
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 // TODO: Call backend to delete event
-                // DeleteRequestController.deleteEvent(event.getUuid(), LocalDataManager.getUserEmail(), this);
-
-                // For now, simulate success
-                deleteEventLocally();
+                //personal event
+                if(event.getUuid().startsWith("PER")) EventDataManager.deleteEvent(event.getTitle());
+                else DeleteRequestController.deleteEvent(event.getUuid(), LocalDataManager.getUserEmail(), this);
+                refreshAndClose();
             }
         });
     }

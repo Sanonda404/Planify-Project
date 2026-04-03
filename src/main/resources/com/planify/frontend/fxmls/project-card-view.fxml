@@ -4,24 +4,19 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ScrollPane?>
-<VBox maxWidth="1.7976931348623157E308"
-      spacing="16.0"
-      styleClass="project-card"
-      stylesheets="@../css/projects.css"
-      xmlns="http://javafx.com/javafx/25"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.planify.frontend.controllers.project.ProjectCardController">
+<VBox maxWidth="1.7976931348623157E308" spacing="16.0" styleClass="project-card" stylesheets="@../css/projects.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.project.ProjectCardController">
 
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <children>
@@ -30,82 +25,65 @@
             <children>
                 <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="titleLabel"
-                               text="Project Title"
-                               styleClass="project-title"
-                               wrapText="true"/>
+                        <Label fx:id="titleLabel" styleClass="project-title" text="Project Title" wrapText="true" />
 
-                        <Label fx:id="descLabel"
-                               text="Project description goes here"
-                               styleClass="project-description"
-                               wrapText="true"/>
+                        <Label fx:id="descLabel" styleClass="project-description" text="Project description goes here" wrapText="true" />
                     </children>
                 </VBox>
 
                 <StackPane styleClass="progress-circle-container">
-                    <Label fx:id="progressLabel"
-                           text="0%"
-                           styleClass="progress-percent"/>
+                    <Label fx:id="progressLabel" styleClass="progress-percent" text="0%" />
                 </StackPane>
             </children>
         </HBox>
 
         <!-- Progress Bar -->
-        <ProgressBar fx:id="progressBar"
-                     progress="0.0"
-                     maxWidth="1.7976931348623157E308"
-                     styleClass="custom-progress-bar"/>
+        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" styleClass="custom-progress-bar" />
 
         <!-- Stats Row -->
-        <HBox spacing="16.0" alignment="CENTER">
+        <HBox alignment="CENTER" spacing="16.0">
             <children>
-                <HBox spacing="8.0" alignment="CENTER" styleClass="stat-box" HBox.hgrow="ALWAYS">
-                    <Label text="📋" styleClass="stat-icon"/>
-                    <Label fx:id="milestoneCountLabel"
-                           text="0 Milestones"
-                           styleClass="stat-text"/>
+                <HBox alignment="CENTER" spacing="8.0" styleClass="stat-box" HBox.hgrow="ALWAYS">
+                    <Label styleClass="stat-icon" text="📋" />
+                    <Label fx:id="milestoneCountLabel" styleClass="stat-text" text="0 Milestones" />
                 </HBox>
 
-                <HBox spacing="8.0" alignment="CENTER" styleClass="stat-box" HBox.hgrow="ALWAYS">
-                    <Label text="👥" styleClass="stat-icon"/>
-                    <Label fx:id="teamCountLabel"
-                           text="0 Members"
-                           styleClass="stat-text"/>
+                <HBox alignment="CENTER" spacing="8.0" styleClass="stat-box" HBox.hgrow="ALWAYS">
+                    <Label styleClass="stat-icon" text="👥" />
+                    <Label fx:id="teamCountLabel" styleClass="stat-text" text="0 Members" />
                 </HBox>
             </children>
         </HBox>
 
         <!-- Milestones Section -->
         <VBox spacing="10.0">
-            <Label text="📌 Recent Milestones" styleClass="section-title"/>
-            <ScrollPane fitToWidth="true"
-                        prefHeight="180"
-                        maxHeight="180"
-                        styleClass="milestones-scroll">
+            <Label styleClass="section-title" text="📌 Recent Milestones" />
+            <ScrollPane fitToWidth="true" maxHeight="180" prefHeight="180" styleClass="milestones-scroll">
                 <content>
-                    <GridPane fx:id="milestoneGrid"
-                              hgap="10.0"
-                              vgap="10.0"
-                              styleClass="milestones-grid"/>
+                    <GridPane fx:id="milestoneGrid" hgap="10.0" styleClass="milestones-grid" vgap="10.0" />
                 </content>
             </ScrollPane>
         </VBox>
 
         <!-- Team Section -->
         <VBox spacing="10.0">
-            <Label text="👥 Team Members" styleClass="section-title"/>
-            <FlowPane fx:id="teamPane"
-                      hgap="8.0"
-                      vgap="8.0"
-                      styleClass="team-container"/>
+            <Label styleClass="section-title" text="👥 Team Members" />
+            <FlowPane fx:id="teamPane" hgap="8.0" styleClass="team-container" vgap="8.0" />
         </VBox>
-
-        <!-- Action Button -->
-        <Button fx:id="viewDetailsBtn"
-                mnemonicParsing="false"
-                onAction="#handleViewDetails"
-                styleClass="view-details-btn"
-                text="View Project Details"
-                maxWidth="1.7976931348623157E308"/>
+      <GridPane hgap="10.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+      
+                    <!-- Action Button -->
+              <Button fx:id="viewDetailsBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleViewDetails" styleClass="view-details-btn" text="View Project Details" />
+            <Button fx:id="deleteBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDeleteProject" styleClass="delete-btn" text="Delete" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
     </children>
 </VBox>

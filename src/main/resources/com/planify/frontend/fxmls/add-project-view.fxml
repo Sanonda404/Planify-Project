@@ -7,135 +7,143 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="750" prefWidth="950" stylesheets="@../css/add_project.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.planify.frontend.controllers.project.AddProjectController">
+<AnchorPane prefHeight="704.0" prefWidth="868.0" stylesheets="@../css/add_project.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.project.AddProjectController">
 
     <children>
-        <StackPane styleClass="ap-overlay" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane layoutX="88.0" layoutY="26.4" prefHeight="724.0" prefWidth="862.0" styleClass="ap-overlay" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <VBox maxHeight="720" maxWidth="860" prefWidth="860" styleClass="ap-modal">
 
                 <!-- Header -->
                 <HBox alignment="CENTER_LEFT" spacing="12" styleClass="ap-header">
                     <padding>
-                        <Insets top="18" right="24" bottom="18" left="24"/>
+                        <Insets bottom="18" left="24" right="24" top="18" />
                     </padding>
-                    <Label text="📊" styleClass="ap-header-icon"/>
-                    <Label text="Create New Project" styleClass="ap-header-title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button onAction="#closeWindow" styleClass="ap-close-btn" text="×"/>
+                    <Label styleClass="ap-header-icon" text="📊" />
+                    <Label styleClass="ap-header-title" text="Create New Project" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#closeWindow" styleClass="ap-close-btn" text="×" />
                 </HBox>
 
                 <ScrollPane fitToWidth="true" styleClass="ap-scroll">
                     <content>
-                        <VBox spacing="24" fillWidth="true" styleClass="ap-content">
+                        <VBox fillWidth="true" spacing="24" styleClass="ap-content">
                             <padding>
-                                <Insets top="28" right="32" bottom="32" left="32"/>
+                                <Insets bottom="32" left="32" right="32" top="28" />
                             </padding>
 
                             <!-- Project Name -->
                             <VBox spacing="8">
-                                <Label text="Project Name" styleClass="ap-label"/>
-                                <TextField fx:id="taskNameField" styleClass="ap-textfield" promptText="Enter project name"/>
+                                <Label styleClass="ap-label" text="Project Name" />
+                                <TextField fx:id="taskNameField" promptText="Enter project name" styleClass="ap-textfield" />
                             </VBox>
 
                             <!-- Description -->
                             <VBox spacing="8">
-                                <Label text="Description" styleClass="ap-label"/>
-                                <TextArea fx:id="descriptionArea" prefRowCount="4" styleClass="ap-textarea"
-                                          promptText="Describe what this project is about" wrapText="true"/>
+                                <Label styleClass="ap-label" text="Description" />
+                                <TextArea fx:id="descriptionArea" prefRowCount="4" promptText="Describe what this project is about" styleClass="ap-textarea" wrapText="true" />
                             </VBox>
 
-                            <Separator styleClass="ap-separator"/>
+                            <Separator styleClass="ap-separator" />
 
                             <!-- Project Type & Group Selection -->
                             <GridPane hgap="20" vgap="16">
                                 <columnConstraints>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
                                 </columnConstraints>
 
                                 <!-- Project Type -->
-                                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="projectTypeContainer">
-                                    <Label text="Project Type" styleClass="ap-label"/>
-                                    <ComboBox fx:id="projectTypeCombo" styleClass="ap-combo" promptText="Select project type"/>
+                                <VBox fx:id="projectTypeContainer" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                    <Label styleClass="ap-label" text="Project Type" />
+                                    <ComboBox fx:id="projectTypeCombo" promptText="Select project type" styleClass="ap-combo" />
                                 </VBox>
 
                                 <!-- Group Selection -->
-                                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="groupSelectionContainer">
-                                    <Label text="Select Group" styleClass="ap-label"/>
-                                    <ComboBox fx:id="groupSelectCombo" styleClass="ap-combo" promptText="Choose a group"/>
+                                <VBox fx:id="groupSelectionContainer" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <Label styleClass="ap-label" text="Select Group" />
+                                    <ComboBox fx:id="groupSelectCombo" promptText="Choose a group" styleClass="ap-combo" />
                                 </VBox>
+                        <rowConstraints>
+                           <RowConstraints />
+                        </rowConstraints>
                             </GridPane>
 
-                            <Separator styleClass="ap-separator"/>
+                            <Separator styleClass="ap-separator" />
 
                             <!-- Timeline Section -->
-                            <Label text="📅 Timeline" styleClass="ap-section-title"/>
+                            <Label styleClass="ap-section-title" text="📅 Timeline" />
 
                             <!-- Start Date & Time -->
                             <GridPane hgap="20" vgap="12">
                                 <columnConstraints>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
                                 </columnConstraints>
 
                                 <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                    <Label text="Start Date" styleClass="ap-label"/>
-                                    <DatePicker fx:id="startDatePicker" styleClass="ap-date-picker" promptText="Select start date"/>
+                                    <Label styleClass="ap-label" text="Start Date" />
+                                    <DatePicker fx:id="startDatePicker" promptText="Select start date" styleClass="ap-date-picker" />
                                 </VBox>
 
                                 <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                    <Label text="Start Time" styleClass="ap-label"/>
-                                    <HBox spacing="8" alignment="CENTER_LEFT">
-                                        <Spinner fx:id="startHour" styleClass="ap-time-spinner" editable="true" prefWidth="70"/>
-                                        <Label text=":" styleClass="ap-time-separator"/>
-                                        <Spinner fx:id="startMinute" styleClass="ap-time-spinner" editable="true" prefWidth="70"/>
-                                        <ComboBox fx:id="startAmPm" styleClass="ap-ampm-combo" prefWidth="70"/>
+                                    <Label styleClass="ap-label" text="Start Time" />
+                                    <HBox alignment="CENTER_LEFT" spacing="8">
+                                        <Spinner fx:id="startHour" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
+                                        <Label styleClass="ap-time-separator" text=":" />
+                                        <Spinner fx:id="startMinute" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
+                                        <ComboBox fx:id="startAmPm" prefWidth="70" styleClass="ap-ampm-combo" />
                                     </HBox>
                                 </VBox>
+                        <rowConstraints>
+                           <RowConstraints />
+                        </rowConstraints>
                             </GridPane>
 
                             <!-- Deadline Date & Time -->
                             <GridPane hgap="20" vgap="12">
                                 <columnConstraints>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
-                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+                                    <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
                                 </columnConstraints>
 
                                 <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                    <Label text="Deadline Date" styleClass="ap-label"/>
-                                    <DatePicker fx:id="deadlinePicker" styleClass="ap-date-picker" promptText="Select deadline date"/>
+                                    <Label styleClass="ap-label" text="Deadline Date" />
+                                    <DatePicker fx:id="deadlinePicker" promptText="Select deadline date" styleClass="ap-date-picker" />
                                 </VBox>
 
                                 <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                    <Label text="Deadline Time" styleClass="ap-label"/>
-                                    <HBox spacing="8" alignment="CENTER_LEFT">
-                                        <Spinner fx:id="deadlineHour" styleClass="ap-time-spinner" editable="true" prefWidth="70"/>
-                                        <Label text=":" styleClass="ap-time-separator"/>
-                                        <Spinner fx:id="deadlineMinute" styleClass="ap-time-spinner" editable="true" prefWidth="70"/>
-                                        <ComboBox fx:id="deadlineAmPm" styleClass="ap-ampm-combo" prefWidth="70"/>
+                                    <Label styleClass="ap-label" text="Deadline Time" />
+                                    <HBox alignment="CENTER_LEFT" spacing="8">
+                                        <Spinner fx:id="deadlineHour" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
+                                        <Label styleClass="ap-time-separator" text=":" />
+                                        <Spinner fx:id="deadlineMinute" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
+                                        <ComboBox fx:id="deadlineAmPm" prefWidth="70" styleClass="ap-ampm-combo" />
                                     </HBox>
                                 </VBox>
+                        <rowConstraints>
+                           <RowConstraints />
+                        </rowConstraints>
                             </GridPane>
 
-                            <Separator styleClass="ap-separator"/>
+                            <Separator styleClass="ap-separator" />
 
                             <!-- Action Buttons -->
-                            <HBox spacing="16" alignment="CENTER">
-                                <Button onAction="#closeWindow" styleClass="ap-cancel-btn" text="Cancel" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                                <Button onAction="#addProject" styleClass="ap-create-btn" text="Create Project" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <HBox alignment="CENTER" spacing="16">
+                                <Button maxWidth="Infinity" onAction="#closeWindow" styleClass="ap-cancel-btn" text="Cancel" HBox.hgrow="ALWAYS" />
+                                <Button maxWidth="Infinity" onAction="#addProject" styleClass="ap-create-btn" text="Create Project" HBox.hgrow="ALWAYS" />
                             </HBox>
 
                         </VBox>

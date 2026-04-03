@@ -223,7 +223,7 @@
    BUTTONS
 ========================= */
 .login-btn {
-    -fx-background-color: linear-gradient(to right, #7c3aed, #8b5cf6);
+    -fx-background-color: linear-gradient(to right, #6e25ec, #662bed);
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: 700;
@@ -238,7 +238,7 @@
 }
 
 .signup-btn {
-    -fx-background-color: linear-gradient(to right, #8b5cf6, #c084fc);
+    -fx-background-color: #c1121f;
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: 700;
@@ -249,7 +249,7 @@
 }
 
 .signup-btn:hover {
-    -fx-background-color: linear-gradient(to right, #7c3aed, #b56cf8);
+    -fx-background-color: #9e2a2b;
 }
 
 .login-btn:disabled,
