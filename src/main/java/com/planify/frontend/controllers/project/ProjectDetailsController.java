@@ -6,6 +6,7 @@ import com.planify.frontend.models.notification.NotificationResponse;
 import com.planify.frontend.models.project.MilestoneDetails;
 import com.planify.frontend.models.project.ProjectDetails;
 import com.planify.frontend.models.tasks.TaskDetails;
+import com.planify.frontend.utils.helpers.DateTimeFormatter;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.managers.NotificationManager;
 import com.planify.frontend.utils.data.group.GroupProjectDataManager;
@@ -158,7 +159,7 @@ public class ProjectDetailsController extends SceneParent implements Initializab
         projectDesc.setText(projectDetails.getDescription());
         groupChip.setText("📁 " + (projectDetails.getGroupName() != null ? projectDetails.getGroupName() : "Personal"));
         projectProgress.setText(projectDetails.getProgress() + "%");
-        projectDue.setText("Due: " + (projectDetails.getDeadline() != null ? projectDetails.getDeadline() : "Not set"));
+        projectDue.setText("Due: " + (projectDetails.getDeadline() != null ? DateTimeFormatter.FormatDateTime(projectDetails.getDeadline()) : "Not set"));
 
         milestoneCount.setText(String.valueOf(projectDetails.getTotalMilestones()));
         taskCount.setText(String.valueOf(projectDetails.getTotalTasks()));

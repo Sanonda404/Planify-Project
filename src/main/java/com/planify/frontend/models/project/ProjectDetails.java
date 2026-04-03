@@ -177,4 +177,8 @@ public class ProjectDetails {
     public boolean isCompleted() {
         return isCompleted;
     }
+
+    public void setProgress(int progress){
+        this.progress = progress;
+    }
 }

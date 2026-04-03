@@ -516,61 +516,6 @@ public class AnalyticsController extends SceneParent implements Initializable {
         label.getStyleClass().add("empty-state");
         return label;
     }
-
-    // ========== NOTIFICATION METHODS ==========
-    public VBox createNotificationItem(NotificationResponse notif) {
-        VBox item = new VBox(6);
-        boolean isRead = "READ".equalsIgnoreCase(notif.getStatus());
-        item.getStyleClass().addAll("notif-item", isRead ? "notif-read" : "notif-unread");
-        item.setPadding(new Insets(12));
-
-        Label titleLabel = new Label(notif.getTitle());
-        titleLabel.getStyleClass().add("notif-item-title");
-
-        Label textLabel = new Label(notif.getMessage());
-        textLabel.getStyleClass().add("notif-item-text");
-        textLabel.setWrapText(true);
-        item.getChildren().addAll(titleLabel, textLabel);
-
-        if (("GROUP_INVITE".equalsIgnoreCase(notif.getType()) || "JOIN_REQUEST".equalsIgnoreCase(notif.getType())) && !isRead) {
-            HBox actions = new HBox(8);
-            Button acceptBtn = new Button("Accept");
-            acceptBtn.getStyleClass().add("btn-accept");
-            acceptBtn.setOnAction(e -> handleInviteAction(notif, "ACCEPT", item));
-            Button declineBtn = new Button("Decline");
-            declineBtn.getStyleClass().add("btn-decline");
-            declineBtn.setOnAction(e -> handleInviteAction(notif, "DECLINE", item));
-            actions.getChildren().addAll(acceptBtn, declineBtn);
-            item.getChildren().add(actions);
-        }
-
-        Label timeLabel = new Label(formatNotificationTime(notif.getCreatedAt()));
-        timeLabel.getStyleClass().add("notif-time");
-        item.getChildren().add(timeLabel);
-        return item;
-    }
-
-    private void handleInviteAction(NotificationResponse notif, String action, VBox uiItem) {
-        uiItem.getChildren().removeIf(node -> node instanceof HBox);
-        uiItem.getStyleClass().remove("notif-unread");
-        uiItem.getStyleClass().add("notif-read");
-    }
-
-    private String formatNotificationTime(String dateTimeStr) {
-        try {
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr);
-            LocalDateTime now = LocalDateTime.now();
-            java.time.Duration duration = java.time.Duration.between(dateTime, now);
-            if (duration.toMinutes() < 1) return "Just now";
-            if (duration.toMinutes() < 60) return duration.toMinutes() + " minutes ago";
-            if (duration.toHours() < 24) return duration.toHours() + " hours ago";
-            if (duration.toDays() < 7) return duration.toDays() + " days ago";
-            return dateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-        } catch (Exception e) {
-            return dateTimeStr;
-        }
-    }
-
     // ========== EVENT HANDLERS ==========
     @FXML private void toggleNotifications() {
         boolean isVisible = notifPanel.isVisible();

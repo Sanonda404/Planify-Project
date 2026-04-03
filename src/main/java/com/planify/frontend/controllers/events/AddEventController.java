@@ -408,8 +408,6 @@ public class AddEventController implements Initializable {
             return;
         }
         gatherEventData();
-        // Show success message
-        showSuccessAlert();
         // Close modal
         handleClose();
     }

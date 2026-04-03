@@ -60,6 +60,7 @@ public class EventDetailController {
 
     public void setEvent(EventGetRequest event) {
         this.event = event;
+        System.out.println(event.getUuid());
         populateEventDetails();
         configurePermissions();
     }
@@ -310,7 +311,7 @@ public class EventDetailController {
                 // TODO: Call backend to delete event
                 //personal event
                 if(event.getUuid().startsWith("PER")) EventDataManager.deleteEvent(event.getTitle());
-                else DeleteRequestController.deleteEvent(event.getUuid(), LocalDataManager.getUserEmail(), this);
+                else DeleteRequestController.deleteEvent(event.getUuid(), this);
                 refreshAndClose();
             }
         });
@@ -318,8 +319,7 @@ public class EventDetailController {
 
     private void deleteEventLocally() {
         // TODO: Remove from local data manager
-        // EventDataManager.deleteEvent(event.getUuid());
-        // GroupEventDataManager.deleteEvent(event.getUuid());
+        EventDataManager.deleteEvent(event.getUuid());
 
         refreshAndClose();
         AlertCreator.showSuccessAlert("Event deleted successfully!");

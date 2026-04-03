@@ -558,7 +558,7 @@ public class SchedulesController extends SceneParent {
             }
 
             EventGetRequest recurringEvent = new EventGetRequest(
-                    event.getUuid() + "_" + currentStart.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    event.getUuid(),
                     event.getTitle(),
                     event.getDescription(),
                     event.getType(),
@@ -1631,7 +1631,6 @@ public class SchedulesController extends SceneParent {
     }
 
     private void openEventDetails(EventGetRequest event) {
-        System.out.println("Opening details");
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/planify/frontend/fxmls/event-detail-view.fxml"));

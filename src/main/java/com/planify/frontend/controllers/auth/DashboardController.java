@@ -9,6 +9,7 @@ import com.planify.frontend.models.notification.NotificationResponse;
 import com.planify.frontend.models.project.ProjectDetails;
 import com.planify.frontend.models.tasks.TaskDetails;
 import com.planify.frontend.utils.InitApp;
+import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.managers.LocalDataManager;
 import com.planify.frontend.utils.managers.NotificationManager;
@@ -201,7 +202,7 @@ public class DashboardController implements Initializable {
     }
 
     private void populateWelcomeMessage() {
-        welcomeLabel.setText("Welcome, " + LocalDataManager.getUserName() + "! 👋");
+        welcomeLabel.setText("Welcome, " + UserSession.getInstance().getName() + "! 👋");
     }
 
     private void populateStatistics() {

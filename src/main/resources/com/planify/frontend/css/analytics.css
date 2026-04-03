@@ -49,7 +49,7 @@
 }
 
 .dashboard-button {
--fx-background-color: linear-gradient(to right, #fbcfe8, #f9a8d4);
+-fx-background-color: #03045e;
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 600;
@@ -195,7 +195,7 @@
 }
 
 .date-range-btn-active {
-    -fx-background-color: #457b9d;
+    -fx-background-color: #9e2a2b;
     -fx-text-fill: white;
     -fx-font-size: 12px;
     -fx-font-weight: 600;
@@ -223,19 +223,19 @@
 }
 
 .kpi-purple {
-    -fx-background-color: linear-gradient(to right, #B9A7FF, #9C8CFF);
+    -fx-background-color: linear-gradient(to right, #8d46d8, #8441d6);
 }
 
 .kpi-green {
-    -fx-background-color: linear-gradient(to right, #A7F3D0, #6EE7B7);
+    -fx-background-color: linear-gradient(to right, #3caf41, #1a831d);
 }
 
 .kpi-blue {
-    -fx-background-color: linear-gradient(to right, #BFDBFE, #93C5FD);
+    -fx-background-color: linear-gradient(to right, #2374da, #2d86ef);
 }
 
 .kpi-orange {
-    -fx-background-color: linear-gradient(to right, #FDE68A, #FCD34D);
+    -fx-background-color: linear-gradient(to right, #ff812b, #f39c2a);
 }
 .kpi-icon { -fx-font-size: 28px; }
 .kpi-value {
@@ -244,11 +244,13 @@
     -fx-text-fill: white;
 }
 .kpi-label {
-    -fx-font-size: 11px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
     -fx-text-fill: rgba(255, 255, 255, 0.85);
 }
 .kpi-trend {
-    -fx-font-size: 9px;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
     -fx-text-fill: rgba(255, 255, 255, 0.7);
 }
 

@@ -8,7 +8,7 @@ public class GroupActivity {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public int getActiveMembers() { return activeMembers; }
+    public int getActiveMembers() { return totalMembers; }
     public void setActiveMembers(int activeMembers) { this.activeMembers = activeMembers; }
     public int getTotalMembers() { return totalMembers; }
     public void setTotalMembers(int totalMembers) { this.totalMembers = totalMembers; }

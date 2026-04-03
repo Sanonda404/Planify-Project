@@ -82,7 +82,7 @@ public class EventDataManager {
 
         String triggerAt = TimingCalculationHelper.calculateTriggerTime(newEvent.getStartDateTime(), newEvent.getReminderMinutesBefore());
 
-        ReminderManager.saveReminder(uuid, newEvent.getTitle(), triggerAt, newEvent.getReminderType()); // Update reminder file
+        ReminderManager.saveReminder(uuid, newEvent.getTitle(), triggerAt, newEvent.getStartDateTime(), newEvent.getReminderType()); // Update reminder file
         GroupProjectDataManager.refresh(refresher);
         personalEvents.add(newEvent);
         saveAll();

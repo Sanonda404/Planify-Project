@@ -82,8 +82,8 @@ public class DeleteRequestController {
         thread.start();
     }
 
-    public static void deleteEvent(String eventUuid, String email, Object refresher) {
-        // 1. Create a background task
+    public static void deleteEvent(String eventUuid, Object refresher) {
+        System.out.println(eventUuid);
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {

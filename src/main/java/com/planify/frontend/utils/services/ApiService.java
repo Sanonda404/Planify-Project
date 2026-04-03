@@ -107,6 +107,8 @@ public class ApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+        System.out.println("Delete code: "+response.statusCode());
+
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             AlertCreator.showSuccessAlert("Successfully deleted");
             return response.body();

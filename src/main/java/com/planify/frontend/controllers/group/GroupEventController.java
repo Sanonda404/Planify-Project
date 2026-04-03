@@ -2,6 +2,7 @@ package com.planify.frontend.controllers.group;
 
 import com.planify.frontend.controllers.events.AddEventController;
 import com.planify.frontend.models.group.EventSummary;
+import com.planify.frontend.utils.helpers.DateTimeFormatter;
 import com.planify.frontend.utils.managers.SceneManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class GroupEventController {
@@ -25,7 +25,6 @@ public class GroupEventController {
     private GroupDetailsController parent;
     private String groupUuid;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy • h:mm a");
 
     @FXML
     private void initialize() {
@@ -120,10 +119,10 @@ public class GroupEventController {
         if (event.getStartDateTime() == null) return "Date TBD";
 
         StringBuilder sb = new StringBuilder("🗓️ ");
-        sb.append(event.getStartDateTime());
+        sb.append(DateTimeFormatter.FormatDateTime( event.getStartDateTime()));
 
         if (event.getEndDateTime() != null && !event.getEndDateTime().equals(event.getStartDateTime())) {
-            sb.append(" → ").append(event.getEndDateTime());
+            sb.append(" → ").append(DateTimeFormatter.FormatDateTime(event.getEndDateTime()));
         }
 
         return sb.toString();

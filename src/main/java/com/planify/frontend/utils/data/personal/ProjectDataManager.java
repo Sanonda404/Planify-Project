@@ -23,7 +23,7 @@ public class ProjectDataManager {
     private static String DATA_PATH;
     private static String FILE_NAME;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static List<ProjectDetails> projects;
+    private static List<ProjectDetails> projects = new ArrayList<>();
 
     // --- Core JSON Helpers ---
     public static void init(){
@@ -169,6 +169,7 @@ public class ProjectDataManager {
 
     public static List<TaskDetails> getAllTasks(){
         List<TaskDetails>tasks = new ArrayList<>();
+        if(projects==null)return tasks;
         for(ProjectDetails p: projects){
             for(MilestoneDetails m: p.getMilestones()){
                 tasks.addAll(m.getTasks());

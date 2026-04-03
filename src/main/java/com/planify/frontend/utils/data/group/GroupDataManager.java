@@ -97,6 +97,8 @@ public class GroupDataManager {
     public static void saveGroup(Object data, Object refresher){
         if (data instanceof DetailedGroup group) {
             detailedGroups.add(group);
+            GroupProjectDataManager.init();
+            GroupEventDataManager.init();
             saveAll(detailedGroups);
             GroupProjectDataManager.refresh(refresher);
         }

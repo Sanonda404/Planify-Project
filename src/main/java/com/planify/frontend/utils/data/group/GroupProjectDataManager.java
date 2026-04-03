@@ -245,6 +245,7 @@ public class GroupProjectDataManager {
                                 .allMatch(t -> t.getStatus().equals("COMPLETED"));
                         m.setCompleted(allTasksDone);
                         GroupDataManager.updateGroupProject(p.getGroupUuid(), p);
+                        p.setProgress(calculateProjectProgress(p));
                     }
                 }
                 refresh(refresher);
@@ -307,6 +308,7 @@ public class GroupProjectDataManager {
                 boolean removed = p.getMilestones().removeIf(m -> m.getUuid().equals(milestoneUuid));
                 if (removed) {
                     System.out.println("Milestone deleted: " + milestoneUuid + " from project: " + p.getName());
+                    p.setProgress(calculateProjectProgress(p));
                     GroupDataManager.updateGroupProject(p.getGroupUuid(), p);
                     break;
                 }
@@ -324,6 +326,7 @@ public class GroupProjectDataManager {
                             if (removed) {
                                 System.out.println("Task removed from UI: " + uuid);
                                 taskFoundAndRemoved = true;
+                                p.setProgress(calculateProjectProgress(p));
                                 GroupDataManager.updateGroupProject(p.getGroupUuid(), p);
                                 break;
                             }
@@ -349,4 +352,30 @@ public class GroupProjectDataManager {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+    public static int calculateProjectProgress(ProjectDetails project) {
+        List<MilestoneDetails> milestones = project.getMilestones();
+
+        if (milestones == null || milestones.isEmpty()) {
+            return 0;
+        }
+
+        double totalWeight = milestones.stream()
+                .flatMap(m -> m.getTasks().stream())
+                .mapToDouble(TaskDetails::getWeight) // Assuming Task has a getWeight() method returning double or int
+                .sum();
+
+        if (totalWeight == 0) return 0;
+
+        double completedWeight = milestones.stream()
+                .flatMap(m -> m.getTasks().stream())
+                .filter(t -> t.getStatus().equalsIgnoreCase("COMPLETED"))
+                .mapToDouble(TaskDetails::getWeight)
+                .sum();
+
+        // 3. Calculate percentage (Cast to int for the final result)
+        return (int) ((completedWeight * 100) / totalWeight);
+    }
+
+
 }

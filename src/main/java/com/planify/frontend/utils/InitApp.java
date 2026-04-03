@@ -16,6 +16,7 @@ import com.planify.frontend.utils.services.NotificationService;
 public class InitApp {
 
     public static void init(){
+        System.out.println("inini");
         GroupProjectDataManager.init();
         NotificationManager.init();
     }

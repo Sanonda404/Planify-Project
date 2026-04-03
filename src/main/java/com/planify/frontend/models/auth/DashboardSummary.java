@@ -10,16 +10,12 @@ import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import com.planify.frontend.utils.data.personal.EventDataManager;
 import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.data.personal.TaskDataManager;
-import javafx.concurrent.Task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class DashboardSummary {
@@ -42,11 +38,11 @@ public class DashboardSummary {
         events = new ArrayList<>();
         tasks = new ArrayList<>();
         projects.addAll(GroupDataManager.getAllGroupProjects());
-        projects.addAll(ProjectDataManager.getAllPersonalProjects());
+        projects.addAll(ProjectDataManager.getAllPersonalProjects()!=null?ProjectDataManager.getAllPersonalProjects():new ArrayList<>());
         events.addAll(GroupEventDataManager.getAll());
-        events.addAll(EventDataManager.getAll());
+        events.addAll(EventDataManager.getAll()!=null?EventDataManager.getAll():new ArrayList<>());
         tasks.addAll(GroupProjectDataManager.getAllTasks());
-        tasks.addAll(TaskDataManager.getAllPersonalTasks());
+        tasks.addAll(TaskDataManager.getAllPersonalTasks()!=null?TaskDataManager.getAllPersonalTasks():new ArrayList<>());
 
         topProjects = extractTopProjects();
         topEvents = extractTopEventsToday();

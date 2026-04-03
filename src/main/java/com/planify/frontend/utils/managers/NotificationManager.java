@@ -21,6 +21,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 
 public class NotificationManager {
     private static final ObservableList<NotificationResponse> notifications =
@@ -34,7 +36,8 @@ public class NotificationManager {
                 System.out.println("Got notifications!");
                 if (notification != null) {
                     notifications.addAll(notification);
-                    System.out.println(notification.size());
+                    InitApp.initialize();
+                }else {
                     InitApp.initialize();
                 }
 
