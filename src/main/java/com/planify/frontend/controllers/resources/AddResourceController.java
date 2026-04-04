@@ -4,6 +4,7 @@ import com.planify.frontend.controllers.Request.CreateRequestController;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.models.resources.ResourceCreateRequest;
 import com.planify.frontend.models.tasks.TaskDetails;
+import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.managers.LocalDataManager;
 import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import javafx.collections.FXCollections;
@@ -321,10 +322,10 @@ public class AddResourceController implements Initializable {
         } else if (selectTaskRadio.isSelected() && selectedTask != null) {
             sourceUuid = selectedTask.getUuid();
             sourceName = selectedTask.getTitle();
-        } else if (selectProjectRadio.isSelected() && projectCombo.getValue() != null) {
+        } else {
             // Resource linked to project, not a specific task
-            sourceUuid = selectedProjectUuid;
-            sourceName = projectCombo.getValue();
+            sourceUuid = "";
+            sourceName = preLinkedTaskProjectName;
         }
 
         MemberInfo creator = new MemberInfo(LocalDataManager.getUserName(), LocalDataManager.getUserEmail());
@@ -338,8 +339,8 @@ public class AddResourceController implements Initializable {
 
         // TODO: Call your backend API
         System.out.println("Creating resource: " + request);
-        CreateRequestController.handleCreateResource(request, parentController);
-
+        if(!selectedProjectUuid.isEmpty()) CreateRequestController.handleCreateResource(request, parentController);
+        else ProjectDataManager.savePersonalProjectResource(name,description,type,url,selectedProjectName,sourceName);
         closeWindow();
     }
 

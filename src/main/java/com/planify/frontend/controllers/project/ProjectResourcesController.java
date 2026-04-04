@@ -4,6 +4,7 @@ import com.planify.frontend.controllers.resources.AddResourceController;
 import com.planify.frontend.models.project.MilestoneDetails;
 import com.planify.frontend.models.project.ProjectDetails;
 import com.planify.frontend.models.resources.ResourceDetails;
+import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import javafx.collections.FXCollections;
@@ -264,8 +265,12 @@ public class ProjectResourcesController implements Initializable {
             Parent root = loader.load();
 
             AddResourceController controller = loader.getController();
-            controller.setContextForProject(projectDetails.getUuid(), projectDetails.getName(),
+            if(!projectDetails.getUuid().isEmpty())controller.setContextForProject(projectDetails.getUuid(), projectDetails.getName(),
                     GroupProjectDataManager.getGroupProjectTasks(projectDetails.getUuid()), parentController);
+            else{
+                controller.setContextForProject(projectDetails.getUuid(), projectDetails.getName(),
+                        ProjectDataManager.getAllPersonalProjectTasks(projectDetails.getName()), parentController);
+            }
 
             Stage stage = new Stage();
             stage.setTitle("Add Resource");

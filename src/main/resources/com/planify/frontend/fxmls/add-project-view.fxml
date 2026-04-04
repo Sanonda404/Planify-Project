@@ -104,7 +104,7 @@
                                         <Spinner fx:id="startHour" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
                                         <Label styleClass="ap-time-separator" text=":" />
                                         <Spinner fx:id="startMinute" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
-                                        <ComboBox fx:id="startAmPm" prefWidth="70" styleClass="ap-ampm-combo" />
+                                        <ComboBox fx:id="startAmPm" prefWidth="100" styleClass="ap-ampm-combo" />
                                     </HBox>
                                 </VBox>
                         <rowConstraints>
@@ -130,7 +130,7 @@
                                         <Spinner fx:id="deadlineHour" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
                                         <Label styleClass="ap-time-separator" text=":" />
                                         <Spinner fx:id="deadlineMinute" editable="true" prefWidth="70" styleClass="ap-time-spinner" />
-                                        <ComboBox fx:id="deadlineAmPm" prefWidth="70" styleClass="ap-ampm-combo" />
+                                        <ComboBox fx:id="deadlineAmPm" prefWidth="100" styleClass="ap-ampm-combo" />
                                     </HBox>
                                 </VBox>
                         <rowConstraints>

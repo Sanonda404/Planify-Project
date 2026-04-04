@@ -1,6 +1,7 @@
 package com.planify.frontend.controllers.task;
 
 import com.planify.frontend.controllers.Request.CreateRequestController;
+import com.planify.frontend.controllers.project.ProjectDetailsController;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.models.project.MilestoneDetails;
 import com.planify.frontend.models.project.MilestoneSummary;
@@ -470,7 +471,15 @@ public class AddTodoController implements Initializable {
                     existingMilestoneName, existingProjectName,
                     LocalDataManager.getUserEmail(), getAssigneeEmails(), attachmentUrl
             );
-            CreateRequestController.handleCreateTask(request, parentController);
+            if(existingMilestoneUuid.isEmpty()){
+                ProjectDataManager.savePersonalProjectTask(title,description,category,dueDateTime,
+                        typeCombo.getSelectionModel().getSelectedItem().equals(TYPE_DAILY),
+                        weight, priority,existingProjectName,existingMilestoneName,attachmentUrl);
+                if(parentController instanceof ProjectDetailsController){
+                    ((ProjectDetailsController)parentController).refresh();
+                }
+            }
+            else CreateRequestController.handleCreateTask(request, parentController);
         } else if (FOR_PERSONAL.equals(todoForCombo.getValue())) {
             // Personal task
             TaskDataManager.saveTask(title, description, category, dueDateTime, attachmentUrl, weight, priority, typeCombo.getSelectionModel().getSelectedItem().equals(TYPE_DAILY));

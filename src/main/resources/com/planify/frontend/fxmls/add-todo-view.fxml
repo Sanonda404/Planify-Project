@@ -79,7 +79,7 @@
                                 <Spinner fx:id="targetHour" editable="true" prefWidth="70" styleClass="time-spinner" />
                                 <Label styleClass="time-separator" text=":" />
                                 <Spinner fx:id="targetMinute" editable="true" prefWidth="70" styleClass="time-spinner" />
-                                <ComboBox fx:id="targetAmPm" prefWidth="70" styleClass="am-pm-combo" />
+                                <ComboBox fx:id="targetAmPm" prefWidth="100" styleClass="am-pm-combo" />
                             </HBox>
                         </VBox>
                   <columnConstraints>

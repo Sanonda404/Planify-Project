@@ -8,12 +8,15 @@ import com.planify.frontend.models.project.MilestoneDetails;
 import com.planify.frontend.models.project.MilestoneSummary;
 import com.planify.frontend.models.project.ProjectDetails;
 import com.planify.frontend.models.project.ProjectSummary;
+import com.planify.frontend.models.resources.ResourceDetails;
 import com.planify.frontend.models.tasks.TaskDetails;
 import com.planify.frontend.utils.UserSession;
+import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import com.planify.frontend.utils.managers.LocalDataManager;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,6 +139,17 @@ public class ProjectDataManager {
         saveAll();
     }
 
+    public static void savePersonalProjectResource(String title, String description, String type, String url, String projectName, String soutceName){
+        for(ProjectDetails p: projects){
+            if(p.getName().equals(projectName)){
+                MemberInfo self = new MemberInfo(UserSession.getInstance().getName(), UserSession.getInstance().getEmail());
+                ResourceDetails resourceDetails = new ResourceDetails("",title,description,type,url,self,
+                        LocalDateTime.now().toString(),"","",soutceName);
+                p.getResources().add(resourceDetails);
+            }
+        }
+    }
+
     // --- Detailed Getters ---
 
     /**
@@ -159,7 +173,7 @@ public class ProjectDataManager {
     /**
      * Gets all tasks for a specific milestone within a project
      */
-    public static List<TaskDetails> getPersonalTasks(String projectName, String milestoneName) {
+    public static List<TaskDetails> getPersonalProjectTasks(String projectName, String milestoneName) {
         return getPersonalMilestones(projectName).stream()
                 .filter(m -> m.getTitle().equals(milestoneName))
                 .findFirst()
@@ -208,6 +222,15 @@ public class ProjectDataManager {
         return projects;
     }
 
+    public static List<TaskDetails> getAllPersonalProjectTasks(String projectName){
+        List<TaskDetails>tasks = new ArrayList<>();
+        for(ProjectDetails p: projects){
+            for(MilestoneDetails m: p.getMilestones()){
+                tasks.addAll(m.getTasks());
+            }
+        }
+        return tasks;
+    }
     // --- Updates ---
 
     public static void updatePersonalTaskStatus(String projectName, String milestoneName, String taskName, String status) {
@@ -222,6 +245,7 @@ public class ProjectDataManager {
                         boolean allTasksDone = m.getTasks().stream()
                                 .allMatch(t -> t.getStatus().equals("COMPLETED"));
                         m.setCompleted(allTasksDone);
+                        p.setProgress(GroupProjectDataManager.calculateProjectProgress(p));
                     }
                 }
             }
@@ -294,6 +318,7 @@ public class ProjectDataManager {
     public static void deletePersonalProjectMilestone(String projectName, String milestoneName) {
         projects.stream().filter(p -> p.getName().equals(projectName)).findFirst().ifPresent(p -> {
             p.getMilestones().removeIf(m -> m.getTitle().equals(milestoneName));
+            p.setProgress(GroupProjectDataManager.calculateProjectProgress(p));
         });
         saveAll();
     }
@@ -303,6 +328,7 @@ public class ProjectDataManager {
             p.getMilestones().stream().filter(m -> m.getTitle().equals(milestoneName)).findFirst().ifPresent(m -> {
                 m.getTasks().removeIf(t -> t.getTitle().equals(taskName));
             });
+            p.setProgress(GroupProjectDataManager.calculateProjectProgress(p));
         });
         saveAll();
     }
