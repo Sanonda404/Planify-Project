@@ -1,5 +1,6 @@
 package com.planify.frontend.utils.services;
 
+import com.planify.frontend.network.BackendConnectionValidation;
 import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.helpers.AlertCreator;
 
@@ -14,6 +15,10 @@ public class ApiService {
     private static final HttpClient client = HttpClient.newHttpClient();
 
     public static String post(String endpoint, String jsonBody) throws Exception {
+        if(!BackendConnectionValidation.canConnectToServer()){
+            AlertCreator.showErrorAlert("Can't connect to server, try again later");
+            return "";
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
                 .header("Authorization", "Bearer " + UserSession.getInstance().getToken())
@@ -58,6 +63,10 @@ public class ApiService {
 
 
     public static String get(String endpoint) throws Exception {
+        if(!BackendConnectionValidation.canConnectToServer()){
+            AlertCreator.showErrorAlert("Can't connect to server, try again later");
+            return "";
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
                 .header("Content-Type", "application/json")
@@ -79,7 +88,36 @@ public class ApiService {
         }
     }
 
+    public static String getSecurityQues(String endpoint) throws Exception {
+        if(!BackendConnectionValidation.canConnectToServer()){
+            AlertCreator.showErrorAlert("Can't connect to server, try again later");
+            return "";
+        }
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("GET code: " + response.statusCode());
+
+        System.out.println(response.body());
+
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            return response.body();
+        } else {
+            AlertCreator.showErrorAlert(response.body());
+            return "";
+        }
+    }
+
     public static String patch(String endpoint, String jsonBody) throws Exception {
+        if(!BackendConnectionValidation.canConnectToServer()){
+            AlertCreator.showErrorAlert("Can't connect to server, try again later");
+            return "";
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
                 .header("Content-Type", "application/json")
@@ -97,6 +135,10 @@ public class ApiService {
     }
 
     public static String delete(String endpoint) throws Exception {
+        if(!BackendConnectionValidation.canConnectToServer()){
+            AlertCreator.showErrorAlert("Can't connect to server, try again later");
+            return "";
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
                 .header("Content-Type", "application/json") // Added for consistency

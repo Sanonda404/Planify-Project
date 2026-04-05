@@ -8,6 +8,7 @@ import com.planify.frontend.controllers.group.GroupDetailsController;
 import com.planify.frontend.models.events.EventGetRequest;
 import com.planify.frontend.models.group.*;
 import com.planify.frontend.models.project.ProjectDetails;
+import com.planify.frontend.network.BackendConnectionValidation;
 import com.planify.frontend.utils.InitApp;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.UserSession;
@@ -19,6 +20,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GroupDataManager {
@@ -27,11 +29,15 @@ public class GroupDataManager {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static List<DetailedGroup>detailedGroups = new ArrayList<>();
 
-    // --- Core JSON Helpers ---
 
     public static void init(){
         DATA_PATH  = System.getProperty("user.home") + "/.planify/"+UserSession.getInstance().getName()+"/group";
         FILE_NAME  = DATA_PATH + "/groups.json";
+
+        if(!BackendConnectionValidation.canConnectToServer()){
+            initOffline();
+            return;
+        }
 
         GetRequestController.getAllUserGroup((summaries)->{
             // Update UI with summaries
@@ -55,6 +61,16 @@ public class GroupDataManager {
 
         });
         System.out.println("GroupController initialized.");
+    }
+
+    public static void initOffline(){
+        detailedGroups = loadAll();
+        if(detailedGroups==null){
+            detailedGroups = new ArrayList<>();
+        }
+        GroupProjectDataManager.init();
+        GroupEventDataManager.init();
+        InitApp.offlineInit();
     }
 
     private static List<DetailedGroup> loadAll() {

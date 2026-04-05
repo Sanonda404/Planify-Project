@@ -1,0 +1,418 @@
+/* =====================================================
+   forget-pass.css  —  Planify Forgot Password Page
+   Soft lavender-white palette, matches auth.css tone
+   ===================================================== */
+
+/* =========================
+   ROOT & CONTAINER
+========================= */
+.root-pane {
+    -fx-background-color: #f7f5ff;
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+}
+
+.fp-container {
+    -fx-background-color: #f7f5ff;
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+.fp-left {
+    -fx-background-color: linear-gradient(
+        to bottom right,
+        #ffffff,
+        #ffffff,
+        #ffffff
+    );
+}
+
+/* Decorative blobs */
+.blob {
+    -fx-fill: transparent;
+}
+
+.blob-1 {
+    -fx-fill: #e9e4ff;
+    -fx-opacity: 0.8;
+    -fx-translate-x: -100;
+    -fx-translate-y: -100;
+}
+
+.blob-2 {
+    -fx-fill: #fde7f5;
+    -fx-opacity: 0.7;
+    -fx-translate-x: 80;
+    -fx-translate-y: 80;
+}
+
+.blob-3 {
+    -fx-fill: #e0f2fe;
+    -fx-opacity: 0.75;
+    -fx-translate-x: -30;
+    -fx-translate-y: 30;
+}
+/* Back button */
+/* ===== NAVBAR ===== */
+.back-btn {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #6d28d9);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-cursor: hand;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 10 18 10 18;
+    -fx-min-height: 36;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.25), 14, 0, 0, 4);
+}
+
+.back-btn:hover {
+    -fx-background-color: linear-gradient(to right, #6d28d9, #5b21b6);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.35), 18, 0, 0, 6);
+    -fx-translate-y: -1;
+}
+
+.back-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-translate-y: 0;
+}
+
+/* Illustration wrapper */
+
+.illustration-wrap {
+    -fx-background-color: linear-gradient(
+        to bottom right,
+        rgba(255,255,255,0.95),
+        rgba(245,240,255,0.92)
+    );
+    -fx-background-radius: 30;
+    -fx-border-color: rgba(231,225,248,0.9);
+    -fx-border-radius: 30;
+    -fx-border-width: 1.4;
+    -fx-padding: 28;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(124,58,237,0.12),
+        30, 0, 0, 8
+    );
+}
+.illustration-img {
+    -fx-opacity: 0.98;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(139,92,246,0.15),
+        20, 0, 0, 4
+    );
+}
+/* Left heading + subtext */
+.left-heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2b1d63;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.left-subtext {
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #7b72a8;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 3;
+}
+
+/* Info chips */
+.info-chip {
+    -fx-background-color: #f3f0fb;
+    -fx-background-radius: 99;
+    -fx-border-color: #e4def7;
+    -fx-border-radius: 99;
+    -fx-border-width: 1;
+    -fx-padding: 7 14 7 14;
+}
+
+.chip-icon {
+    -fx-font-size: 13px;
+}
+
+.chip-text {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #6d42c9;
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+.fp-right {
+    -fx-background-color: #f7f5ff;
+}
+
+.fp-right-wrap {
+    -fx-alignment: center;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+.fp-card {
+    -fx-background-color: white;
+    -fx-background-radius: 26;
+    -fx-border-color: #ebe7f7;
+    -fx-border-radius: 26;
+    -fx-border-width: 1.5;
+    -fx-padding: 32;
+    -fx-effect: dropshadow(gaussian, rgba(109,40,217,0.07), 32, 0, 0, 8);
+}
+
+/* =========================
+   STEP DOTS
+========================= */
+.step-dot-row {
+    -fx-padding: 0 0 4 0;
+}
+
+.step-dot {
+    -fx-pref-width: 10;
+    -fx-pref-height: 10;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    -fx-background-radius: 99;
+}
+
+.step-dot-active {
+    -fx-background-color: #7c3aed;
+    -fx-pref-width: 28;
+    -fx-max-width: 28;
+}
+
+.step-dot-inactive {
+    -fx-background-color: #ddd8f5;
+}
+
+.step-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #a89dd0;
+}
+
+/* =========================
+   FORM TITLES
+========================= */
+.fp-form-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2b1d63;
+}
+
+.fp-form-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #8b87a1;
+    -fx-line-spacing: 2;
+}
+
+.fp-input-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #43366c;
+}
+
+.fp-hint-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #b0a8d0;
+}
+
+/* =========================
+   INPUT FIELDS
+========================= */
+.fp-input-field {
+    -fx-background-color: #fcfbff;
+    -fx-border-color: #e4def7;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2d1b69;
+    -fx-padding: 14 16 14 44;
+    -fx-prompt-text-fill: #c0b8df;
+}
+
+.fp-input-field:hover {
+    -fx-border-color: #cfc6f5;
+    -fx-background-color: #ffffff;
+}
+
+.fp-input-field:focused {
+    -fx-border-color: #8b5cf6;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(139,92,246,0.18), 10, 0, 0, 0);
+}
+
+.fp-input-field.field-error {
+    -fx-border-color: #f87171;
+    -fx-background-color: #fff8f9;
+    -fx-effect: dropshadow(gaussian, rgba(248,113,113,0.14), 8, 0, 0, 0);
+}
+
+.fp-input-field.field-success {
+    -fx-border-color: #34d399;
+    -fx-background-color: #f6fffe;
+}
+
+/* Field icons */
+.fp-field-icon-left {
+    -fx-text-fill: #c0b8df;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 14;
+    -fx-alignment: center-left;
+    -fx-mouse-transparent: true;
+}
+
+/* Show/hide password toggle */
+.fp-pw-toggle {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9f8fd4;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+    -fx-padding: 0 14 0 0;
+    -fx-border-color: transparent;
+}
+
+.fp-pw-toggle:hover {
+    -fx-text-fill: #7c3aed;
+}
+
+/* =========================
+   SECURITY QUESTION CHIP
+========================= */
+.question-chip {
+    -fx-background-color: #f5f0ff;
+    -fx-background-radius: 14;
+    -fx-border-color: #ddd5f9;
+    -fx-border-radius: 14;
+    -fx-border-width: 1.5;
+    -fx-padding: 14 16 14 16;
+    -fx-effect: dropshadow(gaussian, rgba(139,92,246,0.06), 10, 0, 0, 2);
+}
+
+.question-chip-icon {
+    -fx-font-size: 18px;
+}
+
+.question-chip-text {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #4c3599;
+    -fx-wrap-text: true;
+}
+
+/* =========================
+   PASSWORD STRENGTH BAR
+========================= */
+.strength-bar-bg {
+    -fx-background-color: #ede9fb;
+    -fx-background-radius: 4;
+    -fx-pref-height: 5;
+    -fx-pref-width: 9999;
+    -fx-max-height: 5;
+}
+
+.strength-bar-fill {
+    -fx-background-radius: 4;
+    -fx-pref-height: 5;
+    -fx-pref-width: 0;
+    -fx-background-color: #ddd5f9;
+}
+
+.strength-bar-fill.weak   { -fx-background-color: #f87171; }
+.strength-bar-fill.medium { -fx-background-color: #fbbf24; }
+.strength-bar-fill.strong { -fx-background-color: #34d399; }
+
+.strength-hint            { -fx-text-fill: #b0a8d0; }
+.strength-hint.weak       { -fx-text-fill: #f87171; }
+.strength-hint.medium     { -fx-text-fill: #d97706; }
+.strength-hint.strong     { -fx-text-fill: #059669; }
+
+/* =========================
+   ERROR LABEL
+========================= */
+.fp-error-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #c0304a;
+    -fx-background-color: #fff1f3;
+    -fx-border-color: #f9bfc9;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 14 10 14;
+}
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+.fp-primary-btn {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #6d28d9);
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.28), 14, 0, 0, 4);
+}
+
+.fp-primary-btn:hover {
+    -fx-background-color: linear-gradient(to right, #6d28d9, #5b21b6);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.38), 18, 0, 0, 6);
+}
+
+.fp-primary-btn:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-background-color: linear-gradient(to right, #5b21b6, #4c1d95);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.18), 8, 0, 0, 2);
+}
+
+.fp-primary-btn:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+    -fx-effect: none;
+}
+
+.fp-primary-btn.loading {
+    -fx-background-color: linear-gradient(to right, #9061f9, #7c3aed);
+    -fx-opacity: 0.80;
+    -fx-cursor: wait;
+}
+
+/* =========================
+   SUCCESS VIEW
+========================= */
+.success-icon {
+    -fx-font-size: 52px;
+    -fx-alignment: center;
+}
+
+.success-title {
+    -fx-text-fill: #166534;
+}
+
+/* =========================
+   RESPONSIVE: hide left panel
+   at narrow widths (set minWidth
+   on leftPanel to 0 and toggle
+   visibility from controller)
+========================= */
+.fp-left-hidden {
+    -fx-managed: false;
+    -fx-visible: false;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+}

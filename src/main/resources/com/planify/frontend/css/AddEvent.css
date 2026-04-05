@@ -226,30 +226,69 @@
 .am-pm-combo .arrow {
     -fx-background-color: #847bfd;
 }
-
-/* ===== DATE PICKER ===== */
-.styled-datepicker {
-    -fx-background-color: #f8fafc;
-    -fx-border-color: #e2e8f0;
-    -fx-border-width: 1.5;
-    -fx-border-radius: 12;
-    -fx-background-radius: 12;
+/* ===== DATE PICKER POPUP ===== */
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #dbe3f0;
 }
 
-.styled-datepicker:focused {
-    -fx-border-color: #685AFF;
+/* top header background */
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #03045e;
 }
 
-.styled-datepicker .text-field {
-    -fx-background-color: nevi;
-    -fx-padding: 8 12;
-    -fx-font-size: 13px;
+/* month-year text */
+.date-picker-popup > .month-year-pane > .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
 
-.styled-datepicker .arrow-button {
+/* left-right nav buttons */
+.date-picker-popup > .month-year-pane .button {
     -fx-background-color: transparent;
 }
 
+.date-picker-popup > .month-year-pane .button:hover {
+    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-background-radius: 10;
+}
+
+/* left-right arrow color */
+.date-picker-popup > .month-year-pane .left-button .left-arrow,
+.date-picker-popup > .month-year-pane .right-button .right-arrow {
+    -fx-background-color: white;
+}
+
+/* weekday row */
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #03045e;
+    -fx-font-weight: bold;
+}
+
+/* normal days */
+.date-picker-popup .day-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #1e293b;
+}
+
+/* hover day */
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #eef2ff;
+}
+
+/* selected day */
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #685AFF;
+    -fx-text-fill: white;
+}
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #685AFF;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #eef2ff;
+}
 /* ===== TIME SPINNER ===== */
 .time-spinner {
     -fx-background-color: #f8fafc;
@@ -429,25 +468,13 @@
 }
 
 .create-button:hover {
-    -fx-effect: #870812;
+    -fx-effect: dropshadow(gaussian, rgba(135, 8, 18, 0.4), 10, 0, 0, 3);
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
 
 /* ===== ANIMATIONS ===== */
-@keyframes fadeInScale {
-    from {
-        -fx-opacity: 0;
-        -fx-scale-x: 0.95;
-        -fx-scale-y: 0.95;
-    }
-    to {
-        -fx-opacity: 1;
-        -fx-scale-x: 1;
-        -fx-scale-y: 1;
-    }
-}
 
 .modal-container {
-    -fx-animation: fadeInScale 0.25s ease-out;
+
 }

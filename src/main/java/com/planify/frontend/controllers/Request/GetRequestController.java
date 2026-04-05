@@ -3,6 +3,8 @@ package com.planify.frontend.controllers.Request;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.planify.frontend.models.auth.DashboardSummary;
+import com.planify.frontend.models.auth.LoginRequest;
+import com.planify.frontend.models.auth.LoginResponse;
 import com.planify.frontend.models.auth.MemberInfo;
 import com.planify.frontend.models.events.EventGetRequest;
 import com.planify.frontend.models.group.DetailedGroup;
@@ -353,6 +355,31 @@ public class GetRequestController {
                     System.err.println("Error loading Events: " + e.getMessage());
                     // Optionally pass an empty list so the UI doesn't crash
                     callback.accept(new ArrayList<>());
+                });
+            }
+        }).start();
+    }
+
+    public static void getSecurityQues(String email,Consumer<LoginRequest> callback) {
+        new Thread(() -> {
+            try {
+
+                String endpoint = "/auth/security/question/"+email;
+
+                String json = ApiService.getSecurityQues(endpoint);
+
+                java.lang.reflect.Type listType = new com.google.gson.reflect.TypeToken<LoginRequest>(){}.getType();
+                LoginRequest response = gson.fromJson(json, listType);
+
+                Platform.runLater(() -> {
+                    callback.accept(response);
+                });
+
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    System.err.println("Error loading Details: " + e.getMessage());
+                    // Optionally pass an empty list so the UI doesn't crash
+                    callback.accept(null);
                 });
             }
         }).start();

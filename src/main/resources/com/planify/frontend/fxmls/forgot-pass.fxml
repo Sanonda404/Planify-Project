@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+
+<StackPane prefHeight="700.0" prefWidth="1200.0" styleClass="root-pane" stylesheets="@../css/forgot-pass.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.auth.ForgotPassController">
+
+    <HBox prefHeight="700.0" prefWidth="1200.0" styleClass="fp-container">
+
+        <!-- ═══════════════════════════════════
+             LEFT PANEL — soft illustration side
+             ═══════════════════════════════════ -->
+        <StackPane fx:id="leftPanel" minWidth="520.0" prefWidth="520.0" styleClass="fp-left" HBox.hgrow="ALWAYS">
+
+            <!-- Subtle decorative circles (background blobs) -->
+            <Circle fx:id="blob1" radius="180.0" styleClass="blob blob-1" StackPane.alignment="TOP_LEFT">
+            <fill>
+               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                  <stops>
+                     <Stop>
+                        <color>
+                           <Color red="0.6222222447395325" green="0.4333333373069763" blue="1.0" />
+                        </color>
+                     </Stop>
+                     <Stop offset="0.006729475100942127">
+                        <color>
+                           <Color red="0.9792487621307373" green="0.7200000286102295" blue="1.0" />
+                        </color>
+                     </Stop>
+                     <Stop offset="1.0">
+                        <color>
+                           <Color red="1.0" green="1.0" blue="1.0" />
+                        </color>
+                     </Stop>
+                  </stops>
+               </RadialGradient>
+            </fill></Circle>
+            <Circle fx:id="blob2" radius="120.0" styleClass="blob blob-2" StackPane.alignment="BOTTOM_RIGHT">
+            <fill>
+               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                  <stops>
+                     <Stop>
+                        <color>
+                           <Color red="0.7599999904632568" green="1.0" blue="0.9826396107673645" />
+                        </color>
+                     </Stop>
+                     <Stop offset="1.0">
+                        <color>
+                           <Color red="1.0" green="1.0" blue="1.0" />
+                        </color>
+                     </Stop>
+                  </stops>
+               </RadialGradient>
+            </fill></Circle>
+            <Circle fx:id="blob3" radius="60.0" styleClass="blob blob-3" StackPane.alignment="BOTTOM_LEFT">
+            <fill>
+               <RadialGradient centerX="0.4922566371681415" centerY="0.5" radius="0.5">
+                  <stops>
+                     <Stop>
+                        <color>
+                           <Color red="0.644444465637207" green="0.7807407379150391" blue="1.0" />
+                        </color>
+                     </Stop>
+                     <Stop offset="1.0">
+                        <color>
+                           <Color red="1.0" green="1.0" blue="1.0" />
+                        </color>
+                     </Stop>
+                  </stops>
+               </RadialGradient>
+            </fill></Circle>
+
+            <!-- Left content -->
+            <VBox alignment="CENTER" spacing="0" StackPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="60" left="60" right="60" top="60" />
+                </padding>
+
+                <!-- Back button row -->
+                <HBox alignment="TOP_LEFT" prefWidth="9999">
+                    <Button fx:id="backBtn" onAction="#handleBack" prefHeight="30.0" prefWidth="231.0" styleClass="back-btn" text="← Back to Login">
+                  <effect>
+                     <DropShadow>
+                        <color>
+                           <Color red="1.0" green="1.0" blue="1.0" />
+                        </color>
+                     </DropShadow>
+                  </effect></Button>
+                </HBox>
+
+                <Region prefHeight="30.0" />
+
+                <!-- Lock / key illustration image -->
+                <StackPane styleClass="illustration-wrap">
+                    <ImageView fx:id="illustrationImage" fitHeight="310.0" fitWidth="349.0" preserveRatio="true" smooth="true" styleClass="illustration-img">
+                        <image>
+                            <!-- Replace with your own image path.
+                                 Suggested: a "forgot password / key" illustration
+                                 from https://storyset.com or https://undraw.co
+                                 Save as: src/main/resources/.../images/forgot_pass.png -->
+                            <Image url="@../images/forgot_pass.png" />
+                        </image>
+                    </ImageView>
+                </StackPane>
+
+                <Region prefHeight="32.0" />
+
+                <!-- Headline text -->
+                <VBox alignment="CENTER" spacing="12">
+                    <Label styleClass="left-heading" text="Forgot your password?" wrapText="true" />
+                    <Label styleClass="left-subtext" text="No worries. Answer your secret question&#10;and set a new password in seconds." wrapText="true" />
+                </VBox>
+
+                <Region prefHeight="28.0" />
+
+                <!-- Info chip row -->
+                <HBox alignment="CENTER" spacing="12">
+                    <HBox alignment="CENTER" spacing="6" styleClass="info-chip">
+                        <Label styleClass="chip-icon" text="🔐" />
+                        <Label styleClass="chip-text" text="Secure recovery" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="6" styleClass="info-chip">
+                        <Label styleClass="chip-icon" text="⚡" />
+                        <Label styleClass="chip-text" text="Instant reset" />
+                    </HBox>
+                </HBox>
+
+            </VBox>
+        </StackPane>
+
+        <!-- ═══════════════════════════════════
+             RIGHT PANEL — the form
+             ═══════════════════════════════════ -->
+        <StackPane fx:id="rightPanel" minWidth="580.0" prefWidth="680.0" styleClass="fp-right" HBox.hgrow="ALWAYS">
+
+            <VBox alignment="CENTER" styleClass="fp-right-wrap">
+                <padding>
+                    <Insets bottom="50" left="50" right="50" top="50" />
+                </padding>
+
+                <!-- Form card -->
+                <VBox fx:id="formCard" maxWidth="460.0" spacing="0" styleClass="fp-card">
+
+                    <!-- Step dots (visual progress: step 1 of 2) -->
+                    <HBox fx:id="stepDots" alignment="CENTER_LEFT" spacing="8" styleClass="step-dot-row">
+                        <Pane fx:id="dot1" styleClass="step-dot step-dot-active" />
+                        <Pane fx:id="dot2" styleClass="step-dot step-dot-inactive" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="stepLabel" styleClass="step-label" text="Step 1 of 2" />
+                    </HBox>
+
+                    <Region prefHeight="20.0" />
+
+                    <!-- ─── STEP 1: IDENTITY + SECURITY QUESTION ─── -->
+                    <VBox fx:id="step1View" spacing="24.0">
+
+                        <VBox spacing="6">
+                            <Label styleClass="fp-form-title" text="Verify Your Identity" />
+                            <Label styleClass="fp-form-subtitle" text="Enter your username and answer your security question." />
+                        </VBox>
+
+                        <!-- Username field -->
+                        <VBox spacing="8">
+                            <Label styleClass="fp-input-label" text="Username or Email" />
+                            <StackPane>
+                                <TextField fx:id="usernameField" onAction="#handleLookup" promptText="Enter your username or email" styleClass="fp-input-field" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text=" 👤" StackPane.alignment="CENTER_LEFT" />
+                            </StackPane>
+                        </VBox>
+
+                        <!-- Security question display (shown after username lookup) -->
+                        <VBox fx:id="questionBox" managed="false" spacing="10" visible="false">
+
+                            <!-- Question chip -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="question-chip">
+                                <Label styleClass="question-chip-icon" text="❓" />
+                                <Label fx:id="securityQuestionLabel" styleClass="question-chip-text" text="What was the name of your first pet?" wrapText="true" />
+                            </HBox>
+
+                            <!-- Answer field -->
+                            <VBox spacing="8">
+                                <Label styleClass="fp-input-label" text="Your Answer" />
+                                <StackPane>
+                                    <TextField fx:id="answerField" onAction="#handleVerify" promptText="Type your answer..." styleClass="fp-input-field" />
+                                    <Label styleClass="fp-field-icon fp-field-icon-left" text=" 💬" StackPane.alignment="CENTER_LEFT" />
+                                </StackPane>
+                                <Label styleClass="fp-hint-label" text="Answers are not case-sensitive." />
+                            </VBox>
+
+                        </VBox>
+
+                        <!-- Error label (shared) -->
+                        <Label fx:id="step1ErrorLabel" managed="false" styleClass="fp-error-label" text="" visible="false" wrapText="true" />
+
+                        <!-- Lookup / Verify button -->
+                        <Button fx:id="step1Btn" maxWidth="Infinity" onAction="#handleLookup" prefHeight="52.0" styleClass="fp-primary-btn" text="Find My Account" />
+
+                    </VBox>
+
+                    <!-- ─── STEP 2: SET NEW PASSWORD (hidden initially) ─── -->
+                    <VBox fx:id="step2View" managed="false" spacing="24.0" visible="false">
+
+                        <VBox spacing="6">
+                            <Label styleClass="fp-form-title" text="Set New Password" />
+                            <Label styleClass="fp-form-subtitle" text="Choose a strong password you haven't used before." />
+                        </VBox>
+
+                        <!-- New password -->
+                        <VBox spacing="8">
+                            <Label styleClass="fp-input-label" text="New Password" />
+                            <StackPane>
+                                <PasswordField fx:id="newPasswordField" promptText="Create a strong password" styleClass="fp-input-field" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text="🔒" StackPane.alignment="CENTER_LEFT" />
+                                <Button fx:id="toggleNewPw" onAction="#toggleNewPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />
+                            </StackPane>
+                            <!-- Strength bar -->
+                            <Pane fx:id="strengthBarBg" styleClass="strength-bar-bg">
+                                <Pane fx:id="strengthBarFill" styleClass="strength-bar-fill" />
+                            </Pane>
+                            <HBox alignment="CENTER_LEFT">
+                                <Label fx:id="strengthLabel" styleClass="fp-hint-label strength-hint" text="6–20 characters" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Confirm password -->
+                        <VBox spacing="8">
+                            <Label styleClass="fp-input-label" text="Confirm Password" />
+                            <StackPane>
+                                <PasswordField fx:id="confirmPasswordField" promptText="Repeat your new password" styleClass="fp-input-field" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text="🔒" StackPane.alignment="CENTER_LEFT" />
+                                <Button fx:id="toggleConfirmPw" onAction="#toggleConfirmPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />
+                            </StackPane>
+                        </VBox>
+
+                        <!-- Error label step 2 -->
+                        <Label fx:id="step2ErrorLabel" managed="false" styleClass="fp-error-label" text="" visible="false" wrapText="true" />
+
+                        <!-- Reset button -->
+                        <Button fx:id="step2Btn" maxWidth="Infinity" onAction="#handleReset" prefHeight="52.0" styleClass="fp-primary-btn" text="Reset Password" />
+
+                    </VBox>
+
+                    <!-- ─── SUCCESS VIEW (hidden initially) ─── -->
+                    <VBox fx:id="successView" alignment="CENTER" managed="false" spacing="20.0" visible="false">
+
+                        <Label styleClass="success-icon" text="✅" />
+                        <VBox alignment="CENTER" spacing="8">
+                            <Label styleClass="fp-form-title success-title" text="Password Updated!" />
+                            <Label styleClass="fp-form-subtitle" text="Your password has been changed successfully.&#10;You can now log in with your new password." wrapText="true" />
+                        </VBox>
+                        <Button fx:id="goToLoginBtn" maxWidth="Infinity" onAction="#handleGoToLogin" prefHeight="52.0" styleClass="fp-primary-btn" text="Back to Login" />
+
+                    </VBox>
+
+                </VBox>
+            </VBox>
+        </StackPane>
+
+    </HBox>
+</StackPane>

@@ -2,14 +2,12 @@ package com.planify.frontend.controllers.Request;
 
 import com.google.gson.reflect.TypeToken;
 import com.planify.frontend.controllers.auth.AuthController;
+import com.planify.frontend.controllers.auth.ForgotPassController;
 import com.planify.frontend.controllers.events.SchedulesController;
 import com.planify.frontend.controllers.project.ProjectController;
 import com.planify.frontend.controllers.project.ProjectDetailsController;
 import com.planify.frontend.controllers.task.TodoController;
-import com.planify.frontend.models.auth.LoginRequest;
-import com.planify.frontend.models.auth.LoginResponse;
-import com.planify.frontend.models.auth.MemberInfo;
-import com.planify.frontend.models.auth.SignupDetails;
+import com.planify.frontend.models.auth.*;
 import com.planify.frontend.models.events.EventCreateRequest;
 import com.planify.frontend.models.group.GroupCreateRequest;
 import com.planify.frontend.models.group.GroupJoinRequest;
@@ -92,6 +90,13 @@ public class CreateRequestController {
         sendRequest("/resources/create", request, parentController);
     }
 
+    public static void verifySecurityAnswer(SecurityAnswerVerification request, Object refresher) {
+        sendRequest("/auth/verify/answer",request,refresher);
+    }
+
+    public static void handleResetPassword(LoginRequest request, Object refresher) {
+        sendRequest("/auth/reset/password",request,refresher);
+    }
 
     // Helper method to keep code clean
     private static void sendRequest(String endpoint, Object data, Object refresher) {
@@ -101,28 +106,31 @@ public class CreateRequestController {
                 System.out.println("Sending to " + endpoint + ": " + jsonBody);
                 String response;
                 if(refresher instanceof AuthController)response = ApiService.postLogin(endpoint,jsonBody);
+                else if(refresher instanceof ForgotPassController)response = ApiService.postLogin(endpoint,jsonBody);
                 else response = ApiService.post(endpoint, jsonBody);
                 Platform.runLater(() -> {
                     if(response.isEmpty())return;
-                    if(refresher instanceof AuthController && data instanceof SignupDetails){
-                        ((AuthController)refresher).signUpSuccessful();
+                    if(refresher instanceof AuthController){
                         Type listType = new TypeToken<LoginResponse>(){}.getType();
                         LoginResponse res = gson.fromJson(response, listType);
                         System.out.println(res.getEmail());
-                        LocalDataManager.saveUserDataLocally(res.getName(), res.getEmail(), res.getToken());
                         UserSession.init(res.getName(),res.getEmail(),res.getToken());
+                        LocalDataManager.initDataPathAndSave(res.getName(), res.getEmail(), res.getToken());
+
                         ((AuthController)refresher).loginSuccessful();
                         GroupDataManager.init();
                     }
-                    if(refresher instanceof AuthController && data instanceof LoginRequest){
-                        System.out.println("hiii");
-                        Type listType = new TypeToken<LoginResponse>(){}.getType();
-                        LoginResponse res = gson.fromJson(response, listType);
-                        System.out.println(res.getEmail());
-                        LocalDataManager.saveUserDataLocally(res.getName(), res.getEmail(), res.getToken());
-                        UserSession.init(res.getName(),res.getEmail(),res.getToken());
-                        ((AuthController)refresher).loginSuccessful();
-                        GroupDataManager.init();
+                    if(refresher instanceof ForgotPassController){
+                        if(data instanceof SecurityAnswerVerification) ((ForgotPassController)refresher).simulateVerificationSuccess();
+                        else{
+                            ((ForgotPassController)refresher).simulateResetSuccess();
+                            Type listType = new TypeToken<LoginResponse>(){}.getType();
+                            LoginResponse res = gson.fromJson(response, listType);
+                            UserSession.init(res.getName(),res.getEmail(),res.getToken());
+                            LocalDataManager.initDataPathAndSave(res.getName(), res.getEmail(), res.getToken());
+
+                            GroupDataManager.init();
+                        }
                     }
                 });
             } catch (Exception e) {
@@ -143,5 +151,6 @@ public class CreateRequestController {
         alert.setContentText(error);
         alert.showAndWait();
     }
+
 
 }

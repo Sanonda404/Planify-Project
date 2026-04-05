@@ -15,7 +15,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="700.0" prefWidth="1200.0" styleClass="root-pane" stylesheets="@../css/auth.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.auth.AuthController">
+<?import javafx.scene.control.Hyperlink?>
+<StackPane fx:id="rootPane" prefHeight="700.0" prefWidth="1200.0" styleClass="root-pane" stylesheets="@../css/auth.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.auth.AuthController">
 
     <HBox prefHeight="700.0" prefWidth="1200.0" spacing="0" styleClass="auth-container">
 
@@ -37,11 +38,11 @@
                 <padding>
                     <Insets bottom="55.0" left="55.0" right="55.0" top="65.0" />
                 </padding>
-            <Region prefHeight="73.0" prefWidth="476.0" />
+                <Region prefHeight="73.0" prefWidth="476.0" />
 
                 <!-- Brand -->
                 <VBox prefHeight="27.0" prefWidth="476.0" spacing="10">
-                    <Label styleClass="brand-name" text="📅 Planify" />
+                    <Label fx:id="brand" styleClass="brand-name" text="📅 Planify" />
                     <Region styleClass="brand-underline" />
                 </VBox>
 
@@ -64,12 +65,12 @@
                 <!-- Short features from second image -->
                 <VBox prefHeight="64.0" prefWidth="473.0" spacing="10" styleClass="feature-card">
                     <Label styleClass="feature-text" text="✨What is inside?" wrapText="true">
-                  <font>
-                     <Font size="28.0" />
-                  </font>
-                  <effect>
-                     <Glow />
-                  </effect></Label>
+                        <font>
+                            <Font size="28.0" />
+                        </font>
+                        <effect>
+                            <Glow />
+                        </effect></Label>
                     <Label styleClass="feature-text" text="📅 Schedules  🌟 To-Dos" wrapText="true" />
                     <Label styleClass="feature-text" text="👥 Groups  🤖 Planify Bot  📊 Projects " wrapText="true" />
                 </VBox>
@@ -119,6 +120,11 @@
                                 <PasswordField fx:id="loginPassword" promptText="Enter your password" styleClass="input-field" />
                             </VBox>
                         </VBox>
+                        <HBox alignment="CENTER_RIGHT">
+                            <Hyperlink text="Forgot Password? →"
+                                       styleClass="forgot-link-red"
+                                       onAction="#openForgotPassword"/>
+                        </HBox>
 
                         <Label fx:id="loginErrorLabel" managed="false" styleClass="error-label" text="" visible="false" wrapText="true" />
 
@@ -147,6 +153,16 @@
                                 <Label styleClass="input-label" text="Password" />
                                 <PasswordField fx:id="signupPassword" promptText="Create a strong password" styleClass="input-field" />
                                 <Label styleClass="hint-label" text="Must be 6-20 characters" />
+                            </VBox>
+                            <VBox spacing="8">
+                                <Label styleClass="input-label" text="Security Question &amp; Answer " />
+                                <TextField fx:id="signupSecurityQuestion"
+                                           promptText="Set Security Question"
+                                           styleClass="input-field"/>
+
+                                <TextField fx:id="signupSecurityAnswer"
+                                           promptText="Answer"
+                                           styleClass="input-field"/>
                             </VBox>
                         </VBox>
 

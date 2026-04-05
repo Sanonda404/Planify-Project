@@ -17,8 +17,17 @@ public class InitApp {
 
     public static void init(){
         System.out.println("inini");
-        GroupProjectDataManager.init();
         NotificationManager.init();
+    }
+
+    public static void offlineInit(){
+        System.out.println("Offline initialization");
+        ProjectDataManager.init();
+        EventDataManager.init();
+        ReminderManager.init();
+        TaskDataManager.init();
+        ReminderManager.init();
+        SceneManager.switchScene("dashboard-view.fxml","Dashboard");
     }
 
     public static void initialize(){

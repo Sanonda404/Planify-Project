@@ -338,9 +338,9 @@ public class AddResourceController implements Initializable {
         );
 
         // TODO: Call your backend API
-        System.out.println("Creating resource: " + request);
+        System.out.println("Creating resource: " + preLinkedTaskProjectName+" "+selectedProjectUuid);
         if(!selectedProjectUuid.isEmpty()) CreateRequestController.handleCreateResource(request, parentController);
-        else ProjectDataManager.savePersonalProjectResource(name,description,type,url,selectedProjectName,sourceName);
+        else ProjectDataManager.savePersonalProjectResource(name,description,type,url,preLinkedTaskProjectName,sourceName);
         closeWindow();
     }
 

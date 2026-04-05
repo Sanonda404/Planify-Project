@@ -1,13 +1,23 @@
 package com.planify.frontend.utils.managers;
 
 import com.planify.frontend.models.notification.NotificationResponse;
+import com.planify.frontend.utils.UserSession;
 
 import java.io.*;
 import java.nio.file.*;
 
 public class LocalDataManager {
-    // Hidden folder in user's home directory to store Planify data
-    private static final String DATA_PATH = System.getProperty("user.home") + "/.planify/user_config.txt";
+
+    private static String DATA_PATH;
+
+    public static void initDataPathAndSave(String username, String email, String hashedPassword){
+        DATA_PATH = System.getProperty("user.home") + "/.planify/" + UserSession.getInstance().getEmail()+ "/user_config.txt";
+        saveUserDataLocally(username,email,hashedPassword);
+    }
+
+    public static void initDataPathForOffline(String email){
+        DATA_PATH = System.getProperty("user.home") + "/.planify/" + email+ "/user_config.txt";
+    }
 
     public static void saveUserDataLocally(String username, String email, String hashedPassword) {
         try {

@@ -7,4 +7,12 @@ public class LoginRequest {
         this.identifier = identifier;
         this.password = password;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
 }

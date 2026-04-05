@@ -11,7 +11,7 @@ import java.time.Duration;
 import static com.planify.frontend.utils.services.ApiService.BASE_URL;
 
 public class BackendConnectionValidation {
-    private static final String SERVER_URL = "http://localhost:8080";
+    private static final String SERVER_URL = "http://localhost:8000";
     public static boolean isNetworkAvailable() {
         try {
             // Try connecting to a reliable public address

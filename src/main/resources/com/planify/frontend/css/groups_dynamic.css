@@ -1,6 +1,6 @@
 /* ===== ROOT & BASE STYLES ===== */
 .border-pane {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f1faee 0%, #ffffff 100%);
+    -fx-background-color: #f0f9ff;
     -fx-font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .logoBox {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f4d35e, #ee964b);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #93c5fd, #60a5fa);
     -fx-background-radius: 15;
     -fx-padding: 10;
     -fx-min-width: 50;
@@ -44,7 +44,7 @@
 .title {
     -fx-font-size: 24px;
     -fx-font-weight: 800;
-    -fx-text-fill: #1d2d44;
+    -fx-text-fill: #301d57;
 }
 
 .subtitle {
@@ -55,7 +55,7 @@
 
 .welcome {
     -fx-font-size: 14px;
-    -fx-text-fill: #64748b;
+    -fx-text-fill: #457b9d;
     -fx-font-style: italic;
 }
 
@@ -78,8 +78,8 @@
 }
 
 .icon-button {
-    -fx-background-color: #f1f5f9;
-    -fx-text-fill: #457b9d;
+    -fx-background-color: #e0f2fe;
+    -fx-text-fill: #2563eb;
     -fx-font-size: 18px;
     -fx-padding: 8 15;
     -fx-background-radius: 12;
@@ -87,7 +87,8 @@
 }
 
 .icon-button:hover {
-    -fx-background-color: #e2e8f0;
+    -fx-background-color: #bae6fd;
+    -fx-text-fill: #1d4ed8;
 }
 
 .logout-button {
@@ -182,7 +183,7 @@
 .glassCard {
     -fx-background-color: white;
     -fx-background-radius: 24;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 12, 0, 0, 4);
     -fx-padding: 20;
     -fx-border-color: #e2e8f0;
     -fx-border-radius: 24;
@@ -338,17 +339,7 @@
     -fx-alignment: center;
 }
 
-/* ===== ANIMATIONS ===== */
-@keyframes fadeInUp {
-    from {
-        -fx-opacity: 0;
-        -fx-translate-y: 20;
-    }
-    to {
-        -fx-opacity: 1;
-        -fx-translate-y: 0;
-    }
-}
+
 
 .glassCard {
     -fx-animation: fadeInUp 0.3s ease-out;

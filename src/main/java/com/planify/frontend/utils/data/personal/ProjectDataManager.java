@@ -140,6 +140,7 @@ public class ProjectDataManager {
     }
 
     public static void savePersonalProjectResource(String title, String description, String type, String url, String projectName, String soutceName){
+        System.out.println(projectName);
         for(ProjectDetails p: projects){
             if(p.getName().equals(projectName)){
                 MemberInfo self = new MemberInfo(UserSession.getInstance().getName(), UserSession.getInstance().getEmail());
