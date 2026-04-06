@@ -8,6 +8,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -171,22 +173,20 @@
                 </VBox>
             </HBox>
 
-            <!-- List View (Initially Hidden) -->
-            <VBox fx:id="listView" managed="false" spacing="16" styleClass="list-view-container" visible="false" VBox.vgrow="ALWAYS">
-                <VBox spacing="12" styleClass="list-view-header">
-                    <HBox alignment="CENTER_LEFT" spacing="16" styleClass="list-header-row">
-                        <Region prefWidth="24" />
-                        <Label prefWidth="280" styleClass="list-header-cell, list-header-task" text="Task Name" />
-                        <Label prefWidth="100" styleClass="list-header-cell" text="Status" />
-                        <Label prefWidth="80" styleClass="list-header-cell" text="Priority" />
-                        <Label prefWidth="100" styleClass="list-header-cell" text="Due Date" />
-                        <Label prefWidth="60" styleClass="list-header-cell" text="Weight" />
-                        <Label prefWidth="70" styleClass="list-header-cell" text="Actions" />
-                    </HBox>
-                </VBox>
-                <ScrollPane fitToWidth="true" styleClass="list-scroll" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="listContainer" spacing="8" styleClass="list-container" />
-                </ScrollPane>
+            <!-- Table View (Initially Hidden) -->
+            <VBox fx:id="tableView" managed="false" spacing="16" styleClass="table-view-container" visible="false" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tasksTableView" styleClass="tasks-table" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="selectColumn" prefWidth="50" text="✓" />
+                        <TableColumn fx:id="titleColumn" prefWidth="280" text="Task Name" />
+                        <TableColumn fx:id="statusColumn" prefWidth="100" text="Status" />
+                        <TableColumn fx:id="priorityColumn" prefWidth="80" text="Priority" />
+                        <TableColumn fx:id="dueDateColumn" prefWidth="100" text="Due Date" />
+                        <TableColumn fx:id="weightColumn" prefWidth="60" text="Weight" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="100" text="Category" />
+                        <TableColumn fx:id="actionsColumn" prefWidth="90" text="Actions" />
+                    </columns>
+                </TableView>
             </VBox>
 
         </VBox>

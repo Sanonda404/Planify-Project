@@ -7,12 +7,18 @@ import com.planify.frontend.models.notification.NotificationResponse;
 import com.planify.frontend.models.project.ProjectSummary;
 import com.planify.frontend.models.tasks.TaskDetails;
 import com.planify.frontend.models.auth.MemberInfo;
+import com.planify.frontend.utils.helpers.DateTimeFormatter;
 import com.planify.frontend.utils.managers.SceneManager;
 import com.planify.frontend.utils.managers.NotificationManager;
 import com.planify.frontend.utils.data.group.GroupProjectDataManager;
 import com.planify.frontend.utils.data.personal.ProjectDataManager;
 import com.planify.frontend.utils.data.personal.TaskDataManager;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -29,9 +36,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,8 +64,18 @@ public class TodoController extends SceneParent implements Initializable {
     @FXML private Button kanbanViewBtn;
     @FXML private Button listViewBtn;
     @FXML private HBox kanbanView;
-    @FXML private VBox listView;
-    @FXML private VBox listContainer;
+    @FXML private VBox tableView;
+    @FXML private TableView<TaskDetails> tasksTableView;
+
+    // Table Columns
+    @FXML private TableColumn<TaskDetails, Boolean> selectColumn;
+    @FXML private TableColumn<TaskDetails, String> titleColumn;
+    @FXML private TableColumn<TaskDetails, String> statusColumn;
+    @FXML private TableColumn<TaskDetails, String> priorityColumn;
+    @FXML private TableColumn<TaskDetails, String> dueDateColumn;
+    @FXML private TableColumn<TaskDetails, Integer> weightColumn;
+    @FXML private TableColumn<TaskDetails, String> categoryColumn;
+    @FXML private TableColumn<TaskDetails, Void> actionsColumn;
 
     // ========== KANBAN COLUMNS ==========
     @FXML private VBox pendingContainer;
@@ -71,6 +88,8 @@ public class TodoController extends SceneParent implements Initializable {
 
     // ========== DATA ==========
     private final List<TaskDetails> allTasks = new ArrayList<>();
+    private ObservableList<TaskDetails> observableTasks = FXCollections.observableArrayList();
+    private FilteredList<TaskDetails> filteredTasks;
     private List<ProjectSummary> projectSummaries = new ArrayList<>();
 
     private String currentView = "personal";
@@ -87,14 +106,13 @@ public class TodoController extends SceneParent implements Initializable {
     @FXML public Button notifBtn;
     @FXML public VBox notifPanel;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupNotificationPanel();
         init();
         setupFilters();
         setupViewToggle();
+        setupTableView();
         loadData();
         applyFilters();
     }
@@ -151,10 +169,13 @@ public class TodoController extends SceneParent implements Initializable {
 
     private void setupViewToggle() {
         personalTasksBtn.getStyleClass().add("active");
+
         personalTasksBtn.setOnAction(e -> {
             currentView = "personal";
-            personalTasksBtn.getStyleClass().add("active");
+            personalTasksBtn.getStyleClass().remove("active");
             projectTasksBtn.getStyleClass().remove("active");
+            personalTasksBtn.getStyleClass().add("active");
+
             projectFilterBox.setVisible(false);
             projectFilterBox.setManaged(false);
             applyFilters();
@@ -162,11 +183,198 @@ public class TodoController extends SceneParent implements Initializable {
 
         projectTasksBtn.setOnAction(e -> {
             currentView = "project";
-            projectTasksBtn.getStyleClass().add("active");
             personalTasksBtn.getStyleClass().remove("active");
+            projectTasksBtn.getStyleClass().remove("active");
+            projectTasksBtn.getStyleClass().add("active");
+
             projectFilterBox.setVisible(true);
             projectFilterBox.setManaged(true);
             applyFilters();
+        });
+
+    }
+
+    private void setupTableView() {
+        tasksTableView.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            double tableWidth = newWidth.doubleValue();
+
+            selectColumn.setPrefWidth(tableWidth * 0.05);   // 5%
+            titleColumn.setPrefWidth(tableWidth * 0.35);    // 35%
+            statusColumn.setPrefWidth(tableWidth * 0.10);   // 10%
+            priorityColumn.setPrefWidth(tableWidth * 0.08); // 8%
+            dueDateColumn.setPrefWidth(tableWidth * 0.15);  // 15%
+            weightColumn.setPrefWidth(tableWidth * 0.06);   // 6%
+            categoryColumn.setPrefWidth(tableWidth * 0.10); // 10%
+            actionsColumn.setPrefWidth(tableWidth * 0.11);  // 11%
+        });
+
+        // Setup Select Column with CheckBox
+        selectColumn.setCellValueFactory(cellData ->
+                new SimpleBooleanProperty("COMPLETED".equalsIgnoreCase(cellData.getValue().getStatus())));
+        selectColumn.setCellFactory(col -> new CheckBoxTableCell<>());
+        selectColumn.setOnEditCommit(event -> {
+            TaskDetails task = event.getRowValue();
+            if (event.getNewValue()) {
+                task.setStatus("COMPLETED");
+            } else {
+                task.setStatus("PENDING");
+            }
+            updateTaskStatus(task);
+            applyFilters();
+        });
+
+        // Title Column
+        titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        titleColumn.setCellFactory(col -> new TableCell<TaskDetails, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    TaskDetails task = getTableView().getItems().get(getIndex());
+                    HBox container = new HBox(8);
+                    container.setAlignment(Pos.CENTER_LEFT);
+
+                    Label titleLabel = new Label(item);
+                    titleLabel.getStyleClass().add("table-task-title");
+                    if ("COMPLETED".equalsIgnoreCase(task.getStatus())) {
+                        titleLabel.getStyleClass().add("table-task-completed");
+                    }
+
+                    // Category chip
+                    Label categoryChip = new Label(task.getCategory() != null ? task.getCategory() : "General");
+                    categoryChip.getStyleClass().add("table-category-chip");
+
+                    container.getChildren().addAll(titleLabel, categoryChip);
+                    setGraphic(container);
+                    setText(null);
+                }
+            }
+        });
+
+        // Status Column
+        statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
+        statusColumn.setCellFactory(col -> new TableCell<TaskDetails, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label statusLabel = new Label(item);
+                    statusLabel.getStyleClass().addAll("table-status-badge", getStatusBadgeClass(item));
+                    setGraphic(statusLabel);
+                    setText(null);
+                }
+            }
+        });
+
+        // Priority Column
+        priorityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(getPriorityText(cellData.getValue())));
+        priorityColumn.setCellFactory(col -> new TableCell<TaskDetails, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label priorityLabel = new Label(item);
+                    priorityLabel.getStyleClass().addAll("table-priority-badge", getPriorityBadgeClassForTable(item));
+                    setGraphic(priorityLabel);
+                    setText(null);
+                }
+            }
+        });
+
+        // Due Date Column
+        dueDateColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(DateTimeFormatter.FormatDateTime(cellData.getValue().getDueDate())));
+        dueDateColumn.setCellFactory(col -> new TableCell<TaskDetails, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    TaskDetails task = getTableView().getItems().get(getIndex());
+                    Label dueLabel = new Label(item);
+                    if (isOverdue(task.getDueDate()) && !"COMPLETED".equalsIgnoreCase(task.getStatus())) {
+                        dueLabel.getStyleClass().add("table-due-overdue");
+                    }
+                    setGraphic(dueLabel);
+                    setText(null);
+                }
+            }
+        });
+
+        // Weight Column
+        weightColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getWeight()));
+        weightColumn.setCellFactory(col -> new TableCell<TaskDetails, Integer>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText("⚡ " + item);
+                    getStyleClass().add("table-weight-cell");
+                }
+            }
+        });
+
+        // Category Column
+        categoryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategory()));
+
+        // Actions Column
+        actionsColumn.setCellFactory(col -> new TableCell<TaskDetails, Void>() {
+            private final Button viewBtn = new Button("View");
+            private final Button editBtn = new Button("Edit");
+            private final HBox buttons = new HBox(8, viewBtn, editBtn);
+
+            {
+                viewBtn.getStyleClass().add("task-quick-btn");
+                editBtn.getStyleClass().add("task-edit-btn");
+                viewBtn.setOnAction(e -> {
+                    TaskDetails task = getTableView().getItems().get(getIndex());
+                    showTaskDetails(task);
+                });
+                editBtn.setOnAction(e -> {
+                    TaskDetails task = getTableView().getItems().get(getIndex());
+                    showEditTaskDialog(task);
+                });
+                buttons.setAlignment(Pos.CENTER);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(buttons);
+                }
+            }
+        });
+
+        tasksTableView.setRowFactory(tv -> new TableRow<TaskDetails>() {
+            @Override
+            protected void updateItem(TaskDetails item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setStyle("");
+                } else if ("COMPLETED".equalsIgnoreCase(item.getStatus())) {
+                    setStyle("-fx-background-color: #f8fafc;");
+                } else if ("PENDING".equalsIgnoreCase(item.getStatus())) {
+                    setStyle("-fx-background-color: #ffe1de");
+                }else {
+                    setStyle("-fx-background-color: #fff4d8");
+                }
+            }
         });
     }
 
@@ -175,8 +383,8 @@ public class TodoController extends SceneParent implements Initializable {
         isKanbanView = true;
         kanbanView.setVisible(true);
         kanbanView.setManaged(true);
-        listView.setVisible(false);
-        listView.setManaged(false);
+        tableView.setVisible(false);
+        tableView.setManaged(false);
         kanbanViewBtn.getStyleClass().add("view-mode-active");
         listViewBtn.getStyleClass().remove("view-mode-active");
         applyFilters();
@@ -187,8 +395,8 @@ public class TodoController extends SceneParent implements Initializable {
         isKanbanView = false;
         kanbanView.setVisible(false);
         kanbanView.setManaged(false);
-        listView.setVisible(true);
-        listView.setManaged(true);
+        tableView.setVisible(true);
+        tableView.setManaged(true);
         listViewBtn.getStyleClass().add("view-mode-active");
         kanbanViewBtn.getStyleClass().remove("view-mode-active");
         applyFilters();
@@ -201,10 +409,14 @@ public class TodoController extends SceneParent implements Initializable {
         loadProjects();
         loadMilestones();
         loadCategories();
+
+        observableTasks.setAll(allTasks);
+        filteredTasks = new FilteredList<>(observableTasks, p -> true);
+        tasksTableView.setItems(filteredTasks);
     }
 
     private void loadPersonalTasks() {
-        allTasks.addAll(TaskDataManager.getAllPersonalTasks()) ;
+        allTasks.addAll(TaskDataManager.getAllPersonalTasks());
     }
 
     private void loadProjectTasks() {
@@ -271,18 +483,20 @@ public class TodoController extends SceneParent implements Initializable {
     }
 
     private void applyFilters() {
-        List<TaskDetails> filtered = allTasks.stream()
-                .filter(this::matchesViewFilter)
-                .filter(this::matchesTimeFilter)
-                .filter(this::matchesDailyTodoFilter)
-                .filter(this::matchesProjectFilter)
-                .filter(this::matchesMilestoneFilter)
-                .filter(this::matchesCategoryFilter)
-                .filter(this::matchesCompletedFilter)
-                .collect(Collectors.toList());
+        filteredTasks.setPredicate(task ->
+                matchesViewFilter(task) &&
+                        matchesTimeFilter(task) &&
+                        matchesDailyTodoFilter(task) &&
+                        matchesProjectFilter(task) &&
+                        matchesMilestoneFilter(task) &&
+                        matchesCategoryFilter(task) &&
+                        matchesCompletedFilter(task)
+        );
 
-        populateKanban(filtered);
-        updateNavStats(filtered);
+        if (isKanbanView) {
+            populateKanbanView(new ArrayList<>(filteredTasks));
+        }
+        updateNavStats(new ArrayList<>(filteredTasks));
     }
 
     private boolean matchesViewFilter(TaskDetails task) {
@@ -342,14 +556,6 @@ public class TodoController extends SceneParent implements Initializable {
         return !"COMPLETED".equalsIgnoreCase(task.getStatus());
     }
 
-    private void populateKanban(List<TaskDetails> tasks) {
-        if (isKanbanView) {
-            populateKanbanView(tasks);
-        } else {
-            populateListView(tasks);
-        }
-    }
-
     private void populateKanbanView(List<TaskDetails> tasks) {
         pendingContainer.getChildren().clear();
         inProgressContainer.getChildren().clear();
@@ -396,161 +602,6 @@ public class TodoController extends SceneParent implements Initializable {
         }
     }
 
-    private void populateListView(List<TaskDetails> tasks) {
-        listContainer.getChildren().clear();
-        if (tasks.isEmpty()) {
-            listContainer.getChildren().add(createEmptyState());
-            return;
-        }
-
-        for (TaskDetails task : tasks) {
-            listContainer.getChildren().add(createListItem(task));
-        }
-    }
-
-    private VBox createListItem(TaskDetails task) {
-        VBox item = new VBox();
-        item.getStyleClass().add("list-task-item");
-        item.setOnMouseClicked(e -> showTaskDetails(task));
-
-        HBox row = new HBox(16);
-        row.setAlignment(Pos.CENTER_LEFT);
-        row.getStyleClass().add("list-task-row");
-
-        CheckBox checkBox = new CheckBox();
-        checkBox.getStyleClass().add("list-task-checkbox");
-        checkBox.setSelected("COMPLETED".equalsIgnoreCase(task.getStatus()));
-        checkBox.setOnAction(e -> {
-            e.consume();
-            if (checkBox.isSelected()) {
-                task.setStatus("COMPLETED");
-            } else {
-                task.setStatus("PENDING");
-            }
-            updateTaskStatus(task);
-            applyFilters();
-        });
-
-        VBox taskInfoBox = new VBox(4);
-        taskInfoBox.setPrefWidth(280);
-        Label titleLabel = new Label(task.getTitle());
-        titleLabel.getStyleClass().add("list-task-title");
-        if ("COMPLETED".equalsIgnoreCase(task.getStatus())) {
-            titleLabel.getStyleClass().add("list-task-title-completed");
-        }
-
-        HBox chipsBox = new HBox(8);
-        Label categoryChip = new Label(task.getCategory() != null ? task.getCategory() : "General");
-        categoryChip.getStyleClass().add("list-task-chip");
-        chipsBox.getChildren().add(categoryChip);
-        if (task.getMilestoneName() != null && !task.getMilestoneName().isEmpty()) {
-            Label milestoneChip = new Label("🎯 " + task.getMilestoneName());
-            milestoneChip.getStyleClass().add("list-task-chip");
-            chipsBox.getChildren().add(milestoneChip);
-        }
-        taskInfoBox.getChildren().addAll(titleLabel, chipsBox);
-
-        Label statusLabel = new Label(task.getStatus());
-        statusLabel.getStyleClass().addAll("list-task-status", getStatusBadgeClass(task.getStatus()));
-        statusLabel.setPrefWidth(100);
-
-        Label priorityLabel = new Label(getPriorityText(task));
-        priorityLabel.getStyleClass().addAll("list-task-priority", getPriorityBadgeClass(task));
-        priorityLabel.setPrefWidth(80);
-
-        Label dueLabel = new Label(formatDate(task.getDueDate()));
-        dueLabel.getStyleClass().add("list-task-due");
-        dueLabel.setPrefWidth(100);
-        if (isOverdue(task.getDueDate()) && !"COMPLETED".equalsIgnoreCase(task.getStatus())) {
-            dueLabel.getStyleClass().add("list-task-due-overdue");
-        }
-
-        Label weightLabel = new Label("⚡ " + task.getWeight());
-        weightLabel.getStyleClass().add("list-task-weight");
-        weightLabel.setPrefWidth(60);
-
-        HBox actionsBox = new HBox(8);
-        Button viewBtn = new Button("👁");
-        viewBtn.getStyleClass().add("list-action-btn");
-        viewBtn.setOnAction(e -> { e.consume(); showTaskDetails(task); });
-        Button editBtn = new Button("✏️");
-        editBtn.getStyleClass().add("list-action-btn");
-        editBtn.setOnAction(e -> { e.consume(); showEditTaskDialog(task); });
-        actionsBox.getChildren().addAll(viewBtn, editBtn);
-        actionsBox.setPrefWidth(70);
-
-        row.getChildren().addAll(checkBox, taskInfoBox, statusLabel, priorityLabel, dueLabel, weightLabel, actionsBox);
-        HBox.setHgrow(taskInfoBox, Priority.ALWAYS);
-        item.getChildren().add(row);
-        return item;
-    }
-
-    private VBox createEmptyState() {
-        VBox emptyState = new VBox(12);
-        emptyState.setAlignment(Pos.CENTER);
-        emptyState.setPadding(new Insets(60));
-        emptyState.getStyleClass().add("empty-state");
-        Label iconLabel = new Label("📋");
-        iconLabel.getStyleClass().add("empty-icon");
-        Label titleLabel = new Label("No tasks found");
-        titleLabel.getStyleClass().add("empty-text");
-        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: 600;");
-        Label messageLabel = new Label("Create a new task to get started");
-        messageLabel.getStyleClass().add("empty-text");
-        emptyState.getChildren().addAll(iconLabel, titleLabel, messageLabel);
-        return emptyState;
-    }
-
-    private String getStatusBadgeClass(String status) {
-        if (status == null) return "status-pending-badge";
-        switch (status.toUpperCase()) {
-            case "COMPLETED": return "status-completed-badge";
-            case "IN_PROGRESS": return "status-in_progress-badge";
-            default: return "status-pending-badge";
-        }
-    }
-
-    private String getPriorityBadgeClass(TaskDetails task) {
-        String priority = getPriorityText(task).toLowerCase();
-        switch (priority) {
-            case "high": return "priority-high-badge";
-            case "medium": return "priority-medium-badge";
-            case "low": return "priority-low-badge";
-            default: return "priority-medium-badge";
-        }
-    }
-
-    private String getPriorityText(TaskDetails task) {
-        if (task.getPriority() != null && !task.getPriority().isEmpty()) return task.getPriority();
-        if (task.getDueDate() != null && !task.getDueDate().isEmpty()) {
-            try {
-                LocalDate dueDate = LocalDate.parse(task.getDueDate());
-                long daysUntil = LocalDate.now().until(dueDate).getDays();
-                if (daysUntil < 0 || daysUntil <= 2) return "High";
-                if (daysUntil <= 7) return "Medium";
-            } catch (Exception e) {}
-        }
-        return "Medium";
-    }
-
-    private boolean isOverdue(String dateStr) {
-        if (dateStr == null || dateStr.isEmpty()) return false;
-        try {
-            return LocalDate.parse(dateStr).isBefore(LocalDate.now());
-        } catch (Exception e) { return false; }
-    }
-
-    private String formatDate(String dateStr) {
-        if (dateStr == null || dateStr.isEmpty()) return "No date";
-        try {
-            LocalDate date = LocalDate.parse(dateStr);
-            LocalDate today = LocalDate.now();
-            if (date.equals(today)) return "Today";
-            if (date.equals(today.plusDays(1))) return "Tomorrow";
-            return date.format(dateFormatter);
-        } catch (Exception e) { return dateStr; }
-    }
-
     private void updateTaskStatus(TaskDetails task) {
         if (task.getUuid()==null || task.getUuid().trim().isEmpty()) {
             TaskDataManager.updatePersonalTaskStatus(task.getTitle(), task.getStatus());
@@ -580,6 +631,48 @@ public class TodoController extends SceneParent implements Initializable {
         navCompletedLabel.setText(String.valueOf(completed));
         navProgressLabel.setText(String.valueOf(progress));
     }
+
+    // ========== HELPER METHODS ==========
+
+    private String getStatusBadgeClass(String status) {
+        if (status == null) return "status-pending-badge";
+        switch (status.toUpperCase()) {
+            case "COMPLETED": return "status-completed-badge";
+            case "IN_PROGRESS": return "status-in_progress-badge";
+            default: return "status-pending-badge";
+        }
+    }
+
+    private String getPriorityBadgeClassForTable(String priority) {
+        switch (priority.toLowerCase()) {
+            case "high": return "priority-high-badge";
+            case "medium": return "priority-medium-badge";
+            case "low": return "priority-low-badge";
+            default: return "priority-medium-badge";
+        }
+    }
+
+    private String getPriorityText(TaskDetails task) {
+        if (task.getPriority() != null && !task.getPriority().isEmpty()) return task.getPriority();
+        if (task.getDueDate() != null && !task.getDueDate().isEmpty()) {
+            try {
+                LocalDate dueDate = LocalDate.parse(task.getDueDate());
+                long daysUntil = LocalDate.now().until(dueDate).getDays();
+                if (daysUntil < 0 || daysUntil <= 2) return "High";
+                if (daysUntil <= 7) return "Medium";
+            } catch (Exception e) {}
+        }
+        return "Medium";
+    }
+
+    private boolean isOverdue(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) return false;
+        try {
+            return LocalDate.parse(dateStr).isBefore(LocalDate.now());
+        } catch (Exception e) { return false; }
+    }
+
+    // ========== DETAILS AND EDIT METHODS ==========
 
     public void showTaskDetails(TaskDetails task) {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -635,7 +728,7 @@ public class TodoController extends SceneParent implements Initializable {
 
         // Due Date
         if (task.getDueDate() != null && !task.getDueDate().isBlank()) {
-            addGridRow(detailsGrid, row++, "📅 Due Date:", formatDate(task.getDueDate()));
+            addGridRow(detailsGrid, row++, "📅 Due Date:", DateTimeFormatter.FormatDateTime(task.getDueDate()));
         }
 
         // Category
@@ -771,22 +864,6 @@ public class TodoController extends SceneParent implements Initializable {
         });
     }
 
-    private void addGridRow(GridPane grid, int row, String label, String value) {
-        if (value == null || value.isBlank()) return;
-
-        Label labelWidget = new Label(label);
-        labelWidget.getStyleClass().add("detail-label");
-
-        Label valueWidget = new Label(value);
-        valueWidget.getStyleClass().add("detail-value");
-        valueWidget.setWrapText(true);
-
-        grid.add(labelWidget, 0, row);
-        grid.add(valueWidget, 1, row);
-
-        GridPane.setHgrow(valueWidget, Priority.ALWAYS);
-    }
-
     private String getPriorityColor(String priority) {
         switch (priority.toLowerCase()) {
             case "high": return "#dc2626";
@@ -796,11 +873,16 @@ public class TodoController extends SceneParent implements Initializable {
         }
     }
 
-    private void addDetailRow(VBox container, String label, String value) {
+    private void addGridRow(GridPane grid, int row, String label, String value) {
         if (value == null || value.isBlank()) return;
-        VBox row = new VBox(5);
-        row.getChildren().addAll(new Label(label), new Label(value));
-        container.getChildren().add(row);
+        Label labelWidget = new Label(label);
+        labelWidget.getStyleClass().add("detail-label");
+        Label valueWidget = new Label(value);
+        valueWidget.getStyleClass().add("detail-value");
+        valueWidget.setWrapText(true);
+        grid.add(labelWidget, 0, row);
+        grid.add(valueWidget, 1, row);
+        GridPane.setHgrow(valueWidget, Priority.ALWAYS);
     }
 
     public void showEditTaskDialog(TaskDetails task) {
@@ -844,5 +926,4 @@ public class TodoController extends SceneParent implements Initializable {
     @FXML private void goBack() { SceneManager.switchScene("dashboard-view.fxml", "Dashboard"); }
     @FXML private void handleLogout() { SceneManager.switchScene("login-view.fxml", "Login"); }
     public void refresh() { loadData(); applyFilters(); }
-
 }

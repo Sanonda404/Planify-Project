@@ -25,6 +25,7 @@ module com.planify.frontend {
     requires spring.amqp;
     requires javafx.media;
     requires org.jspecify;
+    requires java.sql;
 
     opens com.planify.frontend.controllers to javafx.fxml;
     opens com.planify.frontend.controllers.group to javafx.fxml;
