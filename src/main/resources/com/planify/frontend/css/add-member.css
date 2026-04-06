@@ -154,25 +154,28 @@
 
 /* ===== ADD BUTTON ===== */
 .am-add-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: #457b9d;
+    -fx-background-color: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 600;
-    -fx-padding: 8 16;
-    -fx-background-radius: 10;
-    -fx-border-color: #457b9d;
-    -fx-border-radius: 10;
-    -fx-border-width: 1.5;
+    -fx-padding: 8 18;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
     -fx-cursor: hand;
-    -fx-transition: all 0.2s;
+    -fx-effect: dropshadow(gaussian, rgba(14, 165, 233, 0.3), 6, 0, 0, 2);
 }
 
 .am-add-btn:hover {
-    -fx-background-color: #f1f5f9;
-    -fx-border-color: #1d3557;
-    -fx-text-fill: #1d3557;
+    -fx-background-color: linear-gradient(135deg, #0ea5e9, #0284c7);
+    -fx-effect: dropshadow(gaussian, rgba(2, 132, 199, 0.5), 10, 0, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
+.am-add-btn:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
 /* ===== SEPARATOR ===== */
 .am-separator {
     -fx-background-color: #e2e8f0;
@@ -219,20 +222,26 @@
 }
 
 .am-send-btn {
-    -fx-background-color: linear-gradient(135deg, #457b9d, #1d3557);
+    -fx-background-color: linear-gradient(135deg, #38bdf8, #0284c7);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 600;
-    -fx-padding: 10 20;
-    -fx-background-radius: 10;
+    -fx-padding: 10 22;
+    -fx-background-radius: 12;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(69, 123, 157, 0.3), 6, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(2, 132, 199, 0.35), 8, 0, 0, 3);
 }
 
 .am-send-btn:hover {
-    -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 10, 0, 0, 4);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
+    -fx-background-color: linear-gradient(135deg, #0ea5e9, #0369a1);
+    -fx-effect: dropshadow(gaussian, rgba(3, 105, 161, 0.6), 12, 0, 0, 5);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.am-send-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
 }
 
 /* ===== ANIMATION ===== */
