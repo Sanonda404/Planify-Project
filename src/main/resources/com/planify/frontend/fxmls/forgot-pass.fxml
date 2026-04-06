@@ -14,8 +14,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 
 <StackPane prefHeight="700.0" prefWidth="1200.0" styleClass="root-pane" stylesheets="@../css/forgot-pass.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planify.frontend.controllers.auth.ForgotPassController">
@@ -28,62 +26,9 @@
         <StackPane fx:id="leftPanel" minWidth="520.0" prefWidth="520.0" styleClass="fp-left" HBox.hgrow="ALWAYS">
 
             <!-- Subtle decorative circles (background blobs) -->
-            <Circle fx:id="blob1" radius="180.0" styleClass="blob blob-1" StackPane.alignment="TOP_LEFT">
-            <fill>
-               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                  <stops>
-                     <Stop>
-                        <color>
-                           <Color red="0.6222222447395325" green="0.4333333373069763" blue="1.0" />
-                        </color>
-                     </Stop>
-                     <Stop offset="0.006729475100942127">
-                        <color>
-                           <Color red="0.9792487621307373" green="0.7200000286102295" blue="1.0" />
-                        </color>
-                     </Stop>
-                     <Stop offset="1.0">
-                        <color>
-                           <Color red="1.0" green="1.0" blue="1.0" />
-                        </color>
-                     </Stop>
-                  </stops>
-               </RadialGradient>
-            </fill></Circle>
-            <Circle fx:id="blob2" radius="120.0" styleClass="blob blob-2" StackPane.alignment="BOTTOM_RIGHT">
-            <fill>
-               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                  <stops>
-                     <Stop>
-                        <color>
-                           <Color red="0.7599999904632568" green="1.0" blue="0.9826396107673645" />
-                        </color>
-                     </Stop>
-                     <Stop offset="1.0">
-                        <color>
-                           <Color red="1.0" green="1.0" blue="1.0" />
-                        </color>
-                     </Stop>
-                  </stops>
-               </RadialGradient>
-            </fill></Circle>
-            <Circle fx:id="blob3" radius="60.0" styleClass="blob blob-3" StackPane.alignment="BOTTOM_LEFT">
-            <fill>
-               <RadialGradient centerX="0.4922566371681415" centerY="0.5" radius="0.5">
-                  <stops>
-                     <Stop>
-                        <color>
-                           <Color red="0.644444465637207" green="0.7807407379150391" blue="1.0" />
-                        </color>
-                     </Stop>
-                     <Stop offset="1.0">
-                        <color>
-                           <Color red="1.0" green="1.0" blue="1.0" />
-                        </color>
-                     </Stop>
-                  </stops>
-               </RadialGradient>
-            </fill></Circle>
+            <Circle fx:id="blob1" fill="#9135ec" radius="180.0" styleClass="blob blob-1" StackPane.alignment="TOP_LEFT" />
+            <Circle fx:id="blob2" fill="#d39eff" radius="120.0" styleClass="blob blob-2" StackPane.alignment="BOTTOM_RIGHT" />
+            <Circle fx:id="blob3" fill="#e3cdff" radius="60.0" styleClass="blob blob-3" StackPane.alignment="BOTTOM_LEFT" />
 
             <!-- Left content -->
             <VBox alignment="CENTER" spacing="0" StackPane.alignment="CENTER">
