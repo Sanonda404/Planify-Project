@@ -2,12 +2,12 @@ package com.planify.frontend.controllers.task;
 
 import com.planify.frontend.models.tasks.TaskDetails;
 import com.planify.frontend.models.auth.MemberInfo;
+import com.planify.frontend.utils.helpers.DateTimeFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -59,7 +59,7 @@ public class TodoCardController {
         }
 
         if (task.getDueDate() != null && !task.getDueDate().isBlank()) {
-            dueDateLabel.setText("📅 " + formatDate(task.getDueDate()));
+            dueDateLabel.setText("📅 " + DateTimeFormatter.FormatDateTime(task.getDueDate()));
             if (isOverdue(task.getDueDate()) && !"COMPLETED".equalsIgnoreCase(task.getStatus())) {
                 dueDateLabel.getStyleClass().add("task-overdue");
             }
@@ -124,7 +124,7 @@ public class TodoCardController {
         try {
             LocalDate dueDate = LocalDate.parse(task.getDueDate());
             long daysUntil = LocalDate.now().until(dueDate).getDays();
-            if (daysUntil < 0 || daysUntil <= 2) priorityIndicator.getStyleClass().add("priority-high");
+            if (daysUntil <= 2) priorityIndicator.getStyleClass().add("priority-high");
             else if (daysUntil <= 7) priorityIndicator.getStyleClass().add("priority-medium");
             else priorityIndicator.getStyleClass().add("priority-low");
         } catch (Exception e) { priorityIndicator.getStyleClass().add("priority-none"); }
@@ -152,15 +152,6 @@ public class TodoCardController {
         catch (Exception e) { return false; }
     }
 
-    private String formatDate(String dateStr) {
-        try {
-            LocalDate date = LocalDate.parse(dateStr);
-            LocalDate today = LocalDate.now();
-            if (date.equals(today)) return "Today";
-            if (date.equals(today.plusDays(1))) return "Tomorrow";
-            return date.format(DateTimeFormatter.ofPattern("MMM dd"));
-        } catch (Exception e) { return dateStr; }
-    }
 
     @FXML private void viewTask() { if (parentController != null) parentController.showTaskDetails(task); }
     @FXML private void editTask() { if (parentController != null) parentController.showEditTaskDialog(task); }

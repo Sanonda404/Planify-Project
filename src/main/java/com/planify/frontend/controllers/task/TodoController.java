@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -296,7 +297,7 @@ public class TodoController extends SceneParent implements Initializable {
         if ("All Time".equals(timeFilter)) return true;
         if (task.getDueDate() == null || task.getDueDate().isBlank()) return false;
         try {
-            LocalDate dueDate = LocalDate.parse(task.getDueDate());
+            LocalDate dueDate = LocalDateTime.parse(task.getDueDate()).toLocalDate();
             LocalDate today = LocalDate.now();
             switch (timeFilter) {
                 case "Today": return dueDate.equals(today);

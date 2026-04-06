@@ -128,7 +128,7 @@
 
                         <Label fx:id="loginErrorLabel" managed="false" styleClass="error-label" text="" visible="false" wrapText="true" />
 
-                        <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin" prefHeight="52.0" styleClass="login-btn" text="Sign In" />
+                        <Button maxWidth="Infinity" onAction="#handleLogin" prefHeight="52.0" styleClass="login-btn" text="Sign In" />
                     </VBox>
 
                     <!-- SIGNUP FORM -->
