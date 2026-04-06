@@ -5,15 +5,20 @@ import com.planify.frontend.controllers.Request.GetRequestController;
 import com.planify.frontend.models.auth.LoginRequest;
 import com.planify.frontend.models.auth.SecurityAnswerVerification;
 import com.planify.frontend.utils.managers.SceneManager;
+
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -185,7 +190,7 @@ public class ForgotPassController {
         step1Btn.setText("Checking...");
         clearError(step1ErrorLabel);
 
-        // TODO: Call backend API to get security question
+
         GetRequestController.getSecurityQues(username,(response)->{
             Platform.runLater(() -> {
                 System.out.println(username);
@@ -425,16 +430,39 @@ public class ForgotPassController {
     }
 
     // ========== NAVIGATION ==========
+    @FXML
+    private void goToLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/planify/frontend/fxmls/login-view.fxml"));
+            Parent root = loader.load();
 
+            AuthController controller = loader.getController();
+            controller.resetLoginView();
+
+
+            Stage stage = (Stage) step1View.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.show();
+            System.out.println("Switched to login page"); // debug
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleBack() {
         if (successView.isVisible()) {
-            SceneManager.switchScene("login-view.fxml", "Log in");
+
+           goToLogin();
         } else if (step2View.isVisible()) {
             // Go back to step 1
             transitionToStep1();
         } else {
-            SceneManager.switchScene("login-view.fxml", "Log in");
+
+            goToLogin();
         }
     }
 
@@ -470,7 +498,7 @@ public class ForgotPassController {
 
     @FXML
     private void handleGoToLogin() {
-        SceneManager.switchScene("login-view.fxml", "Log in");
+        goToLogin();
     }
 
     // ========== UTILITY METHODS ==========

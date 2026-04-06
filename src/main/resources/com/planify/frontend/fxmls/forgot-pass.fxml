@@ -109,10 +109,7 @@
                 <StackPane styleClass="illustration-wrap">
                     <ImageView fx:id="illustrationImage" fitHeight="310.0" fitWidth="349.0" preserveRatio="true" smooth="true" styleClass="illustration-img">
                         <image>
-                            <!-- Replace with your own image path.
-                                 Suggested: a "forgot password / key" illustration
-                                 from https://storyset.com or https://undraw.co
-                                 Save as: src/main/resources/.../images/forgot_pass.png -->
+
                             <Image url="@../images/forgot_pass.png" />
                         </image>
                     </ImageView>
@@ -143,9 +140,9 @@
             </VBox>
         </StackPane>
 
-        <!-- ═══════════════════════════════════
+        <!--
              RIGHT PANEL — the form
-             ═══════════════════════════════════ -->
+             -->
         <StackPane fx:id="rightPanel" minWidth="580.0" prefWidth="680.0" styleClass="fp-right" HBox.hgrow="ALWAYS">
 
             <VBox alignment="CENTER" styleClass="fp-right-wrap">
@@ -178,8 +175,8 @@
                         <VBox spacing="8">
                             <Label styleClass="fp-input-label" text="Username or Email" />
                             <StackPane>
-                                <TextField fx:id="usernameField" onAction="#handleLookup" promptText="Enter your username or email" styleClass="fp-input-field" />
-                                <Label styleClass="fp-field-icon fp-field-icon-left" text=" 👤" StackPane.alignment="CENTER_LEFT" />
+                                <TextField fx:id="usernameField" onAction="#handleLookup" promptText="Enter your  email" styleClass="fp-input-field" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text="  👤" StackPane.alignment="CENTER_LEFT" />
                             </StackPane>
                         </VBox>
 
@@ -197,7 +194,7 @@
                                 <Label styleClass="fp-input-label" text="Your Answer" />
                                 <StackPane>
                                     <TextField fx:id="answerField" onAction="#handleVerify" promptText="Type your answer..." styleClass="fp-input-field" />
-                                    <Label styleClass="fp-field-icon fp-field-icon-left" text=" 💬" StackPane.alignment="CENTER_LEFT" />
+                                    <Label styleClass="fp-field-icon fp-field-icon-left" text="  💬" StackPane.alignment="CENTER_LEFT" />
                                 </StackPane>
                                 <Label styleClass="fp-hint-label" text="Answers are not case-sensitive." />
                             </VBox>
@@ -225,8 +222,8 @@
                             <Label styleClass="fp-input-label" text="New Password" />
                             <StackPane>
                                 <PasswordField fx:id="newPasswordField" promptText="Create a strong password" styleClass="fp-input-field" />
-                                <Label styleClass="fp-field-icon fp-field-icon-left" text="🔒" StackPane.alignment="CENTER_LEFT" />
-                                <Button fx:id="toggleNewPw" onAction="#toggleNewPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text=" 🔒" StackPane.alignment="CENTER_LEFT" />
+<!--                                <Button fx:id="toggleNewPw" onAction="#toggleNewPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />-->
                             </StackPane>
                             <!-- Strength bar -->
                             <Pane fx:id="strengthBarBg" styleClass="strength-bar-bg">
@@ -242,8 +239,8 @@
                             <Label styleClass="fp-input-label" text="Confirm Password" />
                             <StackPane>
                                 <PasswordField fx:id="confirmPasswordField" promptText="Repeat your new password" styleClass="fp-input-field" />
-                                <Label styleClass="fp-field-icon fp-field-icon-left" text="🔒" StackPane.alignment="CENTER_LEFT" />
-                                <Button fx:id="toggleConfirmPw" onAction="#toggleConfirmPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />
+                                <Label styleClass="fp-field-icon fp-field-icon-left" text=" 🔒" StackPane.alignment="CENTER_LEFT" />
+<!--                                <Button fx:id="toggleConfirmPw" onAction="#toggleConfirmPassword" styleClass="fp-pw-toggle" text="Show" StackPane.alignment="CENTER_RIGHT" />-->
                             </StackPane>
                         </VBox>
 

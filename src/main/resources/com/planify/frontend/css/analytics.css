@@ -223,35 +223,35 @@
 }
 
 .kpi-purple {
-    -fx-background-color: linear-gradient(to right, #8d46d8, #8441d6);
+    -fx-background-color: linear-gradient(to right, #cdb4f6, #b89af3);
 }
 
 .kpi-green {
-    -fx-background-color: linear-gradient(to right, #3caf41, #1a831d);
+    -fx-background-color: linear-gradient(to right, #a7f3d0, #6ee7b7);
 }
 
 .kpi-blue {
-    -fx-background-color: linear-gradient(to right, #2374da, #2d86ef);
+    -fx-background-color: linear-gradient(to right, #bfdbfe, #93c5fd);
 }
 
 .kpi-orange {
-    -fx-background-color: linear-gradient(to right, #ff812b, #f39c2a);
+    -fx-background-color: linear-gradient(to right, #fed7aa, #fdba74);
 }
 .kpi-icon { -fx-font-size: 28px; }
 .kpi-value {
     -fx-font-size: 28px;
     -fx-font-weight: 800;
-    -fx-text-fill: white;
+   -fx-text-fill: #1e293b;
 }
 .kpi-label {
     -fx-font-size: 14px;
     -fx-font-weight: 800;
-    -fx-text-fill: rgba(255, 255, 255, 0.85);
+      -fx-text-fill: #334155;
 }
 .kpi-trend {
     -fx-font-size: 12px;
     -fx-font-weight: 600;
-    -fx-text-fill: rgba(255, 255, 255, 0.7);
+     -fx-text-fill: #64748b;
 }
 
 /* ===== STATS OVERVIEW ===== */

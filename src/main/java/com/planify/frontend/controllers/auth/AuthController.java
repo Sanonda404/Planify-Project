@@ -381,5 +381,27 @@ public class AuthController {
             formCard.setEffect(null);
         }
     }
+    public void resetLoginView() {
+        entryPlayed = false;
 
+        tabIndicator.setTranslateX(0);
+        loginTabBtn.getStyleClass().add("active");
+        signupTabBtn.getStyleClass().remove("active");
+
+        loginForm.setVisible(true);
+        loginForm.setManaged(true);
+
+        signupForm.setVisible(false);
+        signupForm.setManaged(false);
+
+        clearErrors();
+        stopSignupBorderAnimation();
+
+        if (formCard != null) {
+            formCard.setVisible(true);
+            formCard.setManaged(true);
+            formCard.setOpacity(1);
+            formCard.setTranslateY(0);
+        }
+    }
 }
