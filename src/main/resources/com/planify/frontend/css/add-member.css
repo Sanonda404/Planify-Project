@@ -167,14 +167,16 @@
 
 .am-add-btn:hover {
     -fx-background-color: linear-gradient(135deg, #0ea5e9, #0284c7);
-    -fx-effect: dropshadow(gaussian, rgba(2, 132, 199, 0.5), 10, 0, 0, 4);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(2, 132, 199, 0.35), 8, 0, 0, 3);
+
+    /* very subtle scale (almost still) */
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
 }
 
 .am-add-btn:pressed {
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
 }
 /* ===== SEPARATOR ===== */
 .am-separator {
@@ -234,14 +236,16 @@
 
 .am-send-btn:hover {
     -fx-background-color: linear-gradient(135deg, #0ea5e9, #0369a1);
-    -fx-effect: dropshadow(gaussian, rgba(3, 105, 161, 0.6), 12, 0, 0, 5);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(3, 105, 161, 0.45), 10, 0, 0, 4);
+
+    /* subtle */
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
 }
 
 .am-send-btn:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
 }
 
 /* ===== ANIMATION ===== */
