@@ -7,18 +7,14 @@ import com.planify.frontend.network.BackendConnectionValidation;
 import com.planify.frontend.utils.UserSession;
 import com.planify.frontend.utils.data.group.GroupDataManager;
 import com.planify.frontend.utils.managers.LocalDataManager;
-import com.planify.frontend.utils.PasswordHasher;
 import com.planify.frontend.utils.managers.SceneManager;
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class AuthController {
@@ -37,23 +33,17 @@ public class AuthController {
     // Login Fields
     @FXML private TextField loginNameOrEmail;
     @FXML private PasswordField loginPassword;
-    @FXML private Button loginButton;
     @FXML private Label loginErrorLabel;
 
     // Signup Fields
     @FXML private TextField signupName;
     @FXML private TextField signupEmail;
     @FXML private PasswordField signupPassword;
-    @FXML private CheckBox termsCheckbox;
-    @FXML private Button signupButton;
     @FXML private Label signupErrorLabel;
-    @FXML private StackPane leftSection;
-    @FXML private StackPane rightSection;
     @FXML private TextField signupSecurityQuestion;
     @FXML private TextField signupSecurityAnswer;
     @FXML private VBox formCard;
 
-    private boolean entryPlayed = false;
     private Timeline borderAnimation;
     // ===== INITIALIZATION =====
 
@@ -68,7 +58,6 @@ public class AuthController {
         loginForm.setManaged(true);
         signupForm.setVisible(false);
         signupForm.setManaged(false);
-        setupEntryAnimationAfterWindowShown();
     }
 
     // ===== TAB SWITCHING =====
@@ -94,64 +83,6 @@ public class AuthController {
         clearErrors();
         stopSignupBorderAnimation();
     }
-    private void setupEntryAnimationAfterWindowShown() {
-        if (formCard == null) return;
-
-        formCard.setOpacity(0);
-        formCard.setTranslateY(35);
-
-        formCard.sceneProperty().addListener((obsScene, oldScene, newScene) -> {
-            if (newScene == null) return;
-
-            newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
-                if (newWindow == null) return;
-
-                newWindow.showingProperty().addListener((obsShowing, wasShowing, isShowing) -> {
-                    if (!isShowing || entryPlayed) return;
-
-                    PauseTransition delay = new PauseTransition(Duration.millis(120));
-                    delay.setOnFinished(e -> playEntryAnimation());
-                    delay.play();
-                });
-            });
-
-            Window existingWindow = newScene.getWindow();
-            if (existingWindow != null && existingWindow.isShowing() && !entryPlayed) {
-                PauseTransition delay = new PauseTransition(Duration.millis(120));
-                delay.setOnFinished(e -> playEntryAnimation());
-                delay.play();
-            }
-        });
-
-        Scene existingScene = formCard.getScene();
-        if (existingScene != null) {
-            Window existingWindow = existingScene.getWindow();
-            if (existingWindow != null && existingWindow.isShowing() && !entryPlayed) {
-                PauseTransition delay = new PauseTransition(Duration.millis(120));
-                delay.setOnFinished(e -> playEntryAnimation());
-                delay.play();
-            }
-        }
-    }
-
-    private void playEntryAnimation() {
-        if (entryPlayed || formCard == null) return;
-        entryPlayed = true;
-
-        FadeTransition fade = new FadeTransition(Duration.millis(950), formCard);
-        fade.setFromValue(0);
-        fade.setToValue(1);
-        fade.setInterpolator(Interpolator.EASE_OUT);
-
-        TranslateTransition slide = new TranslateTransition(Duration.millis(950), formCard);
-        slide.setFromY(35);
-        slide.setToY(0);
-        slide.setInterpolator(Interpolator.EASE_OUT);
-
-        ParallelTransition entry = new ParallelTransition(fade, slide);
-        entry.play();
-    }
-
 
     @FXML
     private void showSignup() {
@@ -201,8 +132,6 @@ public class AuthController {
         String identity = loginNameOrEmail.getText().trim();
         String inputPassword = loginPassword.getText();
 
-        System.out.println("log innn");
-
         // Check backend connection
         System.out.println(BackendConnectionValidation.canConnectToServer());
         if (BackendConnectionValidation.canConnectToServer()) {
@@ -232,12 +161,6 @@ public class AuthController {
         // Validate fields
         if (!validateFields(signupName, signupEmail, signupPassword)) {
             showError(signupErrorLabel, "All fields must be filled.");
-            return;
-        }
-
-        // Validate terms checkbox
-        if (termsCheckbox != null && !termsCheckbox.isSelected()) {
-            showError(signupErrorLabel, "You must agree to the Terms & Conditions.");
             return;
         }
 
@@ -382,7 +305,6 @@ public class AuthController {
         }
     }
     public void resetLoginView() {
-        entryPlayed = false;
 
         tabIndicator.setTranslateX(0);
         loginTabBtn.getStyleClass().add("active");

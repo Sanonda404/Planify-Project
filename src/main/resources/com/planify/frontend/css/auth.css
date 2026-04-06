@@ -114,11 +114,9 @@
     -fx-border-radius: 26;
     -fx-border-width: 1.5;
     -fx-padding: 30;
-    /* FIX 1: Subtle entry shadow makes the card feel elevated and premium */
     -fx-effect: dropshadow(gaussian, rgba(109,40,217,0.08), 32, 0, 0, 8);
 }
 
-/* FIX 2: Shake animation state — add styleClass "form-error" in controller */
 .form-card.form-error {
     -fx-border-color: #f0abab;
     -fx-effect: dropshadow(gaussian, rgba(239,102,117,0.18), 20, 0, 0, 4);
@@ -200,7 +198,6 @@
     -fx-background-radius: 12;
     -fx-font-size: 14px;
     -fx-text-fill: #2d1b69;
-    /* FIX 3: Extra left padding leaves room for the icon overlay */
     -fx-padding: 14 16 14 44;
     -fx-prompt-text-fill: #aaa3c2;
 }
@@ -213,7 +210,6 @@
 .input-field:focused {
     -fx-border-color: #8b5cf6;
     -fx-background-color: white;
-    /* FIX 4: Stronger focus ring — more visible, more premium */
     -fx-effect: dropshadow(gaussian, rgba(139,92,246,0.22), 10, 0, 0, 0);
 }
 
@@ -237,7 +233,6 @@
 
 /* =========================
    INPUT ICON OVERLAY
-   Add this styleClass to the icon Label inside the StackPane
 ========================= */
 .input-icon {
     -fx-text-fill: #b0a8d0;
@@ -252,7 +247,6 @@
 
 /* =========================
    SHOW/HIDE PASSWORD TOGGLE
-   Add a Button with styleClass "pw-toggle" inside a StackPane with the PasswordField
 ========================= */
 .pw-toggle {
     -fx-background-color: transparent;
@@ -268,7 +262,6 @@
 
 /* =========================
    PASSWORD STRENGTH BAR
-   Use a ProgressBar with fx:id="strengthBar" below the password field
 ========================= */
 .strength-bar {
     -fx-pref-height: 4;
