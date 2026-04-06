@@ -70,7 +70,7 @@
 
     <!-- Main Content -->
     <center>
-        <VBox spacing="24" styleClass="main-container">
+        <VBox spacing="24" style="-fx-background-color: white;" styleClass="main-container">
             <padding><Insets bottom="28" left="28" right="28" top="24" /></padding>
 
             <!-- Filter Bar -->
