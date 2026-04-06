@@ -13,8 +13,8 @@
 
 /* ===== HEADER ===== */
 .modal-header {
-    -fx-background-color: linear-gradient(to right, #457b9d, #1d3557);
-    -fx-background-radius: 24 24 0 0;
+    -fx-background-color: #03045e;
+    -fx-background-radius: 5 5 0 0;
 }
 
 .header-icon {
@@ -192,14 +192,14 @@
 }
 
 .weight-slider .thumb {
-    -fx-background-color: #457b9d;
+    -fx-background-color: #ee6c4d;
     -fx-background-radius: 10;
     -fx-pref-width: 18;
     -fx-pref-height: 18;
 }
 
 .weight-slider .thumb:hover {
-    -fx-background-color: #1d3557;
+    -fx-background-color: #9e2a2b;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
@@ -207,7 +207,7 @@
 .weight-value {
     -fx-font-size: 18px;
     -fx-font-weight: 800;
-    -fx-text-fill: #457b9d;
+    -fx-text-fill: #ee6c4d;
     -fx-min-width: 40;
     -fx-alignment: center;
 }
@@ -269,7 +269,7 @@
 }
 
 .update-button {
-    -fx-background-color: linear-gradient(to right, #457b9d, #1d3557);
+    -fx-background-color: #e63946;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
@@ -281,6 +281,7 @@
 
 .update-button:hover {
     -fx-effect: dropshadow(gaussian, rgba(29, 53, 87, 0.5), 12, 0, 0, 4);
+    -fx-background-color: #d90429;
 }
 
 /* ===== ANIMATION ===== */
